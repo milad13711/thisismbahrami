@@ -41,6 +41,8 @@ def _fetch(url, follow):
     if os.environ.get("SNAPSHOT_AUTH"):  # staging behind HTTP basic auth: SNAPSHOT_AUTH=user:pass
         import base64
         headers["Authorization"] = "Basic " + base64.b64encode(os.environ["SNAPSHOT_AUTH"].encode()).decode()
+    if os.environ.get("SNAPSHOT_COOKIE"):  # e.g. local WordPress Playground session
+        headers["Cookie"] = os.environ["SNAPSHOT_COOKIE"]
     req = urllib.request.Request(url, headers=headers)
     try:
         r = opener.open(req, timeout=60)

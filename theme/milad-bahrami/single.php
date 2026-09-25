@@ -8,7 +8,7 @@
 get_header();
 the_post();
 
-list( $content, $toc ) = mb_content_with_toc( apply_filters( 'the_content', get_the_content() ) );
+list( $content, $toc ) = mb_content_with_toc( mb_strip_title_heading( apply_filters( 'the_content', get_the_content() ), get_the_title() ) );
 if ( count( $toc ) >= 3 ) {
 	$content = mb_inject_inline_cta( $content );
 }
@@ -61,6 +61,7 @@ $tldr = array_filter( array_map( 'trim', explode( "\n", (string) get_post_meta( 
 
 			<p class="updated">آخرین به‌روزرسانی: <?php echo esc_html( get_the_modified_date( 'j F Y' ) ); ?> · بازبینی تخصصی: میلاد بهرامی</p>
 			<?php mb_author_box(); ?>
+			<?php if ( comments_open() || get_comments_number() ) { comments_template(); } ?>
 		</article>
 
 		<aside class="a-side" aria-label="ابزارهای مقاله">

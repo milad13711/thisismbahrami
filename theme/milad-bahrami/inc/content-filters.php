@@ -32,6 +32,19 @@ function mb_content_with_toc( $html ) {
 	return array( $html, $toc );
 }
 
+/**
+ * Old Elementor posts repeated the post title as their first heading (formerly an
+ * in-content H1, now H2). Drop it when it matches the title the template already prints.
+ */
+function mb_strip_title_heading( $html, $title ) {
+	$norm = fn( $t ) => preg_replace( '/[\s\x{200C}\x{200F}\x{00A0}]+/u', '', wp_strip_all_tags( html_entity_decode( $t ) ) );
+	return preg_replace_callback( '/^\s*<h2[^>]*>(.*?)<\/h2>/su', function ( $m ) use ( $norm, $title ) {
+		$a = $norm( $m[1] );
+		$b = $norm( $title );
+		return ( $a === $b || ( mb_strlen( $a ) > 12 && ( str_contains( $b, $a ) || str_contains( $a, $b ) ) ) ) ? '' : $m[0];
+	}, $html, 1 );
+}
+
 /** Insert the service CTA before the 3rd h2 of long articles. */
 function mb_inject_inline_cta( $html ) {
 	$cta = '<div class="inline-cta"><div><b>سازمان شما کجا نشت می‌کند؟</b><span>در ارزیابی سازمان، گلوگاه‌ها را با داده‌ی واقعی پیدا می‌کنیم.</span></div><a class="btn btn-gold" href="' . esc_url( mb_link( 'assessment' ) ) . '">ارزیابی رایگان اولیه</a></div>';

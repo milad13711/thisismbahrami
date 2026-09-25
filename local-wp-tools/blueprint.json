@@ -1,0 +1,12 @@
+{
+  "$schema": "https://playground.wordpress.net/blueprint-schema.json",
+  "landingPage": "/",
+  "preferredVersions": { "php": "8.3", "wp": "latest" },
+  "login": true,
+  "steps": [
+    { "step": "setSiteOptions", "options": { "blogname": "میلاد بهرامی", "blogdescription": "مشاور کسب‌وکار، سیستم‌سازی و تحول سازمانی", "permalink_structure": "/%postname%/", "timezone_string": "Asia/Tehran" } },
+    { "step": "activatePlugin", "pluginPath": "mb-migration/mb-migration.php" },
+    { "step": "activateTheme", "themeFolderName": "milad-bahrami" },
+    { "step": "runPHP", "code": "<?php require '/wordpress/wp-load.php'; require '/data/import.php';" }
+  ]
+}

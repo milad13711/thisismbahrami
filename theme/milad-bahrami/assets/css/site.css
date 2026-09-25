@@ -926,3 +926,19 @@ a.card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);border-color
 .buy .ebook b{font-size:20px}
 .buy .ebook small{font-size:13px;color:var(--text-3)}
 .hp{position:absolute;inset-inline-start:-9999px;width:1px;height:1px;overflow:hidden}
+
+/* ---------- comments ---------- */
+.comments{margin-top:56px;max-width:720px}
+.comment-list{list-style:none;margin:18px 0 0;padding:0;display:grid;gap:12px}
+.comment-list .children{list-style:none;margin:12px 0 0;padding-inline-start:28px;display:grid;gap:12px;border-inline-start:2px solid var(--line)}
+.comment-list article{border-radius:var(--r-md);border:1px solid var(--line);padding:16px 18px;background:var(--surface)}
+.comment-list .by-author>article{background:#FFF8EA;border-color:#EAD7AE}
+.comment-list header{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:14px}
+.comment-list header .ini{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--ink-900);color:var(--gold-hi);font-weight:800}
+.comment-list header time{margin-inline-start:auto;color:var(--text-3);font-size:13px}
+.comment-list .body{font-size:15.5px;line-height:1.95;color:var(--text-2);margin-top:8px}
+.comment-list .body p{margin:.4em 0}
+.comment-reply-link{display:inline-block;margin-top:6px;font-size:13.5px;font-weight:700;color:var(--gold-text)}
+.comment-respond{margin-top:36px;border-radius:var(--r-lg);border:1px solid var(--line);padding:24px}
+.comment-respond .help{font-size:13.5px;color:var(--text-3);margin:6px 0 16px}
+.comment-respond .form-submit{margin:8px 0 0}

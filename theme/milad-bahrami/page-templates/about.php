@@ -73,6 +73,9 @@
   </div>
 </section>
 
+<!-- ============ ۳ج · محتوای موجود صفحه (حفظ سئو) ============ -->
+<?php get_template_part( 'template-parts/content', null, array( 'title' => 'روایت کامل' ) ); ?>
+
 <!-- ============ ۴ · اصول کار ============ -->
 <section class="sec values">
   <div class="wrap">

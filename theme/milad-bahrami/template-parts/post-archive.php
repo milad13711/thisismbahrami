@@ -67,14 +67,7 @@ $paged     = max( 1, (int) get_query_var( 'paged' ) );
 			?>
 		</div>
 		<?php
-		$links = paginate_links( array( 'type' => 'array', 'prev_text' => '›', 'next_text' => '‹', 'mid_size' => 1 ) );
-		if ( $links ) {
-			echo '<nav class="pager" aria-label="صفحه‌بندی">';
-			foreach ( $links as $l ) {
-				echo str_replace( array( 'page-numbers current', '<span' ), array( 'page-numbers" aria-current="page', '<a' ), $l ); // phpcs:ignore
-			}
-			echo '</nav>';
-		}
+		mb_pager();
 		else :
 			?>
 			<p class="filter-empty">مطلبی پیدا نشد. <a href="<?php echo esc_url( mb_link( 'assessment' ) ); ?>" style="color:var(--gold-text);font-weight:700">سؤال‌تان را مستقیم بپرسید</a></p>

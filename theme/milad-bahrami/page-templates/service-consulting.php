@@ -170,6 +170,9 @@
   </div>
 </section>
 
+<!-- ============ ۵ج · محتوای موجود صفحه (حفظ سئو) ============ -->
+<?php get_template_part( 'template-parts/content', null, array( 'title' => 'راهنمای کامل مشاوره کسب‌وکار' ) ); ?>
+
 <!-- ============ ۶ · رفع تردید ============ -->
 <section class="sec" style="padding-top:0">
   <div class="wrap faq">

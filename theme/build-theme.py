@@ -47,8 +47,12 @@ def php_links(html):
 
 
 def php_parts(html):
-    return re.sub(r"<!--wp:([\w-]+)-->.*?<!--/wp:\1-->",
-                  lambda m: f"<?php get_template_part( 'template-parts/{m.group(1)}' ); ?>", html, flags=re.S)
+    def repl(m):
+        name, attrs = m.group(1), dict(re.findall(r'(\w+)="([^"]*)"', m.group(2) or ""))
+        args = ", ".join(f"'{k}' => '{v}'" for k, v in attrs.items())
+        return f"<?php get_template_part( 'template-parts/{name}', null, array( {args} ) ); ?>" if args \
+            else f"<?php get_template_part( 'template-parts/{name}' ); ?>"
+    return re.sub(r"<!--wp:([\w-]+)((?:\s+\w+=\"[^\"]*\")*)\s*-->.*?<!--/wp:\1-->", repl, html, flags=re.S)
 
 
 def page_body(name):

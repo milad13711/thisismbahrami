@@ -76,6 +76,9 @@
   </div>
 </section>
 
+<!-- ============ ۴ب · محتوای موجود صفحه (حفظ سئو) ============ -->
+<?php get_template_part( 'template-parts/content', null, array( 'title' => 'درباره‌ی کتاب سلطان قیف' ) ); ?>
+
 <!-- ============ ۵ · اعتبار + خرید ============ -->
 <section class="sec band" id="buy">
   <div class="wrap buy-grid" data-reveal>

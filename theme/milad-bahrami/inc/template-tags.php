@@ -124,3 +124,17 @@ function mb_cluster_posts( $cat_slug, $count = 4, $exclude = array() ) {
 	}
 	return get_posts( $args );
 }
+
+/** Pagination in the design's .pager markup. */
+function mb_pager() {
+	$links = paginate_links( array( 'type' => 'array', 'prev_text' => '›', 'next_text' => '‹', 'mid_size' => 1 ) );
+	if ( ! $links ) {
+		return;
+	}
+	echo '<nav class="pager" aria-label="صفحه‌بندی">';
+	foreach ( $links as $l ) {
+		// Current page comes back as <span>; render it as a link-styled item with aria-current.
+		echo str_replace( array( '<span aria-current="page" class="page-numbers current">', '</span>' ), array( '<a aria-current="page">', '</a>' ), $l ); // phpcs:ignore
+	}
+	echo '</nav>';
+}

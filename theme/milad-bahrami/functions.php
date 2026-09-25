@@ -75,6 +75,12 @@ remove_action( 'wp_head', 'rsd_link' );
 remove_action( 'wp_head', 'wlwmanifest_link' );
 add_filter( 'the_generator', '__return_empty_string' );
 
+/* The site is Persian regardless of the admin UI language: always RTL + fa-IR. */
+add_filter( 'language_attributes', function ( $out ) {
+	$out = preg_replace( '/\s*(lang|dir)="[^"]*"/', '', $out );
+	return trim( 'lang="fa-IR" dir="rtl" ' . $out );
+} );
+
 /* Excerpts */
 add_filter( 'excerpt_length', fn() => 28 );
 add_filter( 'excerpt_more', fn() => '…' );

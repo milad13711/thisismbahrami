@@ -6,7 +6,11 @@
 get_header();
 $terms = get_terms( array( 'taxonomy' => 'portfolio-cat', 'hide_empty' => true ) );
 $terms = is_wp_error( $terms ) ? array() : $terms;
-$q     = new WP_Query( array( 'post_type' => 'portfolio', 'posts_per_page' => -1, 'orderby' => 'menu_order date', 'order' => 'DESC' ) );
+$args  = array( 'post_type' => 'portfolio', 'posts_per_page' => -1, 'orderby' => 'menu_order date', 'order' => 'DESC' );
+if ( is_tax() ) { // Also serves /portfolio-cat/… and friends.
+	$args['tax_query'] = array( array( 'taxonomy' => get_queried_object()->taxonomy, 'terms' => get_queried_object_id() ) );
+}
+$q     = new WP_Query( $args );
 ?>
 <!-- ============ ۱ · توجه ============ -->
 <section class="phero on-dark">
