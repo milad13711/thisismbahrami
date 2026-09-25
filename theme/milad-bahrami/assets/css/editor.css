@@ -1,0 +1,7 @@
+/* Block editor: mirror the front-end article typography so posts look the same while editing. */
+@font-face{font-family:Vazirmatn;src:url("../fonts/Vazirmatn-var.woff2") format("woff2");font-weight:100 900;font-display:swap}
+body{font-family:Vazirmatn,Tahoma,sans-serif;font-size:17.5px;line-height:2.05;color:#1F2937;direction:rtl}
+h1,h2,h3,h4{font-family:Vazirmatn,Tahoma,sans-serif;line-height:1.5;color:#0B1322}
+h2{font-size:26px;font-weight:800}h3{font-size:20px;font-weight:800}
+blockquote{border-inline-start:3px solid #C9A45C;padding:6px 22px;font-weight:600}
+a{color:#85632A}

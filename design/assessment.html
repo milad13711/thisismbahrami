@@ -6,9 +6,7 @@
 <title>درخواست ارزیابی سیستم و فرآیند سازمان — میلاد بهرامی</title>
 <meta name="description" content="در ۴ قدم کوتاه وضعیت سازمان‌تان را ثبت کنید؛ گزارش اولیه و پیشنهاد جلسه‌ی تشخیص دریافت می‌کنید.">
 <script>document.documentElement.classList.add('js')</script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="preload" href="assets/fonts/Vazirmatn-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/site.css">
 </head>
 <body data-page="">
@@ -108,7 +106,7 @@
         <div class="field"><label for="org">نام سازمان یا کسب‌وکار <span class="req" aria-hidden="true">*</span></label><input id="org" name="org" required aria-describedby="orgErr" autocomplete="organization"><span class="err" id="orgErr" hidden>نام سازمان را وارد کنید.</span></div>
         <div class="field"><label for="ind">صنعت</label><select id="ind" name="industry"><option value="">انتخاب کنید</option><option>تولیدی و کارخانه</option><option>بازرگانی و پخش</option><option>خدماتی</option><option>فناوری</option><option>خرده‌فروشی</option><option>سایر</option></select></div>
         <div class="field"><span class="lbl" id="sizeL">تعداد نیرو</span>
-          <div class="opts cols-3" data-single role="group" aria-labelledby="sizeL">
+          <div class="opts cols-3" data-single data-name="size" role="group" aria-labelledby="sizeL">
             <button type="button" class="opt" aria-pressed="false">کمتر از ۱۰</button><button type="button" class="opt" aria-pressed="false">۱۰ تا ۵۰</button><button type="button" class="opt" aria-pressed="false">بیش از ۵۰</button>
           </div>
         </div>
@@ -117,7 +115,7 @@
       <fieldset class="wz-pane" style="border:0;padding:0;margin:0" hidden>
         <legend><h2>چالش‌های فعلی</h2></legend>
         <p>هر تعداد که صدق می‌کند انتخاب کنید.</p>
-        <div class="opts" role="group" aria-label="چالش‌ها">
+        <div class="opts" data-name="challenges" role="group" aria-label="چالش‌ها">
           <button type="button" class="opt" aria-pressed="false">همه‌چیز به مدیر وابسته است</button>
           <button type="button" class="opt" aria-pressed="false">فرآیندها مستند نیستند</button>
           <button type="button" class="opt" aria-pressed="false">نرم‌افزار داریم، اما مشکل حل نشده</button>
@@ -130,7 +128,7 @@
       <fieldset class="wz-pane" style="border:0;padding:0;margin:0" hidden>
         <legend><h2>به دنبال چه هستید؟</h2></legend>
         <p>یک مورد را انتخاب کنید.</p>
-        <div class="opts" data-single role="group" aria-label="هدف">
+        <div class="opts" data-single data-name="goal" role="group" aria-label="هدف">
           <button type="button" class="opt" aria-pressed="false">مشاوره کسب‌وکار</button>
           <button type="button" class="opt" aria-pressed="false">سیستم‌سازی سازمان</button>
           <button type="button" class="opt" aria-pressed="false">انتخاب یا استقرار ERP / BPMS</button>
@@ -147,6 +145,8 @@
           <div class="field"><label for="role">سمت</label><input id="role" name="role" autocomplete="organization-title"></div>
         </div>
         <div class="field"><label for="tel">شماره موبایل <span class="req" aria-hidden="true">*</span></label><input id="tel" name="tel" type="tel" inputmode="tel" dir="ltr" required aria-describedby="telErr" autocomplete="tel" style="text-align:right"><span class="err" id="telErr" hidden>شماره موبایل را وارد کنید.</span></div>
+        <div class="hp" aria-hidden="true"><label>وب‌سایت<input name="website" tabindex="-1" autocomplete="off"></label></div>
+        <p class="err" id="sendErr" role="alert" hidden></p>
         <div class="privacy"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="flex:none;margin-top:4px"><rect x="3" y="7" width="10" height="7" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2" stroke="currentColor" stroke-width="1.5"/></svg>اطلاعات شما محرمانه است و در اختیار هیچ شخص یا سازمان دیگری قرار نمی‌گیرد.</div>
       </fieldset>
 
