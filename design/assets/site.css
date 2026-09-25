@@ -817,3 +817,22 @@ a.card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);border-color
 .buy-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(32px,5vw,72px);align-items:center}
 @media (max-width:960px){.story,.about-hero,.buy-grid{grid-template-columns:1fr}.story-head{position:static}.about-hero .portrait{max-width:300px}}
 @media (max-width:760px){.upsell{grid-template-columns:1fr}.upsell .btn{justify-self:start}}
+
+/* ---------- real media + contact ---------- */
+.portrait .ph.photo{display:block;padding:0;overflow:hidden;background:#15181d;outline:0}
+.portrait .ph.photo img{width:100%;height:100%;object-fit:cover;object-position:50% 15%;display:block}
+.cover3d.img{padding:0;background:#0b1322;aspect-ratio:1155/1606;overflow:hidden}
+.cover3d.img picture,.cover3d.img img{display:block;width:100%;height:100%;object-fit:cover}
+.cover3d.img::after{content:"";position:absolute;inset-block:0;right:0;width:12px;background:linear-gradient(270deg,rgba(0,0,0,.4),rgba(255,255,255,.08))}
+.avatar{overflow:hidden}
+.avatar img{width:100%;height:100%;object-fit:cover;display:block}
+.social{display:flex;gap:8px;margin-top:18px}
+.social a{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;border:1px solid rgba(255,255,255,.14);color:var(--ink-200);transition:.2s}
+.social a:hover{color:#fff;border-color:rgba(255,255,255,.4);background:rgba(255,255,255,.05)}
+.nap{font-style:normal;display:grid;gap:8px;line-height:1.9}
+.nap a[dir="ltr"]{text-align:right;font-weight:700;color:#fff}
+.grid-5{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+.edu .chip{margin-bottom:12px}
+.edu h3{font-size:16.5px}
+@media (max-width:1000px){.grid-5{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:560px){.grid-5{grid-template-columns:1fr}}
