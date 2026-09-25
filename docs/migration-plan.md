@@ -23,11 +23,11 @@
 
 ## فازها
 - [x] ۰. baseline سئو + ریپو
-- [ ] ۱. هویت بصری و طراحی Home (نمونه در `design/`) ← **در حال انجام**
+- [x] ۱. هویت بصری + طراحی همه‌ی قالب‌های صفحه بر اساس قیف فروش (`design/pages.html`)
 - [ ] ۲. قالب وردپرس: header/footer، single، page، archive، portfolio، faq، landing خدمات، schema شخص/سازمان
 - [ ] ۳. استیجینگ روی همین هاست + کپی دیتابیس/آپلودها
 - [ ] ۴. تبدیل محتوای Elementor به بلوک (اسکریپت) + بازبینی دستی
-- [ ] ۵. صفحات جدید (Money pages) و بازنویسی Home/About با Positioning جدید
+- [ ] ۵. صفحات جدید (Money pages + `/ارزیابی-سازمان/`) و بازنویسی Home/About با Positioning جدید
 - [ ] ۶. حذف افزونه‌های اضافه (Elementor، Woo، UM در صورت عدم نیاز) + کنترل سرعت
 - [ ] ۷. مقایسه‌ی snapshot، جایگزینی، purge کش آروان، ارسال sitemap در Search Console
 - [ ] ۸. پایش ۴ هفته‌ای: Coverage، 404ها، رتبه‌ی کوئری‌های اصلی

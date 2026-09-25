@@ -1,0 +1,100 @@
+<!--meta {"title":"درخواست ارزیابی سیستم و فرآیند سازمان — میلاد بهرامی","description":"در ۴ قدم کوتاه وضعیت سازمان‌تان را ثبت کنید؛ گزارش اولیه و پیشنهاد جلسه‌ی تشخیص دریافت می‌کنید.","page":"","template":"page-assessment.php (صفحه‌ی جدید + تماس)","url":"/ارزیابی-سازمان/ (جدید)"} -->
+
+<!-- ============ ۱ · اطمینان‌بخشی ============ -->
+<section class="phero on-dark" style="padding-bottom:120px">
+  <div class="wrap">
+    <div class="rise" style="max-width:760px">
+      <ol class="crumbs" aria-label="مسیر صفحه"><li><a href="index.html">خانه</a></li><li aria-current="page">ارزیابی سازمان</li></ol>
+      <h1>ارزیابی سیستم و <span class="grad">فرآیند سازمان</span></h1>
+      <p class="lead">۴ قدم کوتاه، حدود ۳ دقیقه. بعد از ارسال، گزارش اولیه و پیشنهاد زمان جلسه‌ی تشخیص برایتان ارسال می‌شود.</p>
+      <div class="chips" style="margin-top:22px"><span class="chip">بدون تعهد</span><span class="chip">اطلاعات محرمانه می‌ماند</span><span class="chip">پاسخ در یک روز کاری</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ۲ · فرم چندمرحله‌ای ============ -->
+<section class="sec" style="padding-top:0">
+  <div class="wrap wz-wrap">
+    <form class="wizard" id="wizard" novalidate onsubmit="return false" aria-label="فرم ارزیابی سازمان">
+      <ol class="wz-steps" aria-label="مراحل">
+        <li><i>۱</i>سازمان</li><li><i>۲</i>چالش‌ها</li><li><i>۳</i>هدف</li><li><i>۴</i>تماس</li>
+      </ol>
+      <div class="wz-bar" aria-hidden="true"><i></i></div>
+
+      <fieldset class="wz-pane" style="border:0;padding:0;margin:0">
+        <legend><h2>سازمان شما</h2></legend>
+        <p>کمک می‌کند گزارش را متناسب با اندازه و صنعت شما آماده کنیم.</p>
+        <div class="field"><label for="org">نام سازمان یا کسب‌وکار <span class="req" aria-hidden="true">*</span></label><input id="org" name="org" required aria-describedby="orgErr" autocomplete="organization"><span class="err" id="orgErr" hidden>نام سازمان را وارد کنید.</span></div>
+        <div class="field"><label for="ind">صنعت</label><select id="ind" name="industry"><option value="">انتخاب کنید</option><option>تولیدی و کارخانه</option><option>بازرگانی و پخش</option><option>خدماتی</option><option>فناوری</option><option>خرده‌فروشی</option><option>سایر</option></select></div>
+        <div class="field"><span class="lbl" id="sizeL">تعداد نیرو</span>
+          <div class="opts cols-3" data-single role="group" aria-labelledby="sizeL">
+            <button type="button" class="opt" aria-pressed="false">کمتر از ۱۰</button><button type="button" class="opt" aria-pressed="false">۱۰ تا ۵۰</button><button type="button" class="opt" aria-pressed="false">بیش از ۵۰</button>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset class="wz-pane" style="border:0;padding:0;margin:0" hidden>
+        <legend><h2>چالش‌های فعلی</h2></legend>
+        <p>هر تعداد که صدق می‌کند انتخاب کنید.</p>
+        <div class="opts" role="group" aria-label="چالش‌ها">
+          <button type="button" class="opt" aria-pressed="false">همه‌چیز به مدیر وابسته است</button>
+          <button type="button" class="opt" aria-pressed="false">فرآیندها مستند نیستند</button>
+          <button type="button" class="opt" aria-pressed="false">نرم‌افزار داریم، اما مشکل حل نشده</button>
+          <button type="button" class="opt" aria-pressed="false">فروش ثابت مانده یا افت کرده</button>
+          <button type="button" class="opt" aria-pressed="false">گزارش‌ها با هم نمی‌خوانند</button>
+          <button type="button" class="opt" aria-pressed="false">رشد باعث هرج‌ومرج شده</button>
+        </div>
+      </fieldset>
+
+      <fieldset class="wz-pane" style="border:0;padding:0;margin:0" hidden>
+        <legend><h2>به دنبال چه هستید؟</h2></legend>
+        <p>یک مورد را انتخاب کنید.</p>
+        <div class="opts" data-single role="group" aria-label="هدف">
+          <button type="button" class="opt" aria-pressed="false">مشاوره کسب‌وکار</button>
+          <button type="button" class="opt" aria-pressed="false">سیستم‌سازی سازمان</button>
+          <button type="button" class="opt" aria-pressed="false">انتخاب یا استقرار ERP / BPMS</button>
+          <button type="button" class="opt" aria-pressed="false">سیستم‌سازی فروش و قیف</button>
+        </div>
+        <div class="field" style="margin-top:18px"><label for="note">توضیح بیشتر (اختیاری)</label><textarea id="note" name="note" aria-describedby="noteHelp"></textarea><span class="help" id="noteHelp">مثلاً: «از ۶ ماه پیش فروش ثابت مانده و ...»</span></div>
+      </fieldset>
+
+      <fieldset class="wz-pane" style="border:0;padding:0;margin:0" hidden>
+        <legend><h2>کجا نتیجه را ارسال کنیم؟</h2></legend>
+        <p>فقط برای ارسال گزارش و هماهنگی جلسه استفاده می‌شود.</p>
+        <div class="two">
+          <div class="field"><label for="name">نام و نام خانوادگی <span class="req" aria-hidden="true">*</span></label><input id="name" name="name" required aria-describedby="nameErr" autocomplete="name"><span class="err" id="nameErr" hidden>نام خود را وارد کنید.</span></div>
+          <div class="field"><label for="role">سمت</label><input id="role" name="role" autocomplete="organization-title"></div>
+        </div>
+        <div class="field"><label for="tel">شماره موبایل <span class="req" aria-hidden="true">*</span></label><input id="tel" name="tel" type="tel" inputmode="tel" dir="ltr" required aria-describedby="telErr" autocomplete="tel" style="text-align:right"><span class="err" id="telErr" hidden>شماره موبایل را وارد کنید.</span></div>
+        <div class="privacy"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="flex:none;margin-top:4px"><rect x="3" y="7" width="10" height="7" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2" stroke="currentColor" stroke-width="1.5"/></svg>اطلاعات شما محرمانه است و در اختیار هیچ شخص یا سازمان دیگری قرار نمی‌گیرد.</div>
+      </fieldset>
+
+      <div class="wz-pane wz-done" hidden>
+        <div class="ok"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="m8 16.5 5 5 11-12" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h2>درخواست شما ثبت شد</h2>
+        <p style="color:var(--text-3);margin:8px auto 22px;max-width:440px">گزارش اولیه تا یک روز کاری آینده برایتان ارسال می‌شود. تا آن زمان این مطالب را ببینید:</p>
+        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap"><a class="btn btn-line" href="index.html#method">متد سیستم‌سازی</a><a class="btn btn-line" href="book.html">کتاب سلطان قیف</a></div>
+      </div>
+
+      <div class="wz-nav"><button type="button" class="btn btn-line" id="wzBack">مرحله‌ی قبل</button><button type="button" class="btn btn-ink" id="wzNext" style="margin-inline-start:auto">مرحله‌ی بعد</button></div>
+    </form>
+
+    <aside class="wz-aside" id="contact">
+      <div class="report in" style="transform:none">
+        <div class="k">آنچه دریافت می‌کنید</div>
+        <h4>گزارش اولیه‌ی بلوغ سیستمی</h4>
+        <div class="bar"><i style="--w:62%"></i></div>
+        <div class="rows">
+          <div><div class="l"><span>فرآیندها</span><b>امتیاز</b></div><div class="bar"><i style="--w:70%"></i></div></div>
+          <div><div class="l"><span>وابستگی به افراد</span><b>امتیاز</b></div><div class="bar"><i style="--w:40%"></i></div></div>
+        </div>
+      </div>
+      <div class="contact-card">
+        <h3>ترجیح می‌دهید مستقیم صحبت کنید؟</h3>
+        <a href="#" class="placeholder"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M4 2.5h3l1.5 3.5-2 1.2a8 8 0 0 0 4.3 4.3l1.2-2 3.5 1.5v3a1.5 1.5 0 0 1-1.6 1.5A13 13 0 0 1 2.5 4.1 1.5 1.5 0 0 1 4 2.5z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>شماره تماس</a>
+        <a href="#" class="placeholder"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M15.5 3 2.5 8.2l4.2 1.5L8.4 15l2.3-3 3.4 2.5z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>تلگرام / واتس‌اپ</a>
+        <div><svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M9 16s5.5-4.8 5.5-9A5.5 5.5 0 0 0 3.5 7c0 4.2 5.5 9 5.5 9z" stroke="currentColor" stroke-width="1.5"/><circle cx="9" cy="7" r="2" stroke="currentColor" stroke-width="1.5"/></svg>شیراز، <span class="placeholder">آدرس دفتر</span></div>
+      </div>
+    </aside>
+  </div>
+</section>
