@@ -1,0 +1,418 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>میلاد بهرامی | مشاور سیستم‌سازی و تحول سازمانی</title>
+<meta name="description" content="طراحی معماری فرآیندهای سازمانی، سیستم‌سازی، اتوماسیون، BPMS و ERP متناسب با DNA کسب‌وکار شما.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ---------- Brand tokens ---------- */
+:root{
+  --ink:#0E1A2B;          /* primary: deep ink */
+  --ink-2:#1B2B42;
+  --ink-soft:#3A4A62;
+  --paper:#F7F4EE;        /* warm paper background */
+  --paper-2:#EFEAE0;
+  --card:#FFFFFF;
+  --line:#DDD5C7;
+  --gold:#B8914F;         /* accent, shared family tone with Exir */
+  --gold-2:#D9B878;
+  --signal:#2F7D6D;       /* "system works" green, used sparingly */
+  --muted:#6B7486;
+  --radius:14px;
+  --max:1180px;
+  --shadow:0 1px 2px rgba(14,26,43,.06),0 8px 24px rgba(14,26,43,.06);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:Vazirmatn,Tahoma,sans-serif;font-size:17px;line-height:1.9;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+img,svg{max-width:100%;display:block}
+.wrap{max-width:var(--max);margin-inline:auto;padding-inline:20px}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:700;letter-spacing:.02em;color:var(--gold)}
+.eyebrow::before{content:"";width:22px;height:2px;background:var(--gold)}
+h1,h2,h3{line-height:1.45;margin:0}
+h2{font-size:clamp(26px,3.2vw,36px);font-weight:800}
+.lead{color:var(--ink-soft);font-size:18px;max-width:640px}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:14px 24px;border-radius:10px;font-weight:700;font-size:16px;transition:.2s}
+.btn-primary{background:var(--ink);color:#fff}
+.btn-primary:hover{background:var(--ink-2)}
+.btn-ghost{border:1.5px solid var(--ink);color:var(--ink)}
+.btn-ghost:hover{background:var(--ink);color:#fff}
+.btn-gold{background:var(--gold);color:var(--ink)}
+.btn-gold:hover{background:var(--gold-2)}
+section{padding-block:88px}
+.sec-head{display:flex;flex-direction:column;gap:12px;margin-bottom:44px}
+.placeholder{outline:1.5px dashed #d97706;outline-offset:3px;border-radius:4px}
+
+/* ---------- Header ---------- */
+.topbar{position:sticky;top:0;z-index:20;background:rgba(247,244,238,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:72px;gap:24px}
+.brand{display:flex;align-items:center;gap:12px}
+.mono{width:42px;height:42px;border-radius:10px;background:var(--ink);display:grid;place-items:center}
+.brand b{display:block;font-size:17px;font-weight:800;line-height:1.3}
+.brand small{display:block;font-size:12px;color:var(--muted);line-height:1.4}
+.nav{display:flex;gap:26px;font-size:15px;font-weight:500}
+.nav a{color:var(--ink-soft)} .nav a:hover{color:var(--ink)}
+.topbar .btn{padding:10px 18px;font-size:14px}
+@media (max-width:960px){.nav{display:none}}
+
+/* ---------- Hero ---------- */
+.hero{position:relative;padding-block:72px 96px;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:40px 40px;opacity:.45;mask-image:radial-gradient(ellipse at 30% 40%,#000 20%,transparent 70%)}
+.hero .wrap{position:relative;display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
+.hero h1{font-size:clamp(34px,4.6vw,54px);font-weight:900;letter-spacing:-.01em;margin:18px 0}
+.hero h1 em{font-style:normal;color:var(--gold)}
+.hero .lead{font-size:19px}
+.hero .sub{margin-top:14px;color:var(--muted);font-size:15px}
+.hero .ctas{display:flex;gap:14px;flex-wrap:wrap;margin-top:32px}
+.trust{display:flex;gap:18px;flex-wrap:wrap;margin-top:36px;font-size:13px;color:var(--muted)}
+.trust span{display:flex;align-items:center;gap:6px}
+.trust i{width:6px;height:6px;border-radius:50%;background:var(--signal)}
+.diagram{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:26px;box-shadow:var(--shadow)}
+.diagram figcaption{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:14px}
+@media (max-width:960px){.hero .wrap{grid-template-columns:1fr}}
+
+/* ---------- Evidence strip ---------- */
+.evidence{background:var(--ink);color:#fff;padding-block:44px}
+.evidence .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.stat b{display:block;font-size:40px;font-weight:900;color:var(--gold-2);line-height:1.2}
+.stat span{font-size:14px;color:#B9C2D0}
+@media (max-width:760px){.evidence .wrap{grid-template-columns:repeat(2,1fr)}}
+
+/* ---------- Symptoms ---------- */
+.symptoms{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.symptom{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:24px}
+.symptom h3{font-size:18px;font-weight:700;margin-bottom:6px}
+.symptom p{margin:0;color:var(--muted);font-size:15px;line-height:1.8}
+.symptom .n{font-size:13px;color:var(--gold);font-weight:800}
+@media (max-width:860px){.symptoms{grid-template-columns:1fr}}
+
+/* ---------- Method ---------- */
+.method{background:var(--paper-2)}
+.method .grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:56px;align-items:start}
+.steps{list-style:none;margin:0;padding:0;position:relative}
+.steps::before{content:"";position:absolute;right:21px;top:10px;bottom:10px;width:2px;background:repeating-linear-gradient(var(--gold) 0 6px,transparent 6px 12px)}
+.steps li{position:relative;display:grid;grid-template-columns:44px 1fr;gap:16px;padding:10px 0}
+.steps .dot{width:44px;height:44px;border-radius:50%;background:var(--card);border:2px solid var(--ink);display:grid;place-items:center;font-weight:800;font-size:14px;z-index:1}
+.steps li:nth-child(n+6) .dot{background:var(--ink);color:#fff}
+.steps h3{font-size:17px;font-weight:700}
+.steps p{margin:0;font-size:14.5px;color:var(--muted);line-height:1.8}
+.steps li.phase{display:block;font-size:12px;font-weight:700;color:var(--signal);padding:14px 60px 2px 0}
+.method aside{position:sticky;top:110px}
+.method aside .note{margin-top:22px;padding:18px 20px;border-right:3px solid var(--gold);background:var(--card);border-radius:8px;font-size:15px;color:var(--ink-soft)}
+@media (max-width:900px){.method .grid{grid-template-columns:1fr}.method aside{position:static}}
+
+/* ---------- Services ---------- */
+.services{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.svc{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:24px;display:flex;flex-direction:column;gap:10px;transition:.2s}
+.svc:hover{border-color:var(--ink);transform:translateY(-2px);box-shadow:var(--shadow)}
+.svc .ic{width:40px;height:40px;border-radius:10px;background:var(--paper-2);display:grid;place-items:center}
+.svc h3{font-size:17px;font-weight:700}
+.svc p{margin:0;font-size:14.5px;color:var(--muted);line-height:1.8;flex:1}
+.svc .more{font-size:13px;font-weight:700;color:var(--gold)}
+.svc.core{background:var(--ink);color:#fff;border-color:var(--ink)}
+.svc.core p{color:#B9C2D0}
+.svc.core .ic{background:var(--ink-2)}
+@media (max-width:1000px){.services{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:560px){.services{grid-template-columns:1fr}}
+
+/* ---------- Cases ---------- */
+.cases{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.case{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column}
+.case .top{padding:22px 22px 0}
+.case .tag{display:inline-block;font-size:12px;font-weight:700;padding:3px 10px;border-radius:99px;background:var(--paper-2);color:var(--ink-soft)}
+.case h3{font-size:18px;font-weight:800;margin:12px 0 4px}
+.case .flow{margin:16px 22px 22px;padding:14px;border-radius:10px;background:var(--paper);font-size:13.5px;display:grid;gap:6px}
+.case .flow div{display:grid;grid-template-columns:70px 1fr;gap:8px}
+.case .flow b{color:var(--muted);font-weight:500}
+@media (max-width:900px){.cases{grid-template-columns:1fr}}
+
+/* ---------- Book ---------- */
+.book{background:var(--ink);color:#fff;border-radius:24px;padding:56px;display:grid;grid-template-columns:260px 1fr;gap:56px;align-items:center}
+.cover{aspect-ratio:3/4.3;border-radius:6px 14px 14px 6px;background:linear-gradient(160deg,#1f3150,#0b1422);border:1px solid #2b3d5c;box-shadow:-14px 20px 40px rgba(0,0,0,.35);display:flex;flex-direction:column;justify-content:space-between;padding:24px}
+.cover b{font-size:30px;font-weight:900;color:var(--gold-2);line-height:1.3}
+.cover small{color:#B9C2D0;font-size:13px}
+.book .lead{color:#C9D1DD}
+@media (max-width:820px){.book{grid-template-columns:1fr;padding:32px}.cover{max-width:220px}}
+
+/* ---------- Knowledge ---------- */
+.clusters{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.cluster{border-top:3px solid var(--ink);padding-top:18px}
+.cluster h3{font-size:19px;font-weight:800;margin-bottom:10px}
+.cluster ul{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+.cluster li a{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid var(--line);font-size:15px;color:var(--ink-soft)}
+.cluster li a:hover{color:var(--ink)}
+.cluster li a::after{content:"←";color:var(--gold)}
+@media (max-width:900px){.clusters{grid-template-columns:1fr}}
+
+/* ---------- Assessment CTA ---------- */
+.assess{background:linear-gradient(135deg,#fff 0%,var(--paper-2) 100%);border:1px solid var(--line);border-radius:24px;padding:48px;display:grid;grid-template-columns:1.2fr .8fr;gap:40px;align-items:center}
+.assess ol{margin:0;padding-inline-start:20px;color:var(--ink-soft);font-size:15px}
+.assess .box{background:var(--card);border-radius:16px;padding:26px;border:1px solid var(--line);box-shadow:var(--shadow)}
+.meter{height:10px;border-radius:99px;background:var(--paper-2);overflow:hidden;margin:12px 0 6px}
+.meter i{display:block;height:100%;width:62%;background:linear-gradient(90deg,var(--gold),var(--signal))}
+@media (max-width:860px){.assess{grid-template-columns:1fr;padding:28px}}
+
+/* ---------- Footer ---------- */
+footer{background:var(--ink);color:#B9C2D0;padding-block:56px 28px;font-size:14.5px}
+footer .cols{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:32px}
+footer h4{color:#fff;font-size:15px;margin:0 0 12px}
+footer ul{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+footer a:hover{color:#fff}
+footer .legal{border-top:1px solid #24344d;margin-top:40px;padding-top:20px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:13px}
+@media (max-width:860px){footer .cols{grid-template-columns:1fr 1fr}}
+
+.proto-note{position:fixed;bottom:16px;left:16px;z-index:50;background:#fff7e6;border:1px solid #f0c36d;color:#7a4b00;font-size:12.5px;padding:8px 12px;border-radius:8px;max-width:300px;line-height:1.7}
+</style>
+</head>
+<body>
+
+<div class="proto-note">نمونه‌ی طراحی — کادرهای نارنجی‌خط‌چین = اعداد/ادعاهایی که باید با داده‌ی واقعی شما پر شوند.</div>
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="#">
+      <span class="mono" aria-hidden="true">
+        <svg width="26" height="26" viewBox="0 0 26 26" fill="none"><circle cx="5" cy="13" r="3" fill="#D9B878"/><circle cx="21" cy="5" r="3" stroke="#fff" stroke-width="1.8"/><circle cx="21" cy="21" r="3" stroke="#fff" stroke-width="1.8"/><path d="M8 13h5m0 0V6.5a1.5 1.5 0 0 1 1.5-1.5H18M13 13v6.5a1.5 1.5 0 0 0 1.5 1.5H18" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </span>
+      <span><b>میلاد بهرامی</b><small>سیستم‌سازی و تحول سازمانی</small></span>
+    </a>
+    <nav class="nav" aria-label="منوی اصلی">
+      <a href="#services">خدمات</a>
+      <a href="#method">متد</a>
+      <a href="#cases">پروژه‌ها</a>
+      <a href="#knowledge">دانشنامه</a>
+      <a href="#book">سلطان قیف</a>
+      <a href="#about">درباره من</a>
+    </nav>
+    <a class="btn btn-primary" href="#assess">ارزیابی سازمان</a>
+  </div>
+</header>
+
+<main>
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <span class="eyebrow">میلاد بهرامی · مدیرعامل اکسیر تجارت امین</span>
+      <h1>مشاور <em>سیستم‌سازی</em> و تحول سازمانی</h1>
+      <p class="lead">طراحی معماری فرآیندهای سازمانی، سیستم‌سازی، اتوماسیون، BPMS و ERP — متناسب با DNA کسب‌وکار شما.</p>
+      <p class="sub">از شناسایی گلوگاه‌ها و معماری فرآیند، تا طراحی سیستم، انتخاب تکنولوژی و استقرار در سازمان.</p>
+      <div class="ctas">
+        <a class="btn btn-primary" href="#assess">درخواست ارزیابی سازمان
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3 5 8l5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a class="btn btn-ghost" href="#cases">مشاهده پروژه‌ها</a>
+      </div>
+      <div class="trust">
+        <span><i></i>بررسی حضوری در شیراز و سایر شهرها</span>
+        <span><i></i>تحلیل بر اساس داده‌ی واقعی، نه فقط گزارش مدیران</span>
+        <span><i></i>نویسنده‌ی کتاب سلطان قیف</span>
+      </div>
+    </div>
+
+    <figure class="diagram" aria-label="نمونه‌ی نقشه‌ی فرآیند">
+      <figcaption><span>نقشه‌ی فرآیند · وضعیت موجود ← مطلوب</span><span>BPMN</span></figcaption>
+      <svg viewBox="0 0 440 300" role="img" aria-hidden="true" font-family="Vazirmatn" font-size="12" direction="ltr">
+        <defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#0E1A2B"/></marker></defs>
+        <!-- lanes -->
+        <rect x="0" y="0" width="440" height="96" fill="#F7F4EE"/><rect x="0" y="100" width="440" height="96" fill="#fff"/><rect x="0" y="200" width="440" height="100" fill="#F7F4EE"/>
+        <text x="430" y="18" text-anchor="end" fill="#6B7486" font-size="11">فروش</text>
+        <text x="430" y="118" text-anchor="end" fill="#6B7486" font-size="11">عملیات</text>
+        <text x="430" y="218" text-anchor="end" fill="#6B7486" font-size="11">مالی · ERP</text>
+        <!-- flow (RTL: right to left) -->
+        <circle cx="395" cy="55" r="14" fill="#fff" stroke="#0E1A2B" stroke-width="2"/>
+        <line x1="380" y1="55" x2="330" y2="55" stroke="#0E1A2B" stroke-width="1.6" marker-end="url(#a)"/>
+        <rect x="240" y="35" width="88" height="40" rx="8" fill="#fff" stroke="#0E1A2B" stroke-width="1.6"/><text x="284" y="60" text-anchor="middle">ثبت سفارش</text>
+        <line x1="284" y1="75" x2="284" y2="130" stroke="#0E1A2B" stroke-width="1.6" marker-end="url(#a)"/>
+        <path d="M284 132 308 152 284 172 260 152z" fill="#fff" stroke="#0E1A2B" stroke-width="1.6"/><text x="284" y="156" text-anchor="middle" font-size="11">موجود؟</text>
+        <line x1="258" y1="152" x2="200" y2="152" stroke="#0E1A2B" stroke-width="1.6" marker-end="url(#a)"/>
+        <rect x="110" y="132" width="88" height="40" rx="8" fill="#FFF4E0" stroke="#B8914F" stroke-width="2" stroke-dasharray="5 3"/><text x="154" y="157" text-anchor="middle" fill="#7a5a22">تأیید دستی</text>
+        <text x="154" y="190" text-anchor="middle" fill="#B8914F" font-size="10.5" font-weight="700">گلوگاه · ۲.۵ روز</text>
+        <line x1="154" y1="172" x2="154" y2="228" stroke="#0E1A2B" stroke-width="1.6" marker-end="url(#a)"/>
+        <rect x="110" y="230" width="88" height="40" rx="8" fill="#0E1A2B"/><text x="154" y="255" text-anchor="middle" fill="#fff">صدور فاکتور</text>
+        <line x1="108" y1="250" x2="60" y2="250" stroke="#0E1A2B" stroke-width="1.6" marker-end="url(#a)"/>
+        <circle cx="44" cy="250" r="14" fill="#0E1A2B"/><circle cx="44" cy="250" r="8" fill="#D9B878"/>
+        <!-- automation badge -->
+        <g transform="translate(20 118)"><rect width="78" height="30" rx="15" fill="#E7F2EF"/><text x="39" y="20" text-anchor="middle" fill="#2F7D6D" font-size="11" font-weight="700">⚙ اتوماسیون</text></g>
+        <path d="M98 133 Q104 140 110 145" stroke="#2F7D6D" stroke-width="1.4" fill="none" stroke-dasharray="3 3"/>
+      </svg>
+    </figure>
+  </div>
+</section>
+
+<!-- ================= EVIDENCE ================= -->
+<div class="evidence" aria-label="شواهد">
+  <div class="wrap">
+    <div class="stat"><b>۴۲+</b><span>کسب‌وکار عارضه‌یابی و توسعه‌یافته</span></div>
+    <div class="stat"><b class="placeholder">۱۲</b><span>پروژه‌ی سیستم‌سازی و استقرار</span></div>
+    <div class="stat"><b class="placeholder">۸</b><span>صنعت مختلف</span></div>
+    <div class="stat"><b class="placeholder">۳۰۰+</b><span>فرآیند طراحی و مستندشده</span></div>
+  </div>
+</div>
+
+<!-- ================= SYMPTOMS ================= -->
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">عارضه‌یابی</span>
+      <h2>سازمان شما به «سیستم» نیاز دارد، نه آدم بیشتر</h2>
+      <p class="lead">اگر یکی از این نشانه‌ها را می‌بینید، مسئله معمولاً کمبود نیرو یا تلاش نیست؛ نبودِ معماری فرآیند است.</p>
+    </div>
+    <div class="symptoms">
+      <div class="symptom"><span class="n">۰۱</span><h3>همه‌چیز به مدیر وابسته است</h3><p>بدون حضور شما تصمیم‌ها متوقف می‌شوند و رشد به سقف زمان شما می‌خورد.</p></div>
+      <div class="symptom"><span class="n">۰۲</span><h3>نرم‌افزار خریدید، مشکل ماند</h3><p>ERP یا اتوماسیون مستقر شده، اما فرآیندها همان آشفتگی قبل را دیجیتال کرده‌اند.</p></div>
+      <div class="symptom"><span class="n">۰۳</span><h3>رفتن یک نفر، دانش را می‌برد</h3><p>کار در ذهن افراد است، نه در فرآیند مستند؛ هر جابه‌جایی یعنی شروع از صفر.</p></div>
+      <div class="symptom"><span class="n">۰۴</span><h3>فروش هست، سود نیست</h3><p>گلوگاه‌ها در مسیر سفارش تا تحویل، حاشیه‌ی سود را بی‌صدا می‌خورند.</p></div>
+      <div class="symptom"><span class="n">۰۵</span><h3>گزارش‌ها با هم نمی‌خوانند</h3><p>فروش، انبار و مالی هر کدام عدد خودشان را دارند و تصمیم‌گیری حدسی است.</p></div>
+      <div class="symptom"><span class="n">۰۶</span><h3>رشد، هرج‌ومرج بیشتری آورده</h3><p>چیزی که در ۱۰ نفر جواب می‌داد، در ۵۰ نفر دیگر کار نمی‌کند.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= METHOD ================= -->
+<section class="method" id="method">
+  <div class="wrap grid">
+    <aside>
+      <span class="eyebrow">متد اختصاصی</span>
+      <h2 style="margin-top:12px">متد سیستم‌سازی بهرامی</h2>
+      <p class="lead" style="margin-top:12px">۹ گام از شناخت DNA سازمان تا استقرار و پایش. هر گام خروجی مستند و قابل‌سنجش دارد.</p>
+      <div class="note">اطلاعات واقعی سازمان بررسی می‌شود — نه صرفاً گزارش مدیران یا توضیحات کارکنان. بررسی برای سازمان‌های خارج از شیراز هم حضوری انجام می‌شود.</div>
+      <div class="ctas" style="margin-top:24px"><a class="btn btn-ghost" href="#">جزئیات متد</a></div>
+    </aside>
+    <ol class="steps">
+      <li class="phase">فاز ۱ · تشخیص</li>
+      <li><span class="dot">۰۱</span><div><h3>شناخت DNA سازمان</h3><p>مدل کسب‌وکار، فرهنگ، ساختار قدرت و مزیت رقابتی.</p></div></li>
+      <li><span class="dot">۰۲</span><div><h3>عارضه‌یابی</h3><p>مصاحبه، مشاهده‌ی میدانی و تحلیل داده‌های واقعی عملکرد.</p></div></li>
+      <li><span class="dot">۰۳</span><div><h3>ترسیم فرآیندهای موجود</h3><p>نقشه‌ی As-Is با BPMN؛ آن‌طور که واقعاً انجام می‌شود.</p></div></li>
+      <li><span class="dot">۰۴</span><div><h3>شناسایی گلوگاه‌ها</h3><p>زمان انتظار، دوباره‌کاری و نقاط وابستگی به افراد.</p></div></li>
+      <li class="phase">فاز ۲ · طراحی</li>
+      <li><span class="dot">۰۵</span><div><h3>طراحی فرآیند مطلوب</h3><p>نقشه‌ی To-Be، نقش‌ها، RACI و شاخص‌های کلیدی.</p></div></li>
+      <li><span class="dot">۰۶</span><div><h3>معماری سیستم</h3><p>جریان داده بین واحدها و نقطه‌ی اتصال سیستم‌ها.</p></div></li>
+      <li><span class="dot">۰۷</span><div><h3>انتخاب ERP / BPMS / Automation</h3><p>انتخاب ابزار بر اساس فرآیند، نه برعکس.</p></div></li>
+      <li class="phase">فاز ۳ · استقرار</li>
+      <li><span class="dot">۰۸</span><div><h3>استقرار</h3><p>پیاده‌سازی مرحله‌ای، مهاجرت داده و مدیریت تغییر.</p></div></li>
+      <li><span class="dot">۰۹</span><div><h3>آموزش و پایش</h3><p>آموزش تیم، داشبورد شاخص‌ها و بهبود مستمر.</p></div></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ================= SERVICES ================= -->
+<section id="services">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">خدمات</span>
+      <h2>از تشخیص تا استقرار، در یک مسیر</h2>
+    </div>
+    <div class="services">
+      <a class="svc core" href="#"><span class="ic"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="2" width="7" height="7" rx="2" stroke="#D9B878" stroke-width="1.8"/><rect x="11" y="11" width="7" height="7" rx="2" stroke="#D9B878" stroke-width="1.8"/><path d="M9 5.5h3.5a2 2 0 0 1 2 2V11" stroke="#fff" stroke-width="1.8"/></svg></span><h3>سیستم‌سازی سازمانی</h3><p>طراحی سیستم‌های فروش، منابع انسانی، مالی و مدیریت؛ کاهش وابستگی به افراد.</p><span class="more">مشاهده ←</span></a>
+      <a class="svc core" href="#"><span class="ic"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="4" cy="10" r="2.5" stroke="#D9B878" stroke-width="1.8"/><circle cx="16" cy="4" r="2.5" stroke="#fff" stroke-width="1.8"/><circle cx="16" cy="16" r="2.5" stroke="#fff" stroke-width="1.8"/><path d="M6.5 10H10V4h3.5M10 10v6h3.5" stroke="#fff" stroke-width="1.6"/></svg></span><h3>معماری فرآیند</h3><p>نقشه‌ی فرآیندهای سازمان، BPMN، مستندسازی و بهبود فرآیند.</p><span class="more">مشاهده ←</span></a>
+      <a class="svc core" href="#"><span class="ic"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="9" cy="9" r="5.5" stroke="#fff" stroke-width="1.8"/><path d="m13 13 4 4" stroke="#D9B878" stroke-width="2" stroke-linecap="round"/></svg></span><h3>عارضه‌یابی سازمان</h3><p>شناسایی ریشه‌ای مشکلات و گلوگاه‌ها بر اساس داده‌ی واقعی.</p><span class="more">مشاهده ←</span></a>
+      <a class="svc core" href="#"><span class="ic"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 15V5m4 10V8m4 7V3m4 12v-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/><path d="M2 17h16" stroke="#D9B878" stroke-width="1.8"/></svg></span><h3>تحول سازمانی</h3><p>نقشه‌ی راه تحول، مدیریت تغییر و همراهی تا نتیجه.</p><span class="more">مشاهده ←</span></a>
+      <a class="svc" href="#"><span class="ic"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="3" width="16" height="14" rx="2" stroke="#0E1A2B" stroke-width="1.8"/><path d="M2 7h16M7 7v10" stroke="#0E1A2B" stroke-width="1.6"/></svg></span><h3>مشاوره ERP</h3><p>انتخاب، استقرار و نجات پروژه‌های ERP.</p><span class="more">مشاهده ←</span></a>
+      <a class="svc" href="#"><span class="ic"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 6h5l2 4h7" stroke="#0E1A2B" stroke-width="1.8" stroke-linecap="round"/><path d="M10 10l-2 4H3" stroke="#0E1A2B" stroke-width="1.8" stroke-linecap="round"/><circle cx="17" cy="10" r="1.6" fill="#B8914F"/></svg></span><h3>مشاوره BPMS</h3><p>طراحی و خودکارسازی گردش‌کار سازمانی.</p><span class="more">مشاهده ←</span></a>
+      <a class="svc" href="#"><span class="ic"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="3" stroke="#0E1A2B" stroke-width="1.8"/><path d="M10 2v3m0 10v3M2 10h3m10 0h3M4.3 4.3l2.1 2.1m7.2 7.2 2.1 2.1m0-11.4-2.1 2.1m-7.2 7.2-2.1 2.1" stroke="#0E1A2B" stroke-width="1.6" stroke-linecap="round"/></svg></span><h3>اتوماسیون کسب‌وکار</h3><p>حذف کارهای تکراری و اتصال سیستم‌ها.</p><span class="more">مشاهده ←</span></a>
+      <a class="svc" href="#"><span class="ic"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M2 3h16l-6 7v6l-4 2v-8z" stroke="#0E1A2B" stroke-width="1.8" stroke-linejoin="round"/></svg></span><h3>مشاوره قیف فروش</h3><p>سیستم‌سازی فروش بر پایه‌ی متد سلطان قیف.</p><span class="more">مشاهده ←</span></a>
+    </div>
+    <p style="margin-top:22px;font-size:15px;color:var(--muted)">به دنبال <a href="#" style="color:var(--ink);font-weight:700;border-bottom:1px solid var(--gold)">مشاوره کسب‌وکار و راه‌اندازی</a> هستید؟ این خدمت همچنان ارائه می‌شود.</p>
+  </div>
+</section>
+
+<!-- ================= CASES ================= -->
+<section id="cases" style="background:var(--paper-2)">
+  <div class="wrap">
+    <div class="sec-head" style="flex-direction:row;justify-content:space-between;align-items:end;flex-wrap:wrap">
+      <div style="display:flex;flex-direction:column;gap:12px"><span class="eyebrow">پروژه‌ها</span><h2>مسئله، تشخیص، سیستم، نتیجه</h2></div>
+      <a class="btn btn-ghost" href="#">همه‌ی پروژه‌ها</a>
+    </div>
+    <div class="cases">
+      <article class="case">
+        <div class="top"><span class="tag">فناوری اطلاعات · سازمان بزرگ</span><h3>واحد فناوری اطلاعات آستان قدس رضوی</h3></div>
+        <div class="flow"><div><b>مسئله</b><span class="placeholder">…</span></div><div><b>سیستم</b><span class="placeholder">…</span></div><div><b>نتیجه</b><span class="placeholder">…</span></div></div>
+      </article>
+      <article class="case">
+        <div class="top"><span class="tag">ERP · مدیریت هوشمند</span><h3>اکسیر تجارت امین</h3></div>
+        <div class="flow"><div><b>مسئله</b><span class="placeholder">…</span></div><div><b>سیستم</b><span>Exir ERP</span></div><div><b>نتیجه</b><span class="placeholder">…</span></div></div>
+      </article>
+      <article class="case">
+        <div class="top"><span class="tag">تولید پوشاک · فروش</span><h3>تیم فروش برند پوشینو</h3></div>
+        <div class="flow"><div><b>مسئله</b><span class="placeholder">…</span></div><div><b>سیستم</b><span>قیف فروش</span></div><div><b>نتیجه</b><span class="placeholder">…</span></div></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= BOOK ================= -->
+<section id="book">
+  <div class="wrap">
+    <div class="book">
+      <div class="cover"><small>میلاد بهرامی</small><b>سلطان<br>قیف</b><small>FUNNEL KING</small></div>
+      <div>
+        <span class="eyebrow">کتاب</span>
+        <h2 style="margin:12px 0">سلطان قیف | Funnel King</h2>
+        <p class="lead">ساخت سیستم فروش پایدار؛ از جذب تا وفاداری، و جایی که شکایت و رضایت مشتری هم بخشی از قیف فروش می‌شود.</p>
+        <div class="ctas" style="margin-top:26px;display:flex;gap:12px;flex-wrap:wrap"><a class="btn btn-gold" href="#">معرفی و خرید کتاب</a><a class="btn" style="border:1.5px solid #3A4A62;color:#fff" href="#">قیف فروش چیست؟</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= KNOWLEDGE ================= -->
+<section id="knowledge" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow">دانشنامه</span><h2>راهنماهای تخصصی</h2></div>
+    <div class="clusters">
+      <div class="cluster"><h3>سیستم‌سازی</h3><ul><li><a href="#">سیستم‌سازی کسب‌وکار چیست؟</a></li><li><a href="#">مراحل سیستم‌سازی</a></li><li><a href="#">سیستم‌سازی فروش</a></li><li><a href="#">سیستم‌سازی انبار</a></li></ul></div>
+      <div class="cluster"><h3>فرآیند و BPMS</h3><ul><li><a href="#">معماری فرآیندهای سازمانی</a></li><li><a href="#">BPMN چیست؟</a></li><li><a href="#">BPMS چیست؟</a></li><li><a href="#">۱۰ قدم عارضه‌یابی کسب‌وکار</a></li></ul></div>
+      <div class="cluster"><h3>ERP و فروش</h3><ul><li><a href="#">ERP چیست؟ راهنمای انتخاب</a></li><li><a href="#">چرا پروژه‌های ERP شکست می‌خورند؟</a></li><li><a href="#">قیف فروش چیست؟</a></li><li><a href="#">قیف فروش استاندارد</a></li></ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ASSESSMENT ================= -->
+<section id="assess" style="padding-top:0">
+  <div class="wrap">
+    <div class="assess">
+      <div>
+        <span class="eyebrow">شروع همکاری</span>
+        <h2 style="margin:12px 0">ارزیابی سیستم و فرآیند سازمان</h2>
+        <p class="lead">قبل از هر پیشنهادی، سازمان را می‌شناسیم. مسیر شروع:</p>
+        <ol><li>پرسش‌نامه‌ی ۱۰ دقیقه‌ای بلوغ سازمانی</li><li>دریافت امتیاز و گزارش اولیه</li><li>جلسه‌ی تشخیص</li><li>پیشنهاد اجرایی (Proposal)</li></ol>
+        <div class="ctas" style="margin-top:24px;display:flex;gap:12px;flex-wrap:wrap"><a class="btn btn-primary" href="#">شروع ارزیابی</a><a class="btn btn-ghost" href="#">تماس مستقیم</a></div>
+      </div>
+      <div class="box">
+        <div style="font-size:13px;color:var(--muted)">نمونه‌ی خروجی</div>
+        <div style="font-weight:800;font-size:20px;margin-top:4px">امتیاز بلوغ سیستمی</div>
+        <div class="meter"><i></i></div>
+        <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--muted)"><span>۶۲ از ۱۰۰</span><span>سطح ۳: تعریف‌شده</span></div>
+        <hr style="border:0;border-top:1px solid var(--line);margin:18px 0">
+        <div style="display:grid;gap:8px;font-size:14px">
+          <div style="display:flex;justify-content:space-between"><span>فرآیندهای فروش</span><b style="color:var(--signal)">قوی</b></div>
+          <div style="display:flex;justify-content:space-between"><span>وابستگی به مدیر</span><b style="color:#b45309">بالا</b></div>
+          <div style="display:flex;justify-content:space-between"><span>یکپارچگی داده</span><b style="color:#b45309">ضعیف</b></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer id="about">
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <div class="brand" style="color:#fff"><span class="mono" style="background:#1B2B42"><svg width="26" height="26" viewBox="0 0 26 26" fill="none"><circle cx="5" cy="13" r="3" fill="#D9B878"/><circle cx="21" cy="5" r="3" stroke="#fff" stroke-width="1.8"/><circle cx="21" cy="21" r="3" stroke="#fff" stroke-width="1.8"/><path d="M8 13h5m0 0V6.5a1.5 1.5 0 0 1 1.5-1.5H18M13 13v6.5a1.5 1.5 0 0 0 1.5 1.5H18" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg></span><span><b>میلاد بهرامی</b><small style="color:#8E9AAE">مشاور سیستم‌سازی و تحول سازمانی</small></span></div>
+        <p style="margin-top:16px;line-height:1.9">مدیرعامل اکسیر تجارت امین، متخصص معماری فرآیند، ERP، BPMS و اتوماسیون، نویسنده‌ی کتاب سلطان قیف.</p>
+      </div>
+      <div><h4>خدمات</h4><ul><li><a href="#">سیستم‌سازی سازمانی</a></li><li><a href="#">معماری فرآیند</a></li><li><a href="#">عارضه‌یابی سازمان</a></li><li><a href="#">مشاوره ERP</a></li><li><a href="#">مشاوره BPMS</a></li></ul></div>
+      <div><h4>منابع</h4><ul><li><a href="#">دانشنامه</a></li><li><a href="#">پروژه‌ها</a></li><li><a href="#">کتاب سلطان قیف</a></li><li><a href="#">سوالات متداول</a></li></ul></div>
+      <div><h4>تماس</h4><ul><li>شیراز، <span class="placeholder">آدرس</span></li><li class="placeholder">تلفن</li><li><a href="#">درخواست ارزیابی</a></li></ul></div>
+    </div>
+    <div class="legal"><span>© ۱۴۰۵ میلاد بهرامی · thisismbahrami.ir</span><span>مشاور سیستم‌سازی در شیراز و سراسر ایران</span></div>
+  </div>
+</footer>
+</body>
+</html>
