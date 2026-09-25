@@ -916,3 +916,7 @@ a.card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);border-color
 .testi small{display:block;font-size:13px;color:var(--text-3)}
 .band .testi{border-color:transparent}
 @media (max-width:960px){.testis{grid-template-columns:1fr}}
+.buy .ebook{display:flex;justify-content:space-between;align-items:baseline;padding:12px 16px;border-radius:12px;background:var(--paper-2)}
+.buy .ebook span{font-size:14.5px;color:var(--text-2)}
+.buy .ebook b{font-size:20px}
+.buy .ebook small{font-size:13px;color:var(--text-3)}
