@@ -37,7 +37,11 @@ def fetch(url, follow=True, tries=4):
 def _fetch(url, follow):
     https = urllib.request.HTTPSHandler(context=_CTX)
     opener = urllib.request.build_opener(https) if follow else urllib.request.build_opener(https, NoRedirect)
-    req = urllib.request.Request(url, headers={"User-Agent": UA})
+    headers = {"User-Agent": UA}
+    if os.environ.get("SNAPSHOT_AUTH"):  # staging behind HTTP basic auth: SNAPSHOT_AUTH=user:pass
+        import base64
+        headers["Authorization"] = "Basic " + base64.b64encode(os.environ["SNAPSHOT_AUTH"].encode()).decode()
+    req = urllib.request.Request(url, headers=headers)
     try:
         r = opener.open(req, timeout=60)
         return r.status, r.geturl(), r.read().decode("utf-8", "replace")
