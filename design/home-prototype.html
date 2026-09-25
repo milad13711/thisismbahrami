@@ -172,7 +172,7 @@ p{margin:0}
 /* =========================================================
    Proof bar
    ========================================================= */
-.proof{background:var(--ink-950);color:#fff;padding-bottom:72px}
+.proof{background:var(--ink-950);color:#fff;padding-bottom:56px}
 .stats{display:grid;grid-template-columns:repeat(4,1fr);border-radius:var(--r-lg);border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.025);overflow:hidden}
 .stat{padding:28px 28px 26px;border-inline-start:1px solid rgba(255,255,255,.08)}
 .stat:first-child{border-inline-start:0}
@@ -190,6 +190,28 @@ p{margin:0}
 @keyframes marquee{to{transform:translateX(calc(50% + 24px))}}
 .mq-btn{width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.14);background:transparent;display:grid;place-items:center;color:var(--ink-200)}
 @media (max-width:700px){.clients{grid-template-columns:1fr auto}.clients .lbl{grid-column:1/-1}}
+
+.btn-ink{background:var(--ink-900);color:#fff;box-shadow:var(--shadow-md)}
+.btn-ink:hover{background:var(--ink-700)}
+
+/* =========================================================
+   About + evidence
+   ========================================================= */
+.about{display:grid;grid-template-columns:360px 1fr;gap:clamp(40px,6vw,88px);align-items:center}
+.portrait{position:relative}
+.portrait .ph{aspect-ratio:4/5;border-radius:var(--r-xl);background:radial-gradient(400px 300px at 70% 20%,rgba(201,164,92,.25),transparent 60%),linear-gradient(160deg,var(--ink-700),var(--ink-950));display:grid;place-items:center;align-content:center;gap:14px;color:var(--ink-300);font-size:14px;outline-offset:-10px}
+.portrait .badge{position:absolute;bottom:24px;inset-inline-start:-20px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:12px 18px;box-shadow:var(--shadow-lg);display:grid;line-height:1.5}
+.portrait .badge b{font-size:15px}
+.portrait .badge span{font-size:13px;color:var(--text-3)}
+.about .more{display:inline-flex;align-items:center;gap:8px;margin-top:22px;font-weight:700;color:var(--gold-text)}
+.about .more svg{transition:transform .3s var(--ease-out)}
+.about .more:hover svg{transform:translateX(-5px)}
+.stats.light{margin-top:clamp(40px,5vw,64px);background:var(--paper-2);border-color:var(--line)}
+.stats.light .stat{border-color:var(--line)}
+.stats.light .stat b{background:linear-gradient(180deg,var(--ink-900),var(--gold-text));-webkit-background-clip:text;background-clip:text}
+.stats.light .stat span{color:var(--text-3)}
+@media (max-width:900px){.about{grid-template-columns:1fr}.portrait{max-width:320px}.portrait .badge{inset-inline-start:12px}}
+@media (max-width:800px){.stats.light .stat:nth-child(n+3){border-top:1px solid var(--line)}}
 
 /* =========================================================
    Diagnosis (interactive symptoms)
@@ -450,12 +472,12 @@ footer .legal{border-top:1px solid rgba(255,255,255,.08);margin-top:56px;padding
       <span><b>میلاد بهرامی</b><small>سیستم‌سازی و تحول سازمانی</small></span>
     </a>
     <nav class="nav" aria-label="منوی اصلی">
-      <a href="#services">خدمات</a>
       <a href="#method">متد</a>
+      <a href="#services">خدمات</a>
+      <a href="#about">درباره من</a>
       <a href="#products">محصولات</a>
-      <a href="#knowledge">دانشنامه</a>
       <a href="#book">سلطان قیف</a>
-      <a href="#faq">درباره من</a>
+      <a href="#knowledge">دانشنامه</a>
     </nav>
     <a class="btn btn-gold cta-desk" href="#assess">ارزیابی سازمان</a>
     <button class="burger" aria-label="باز کردن منو" aria-expanded="false" aria-controls="drawer" id="burger">
@@ -466,13 +488,13 @@ footer .legal{border-top:1px solid rgba(255,255,255,.08);margin-top:56px;padding
 <div class="drawer" id="drawer" aria-hidden="true">
   <div class="panel" role="dialog" aria-label="منو">
     <button class="close" id="drawerClose" aria-label="بستن منو"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M4 4l10 10M14 4 4 14" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg></button>
-    <a href="#services">خدمات</a><a href="#method">متد</a><a href="#products">محصولات</a><a href="#knowledge">دانشنامه</a><a href="#book">سلطان قیف</a><a href="#faq">درباره من</a>
+    <a href="#method">متد</a><a href="#services">خدمات</a><a href="#about">درباره من</a><a href="#products">محصولات</a><a href="#book">سلطان قیف</a><a href="#knowledge">دانشنامه</a>
     <a class="btn btn-gold" href="#assess" style="margin-top:16px">درخواست ارزیابی سازمان</a>
   </div>
 </div>
 
 <main id="main">
-<!-- ============ HERO ============ -->
+<!-- ============ ۱ · توجه (Hero) ============ -->
 <section class="hero on-dark">
   <div class="wrap">
     <div>
@@ -482,7 +504,7 @@ footer .legal{border-top:1px solid rgba(255,255,255,.08);margin-top:56px;padding
       <div class="ctas rise" style="--d:240ms">
         <a class="btn btn-gold" href="#assess">درخواست ارزیابی سازمان
           <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M15 9H3m0 0 5-5M3 9l5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-        <a class="btn btn-line" href="#products">محصولات ما</a>
+        <a class="btn btn-line" href="#diagnosis">خودارزیابی ۳۰ ثانیه‌ای</a>
       </div>
       <div class="facts rise" style="--d:320ms">
         <span><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3 8.5 3 3 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>بررسی حضوری در شیراز و سایر شهرها</span>
@@ -571,16 +593,10 @@ footer .legal{border-top:1px solid rgba(255,255,255,.08);margin-top:56px;padding
   </div>
 </section>
 
-<!-- ============ PROOF ============ -->
+<!-- ============ ۱ب · اعتماد سریع (Trust strip) ============ -->
 <section class="proof on-dark" aria-label="شواهد و مشتریان">
   <div class="wrap">
-    <div class="stats" data-reveal>
-      <div class="stat"><b data-count="42" data-suffix="+">۰</b><span>کسب‌وکار عارضه‌یابی و توسعه‌یافته</span></div>
-      <div class="stat"><b class="placeholder" data-count="12">۰</b><span>پروژه‌ی سیستم‌سازی و استقرار</span></div>
-      <div class="stat"><b class="placeholder" data-count="8">۰</b><span>صنعت مختلف</span></div>
-      <div class="stat"><b class="placeholder" data-count="300" data-suffix="+">۰</b><span>فرآیند طراحی و مستندشده</span></div>
-    </div>
-    <div class="clients">
+    <div class="clients" style="margin-top:0">
       <span class="lbl">همکاری با</span>
       <div class="marquee" id="marquee">
         <div class="track">
@@ -595,7 +611,7 @@ footer .legal{border-top:1px solid rgba(255,255,255,.08);margin-top:56px;padding
   </div>
 </section>
 
-<!-- ============ DIAGNOSIS ============ -->
+<!-- ============ ۲ · علاقه: درگیر کردن با مسئله (Self-diagnosis) ============ -->
 <section class="sec" id="diagnosis">
   <div class="wrap">
     <div class="sec-head" data-reveal>
@@ -642,15 +658,16 @@ footer .legal{border-top:1px solid rgba(255,255,255,.08);margin-top:56px;padding
   </div>
 </section>
 
-<!-- ============ METHOD ============ -->
+<!-- ============ ۳ · راه‌حل: سازوکار اختصاصی (Method) ============ -->
 <section class="sec method" id="method">
   <div class="wrap grid">
     <aside>
       <span class="eyebrow">متد اختصاصی</span>
       <h2 class="h2" style="margin-top:14px">متد سیستم‌سازی بهرامی</h2>
-      <p class="lead" style="margin-top:14px">۹ گام در ۳ فاز؛ از شناخت DNA سازمان تا استقرار و پایش. هر گام یک خروجی مستند و قابل‌سنجش دارد.</p>
+      <p class="lead" style="margin-top:14px">همه‌ی آن نشانه‌ها یک ریشه دارند: سازمانی که بر پایه‌ی افراد کار می‌کند، نه فرآیند. این متد در ۹ گام و ۳ فاز آن را اصلاح می‌کند؛ هر گام یک خروجی مستند و قابل‌سنجش دارد.</p>
       <div class="phases" id="phases" aria-hidden="true"><span data-ph="1">تشخیص</span><span data-ph="2">طراحی</span><span data-ph="3">استقرار</span></div>
       <div class="quote">اطلاعات واقعی سازمان بررسی می‌شود — نه صرفاً گزارش مدیران یا توضیحات کارکنان. بررسی برای سازمان‌های خارج از شیراز هم حضوری انجام می‌شود.</div>
+      <a class="btn btn-ink" href="#assess" style="margin-top:24px">شروع از گام اول: ارزیابی سازمان</a>
     </aside>
     <div class="steps" id="steps">
       <span class="rail" aria-hidden="true"><i></i></span>
@@ -676,12 +693,13 @@ footer .legal{border-top:1px solid rgba(255,255,255,.08);margin-top:56px;padding
   </div>
 </section>
 
-<!-- ============ SERVICES ============ -->
+<!-- ============ ۴ · پیشنهاد: انتخاب مسیر (Services) ============ -->
 <section class="sec" id="services">
   <div class="wrap">
     <div class="sec-head" data-reveal>
       <span class="eyebrow">خدمات</span>
-      <h2 class="h2">از تشخیص تا استقرار، در یک مسیر</h2>
+      <h2 class="h2">نقطه‌ی شروع سازمان شما کجاست؟</h2>
+      <p class="lead">متد یکی است؛ اما هر سازمان از جای متفاوتی وارد آن می‌شود. از مشاوره‌ی کسب‌وکار تا استقرار ERP.</p>
     </div>
     <div class="bento">
       <a class="tile feat" href="#" data-reveal>
@@ -751,11 +769,38 @@ footer .legal{border-top:1px solid rgba(255,255,255,.08);margin-top:56px;padding
   </div>
 </section>
 
-<!-- ============ PRODUCTS ============ -->
+<!-- ============ ۵ · اعتبار: چه کسی (About + Evidence) ============ -->
+<section class="sec" id="about" style="padding-top:0">
+  <div class="wrap">
+    <div class="about">
+      <div class="portrait" data-reveal>
+        <div class="ph placeholder" role="img" aria-label="عکس میلاد بهرامی">
+          <svg width="88" height="88" viewBox="0 0 26 26" fill="none" aria-hidden="true"><circle cx="5" cy="13" r="3" fill="#E6C98E"/><circle cx="21" cy="5" r="3" stroke="#fff" stroke-width="1.4"/><circle cx="21" cy="21" r="3" stroke="#fff" stroke-width="1.4"/><path d="M8 13h5m0 0V6.5a1.5 1.5 0 0 1 1.5-1.5H18M13 13v6.5a1.5 1.5 0 0 0 1.5 1.5H18" stroke="#fff" stroke-width="1.4" stroke-linecap="round"/></svg>
+          <span>جای عکس حرفه‌ای</span>
+        </div>
+        <div class="badge"><b>مدیرعامل</b><span>اکسیر تجارت امین</span></div>
+      </div>
+      <div data-reveal style="--d:80ms">
+        <span class="eyebrow">درباره من</span>
+        <h2 class="h2" style="margin:14px 0">میلاد بهرامی؛ از عارضه‌یابی تا ساختن سیستم</h2>
+        <p class="lead">مشاور سیستم‌سازی و تحول سازمانی، مدیرعامل اکسیر تجارت امین و نویسنده‌ی کتاب سلطان قیف. نامم در کتاب بین‌المللی «Entrepreneurship: A Tribute to Success» آمده است؛ اما بیشتر از ادعا، به خروجی‌ها باور دارم: فرآیند مستند، سیستم در حال اجرا و سازمانی که بدون مدیر هم کار می‌کند.</p>
+        <a class="more" href="#">بیشتر درباره من و مسیر حرفه‌ای <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13 8H3m0 0 4-4M3 8l4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+    </div>
+    <div class="stats light" data-reveal>
+      <div class="stat"><b data-count="42" data-suffix="+">۰</b><span>کسب‌وکار عارضه‌یابی و توسعه‌یافته</span></div>
+      <div class="stat"><b class="placeholder" data-count="12">۰</b><span>پروژه‌ی سیستم‌سازی و استقرار</span></div>
+      <div class="stat"><b class="placeholder" data-count="8">۰</b><span>صنعت مختلف</span></div>
+      <div class="stat"><b class="placeholder" data-count="300" data-suffix="+">۰</b><span>فرآیند طراحی و مستندشده</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ۶ · اثبات: سیستم‌هایی که ساخته‌ایم (Products) ============ -->
 <section class="sec" id="products" style="padding-top:0">
   <div class="wrap">
     <div class="sec-head split" data-reveal>
-      <div style="display:grid;gap:14px"><span class="eyebrow">محصولات اکسیر تجارت امین</span><h2 class="h2">سیستم‌هایی که خودمان ساخته‌ایم</h2><p class="lead">تجربه‌ی سیستم‌سازی در سازمان‌ها، در قالب نرم‌افزارهای تخصصی برای هر صنف.</p></div>
+      <div style="display:grid;gap:14px"><span class="eyebrow">محصولات اکسیر تجارت امین</span><h2 class="h2">سیستم‌هایی که خودمان ساخته‌ایم</h2><p class="lead">سیستم‌سازی را فقط توصیه نمی‌کنیم؛ خودمان هم می‌سازیم. تجربه‌ی پروژه‌های سازمانی، در قالب نرم‌افزارهای تخصصی برای هر صنف.</p></div>
       <a class="btn btn-line" href="https://eta.co.ir" target="_blank" rel="noopener">همه‌ی محصولات</a>
     </div>
     <div class="cases">
@@ -781,7 +826,7 @@ footer .legal{border-top:1px solid rgba(255,255,255,.08);margin-top:56px;padding
   </div>
 </section>
 
-<!-- ============ BOOK ============ -->
+<!-- ============ ۷ · اقتدار: دارایی فکری (Book) ============ -->
 <section id="book" aria-labelledby="bookTitle">
   <div class="wrap">
     <div class="book on-dark" data-reveal>
@@ -807,35 +852,8 @@ footer .legal{border-top:1px solid rgba(255,255,255,.08);margin-top:56px;padding
   </div>
 </section>
 
-<!-- ============ KNOWLEDGE ============ -->
-<section class="sec" id="knowledge">
-  <div class="wrap">
-    <div class="sec-head split" data-reveal>
-      <div style="display:grid;gap:14px"><span class="eyebrow">دانشنامه</span><h2 class="h2">راهنماهای تخصصی</h2></div>
-      <a class="btn btn-line" href="#">همه‌ی مقالات</a>
-    </div>
-    <div class="kn">
-      <div class="kcol" data-reveal><div class="hd"><h3>سیستم‌سازی</h3><span class="n">۴ راهنما</span></div><ul>
-        <li><a href="#">سیستم‌سازی کسب‌وکار چیست؟<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13 8H3m0 0 4-4M3 8l4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></a></li>
-        <li><a href="#">مراحل سیستم‌سازی<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13 8H3m0 0 4-4M3 8l4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></a></li>
-        <li><a href="#">سیستم‌سازی فروش<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13 8H3m0 0 4-4M3 8l4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></a></li>
-        <li><a href="#">سیستم‌سازی انبار<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13 8H3m0 0 4-4M3 8l4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></a></li></ul></div>
-      <div class="kcol" data-reveal style="--d:80ms"><div class="hd"><h3>فرآیند و BPMS</h3><span class="n">۴ راهنما</span></div><ul>
-        <li><a href="#">معماری فرآیندهای سازمانی<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13 8H3m0 0 4-4M3 8l4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></a></li>
-        <li><a href="#">BPMN چیست؟<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13 8H3m0 0 4-4M3 8l4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></a></li>
-        <li><a href="#">BPMS چیست؟<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13 8H3m0 0 4-4M3 8l4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></a></li>
-        <li><a href="#">۱۰ قدم عارضه‌یابی کسب‌وکار<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13 8H3m0 0 4-4M3 8l4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></a></li></ul></div>
-      <div class="kcol" data-reveal style="--d:160ms"><div class="hd"><h3>ERP و فروش</h3><span class="n">۴ راهنما</span></div><ul>
-        <li><a href="#">ERP چیست؟ راهنمای انتخاب<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13 8H3m0 0 4-4M3 8l4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></a></li>
-        <li><a href="#">چرا پروژه‌های ERP شکست می‌خورند؟<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13 8H3m0 0 4-4M3 8l4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></a></li>
-        <li><a href="#">قیف فروش چیست؟<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13 8H3m0 0 4-4M3 8l4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></a></li>
-        <li><a href="#">قیف فروش استاندارد<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13 8H3m0 0 4-4M3 8l4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></a></li></ul></div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ FAQ ============ -->
-<section class="sec" id="faq" style="padding-top:0">
+<!-- ============ ۸ · رفع تردید (FAQ) ============ -->
+<section class="sec" id="faq">
   <div class="wrap faq">
     <div data-reveal>
       <span class="eyebrow">پرسش‌های رایج</span>
@@ -851,7 +869,7 @@ footer .legal{border-top:1px solid rgba(255,255,255,.08);margin-top:56px;padding
   </div>
 </section>
 
-<!-- ============ FINAL CTA ============ -->
+<!-- ============ ۹ · اقدام (Assessment CTA) ============ -->
 <section id="assess" aria-labelledby="assessTitle">
   <div class="wrap">
     <div class="final on-dark" data-reveal>
@@ -884,6 +902,33 @@ footer .legal{border-top:1px solid rgba(255,255,255,.08);margin-top:56px;padding
     </div>
   </div>
 </section>
+<!-- ============ ۱۰ · پرورش سرنخ برای کسی که هنوز آماده نیست (Knowledge) ============ -->
+<section class="sec" id="knowledge" style="padding-bottom:0">
+  <div class="wrap">
+    <div class="sec-head split" data-reveal>
+      <div style="display:grid;gap:14px"><span class="eyebrow">دانشنامه</span><h2 class="h2">هنوز آماده‌ی گفتگو نیستید؟</h2><p class="lead">از این راهنماها شروع کنید؛ هر کدام یک قدم شما را به تصمیم درست نزدیک‌تر می‌کند.</p></div>
+      <a class="btn btn-line" href="#">همه‌ی مقالات</a>
+    </div>
+    <div class="kn">
+      <div class="kcol" data-reveal><div class="hd"><h3>سیستم‌سازی</h3><span class="n">۴ راهنما</span></div><ul>
+        <li><a href="#">سیستم‌سازی کسب‌وکار چیست؟<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13 8H3m0 0 4-4M3 8l4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></a></li>
+        <li><a href="#">مراحل سیستم‌سازی<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13 8H3m0 0 4-4M3 8l4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></a></li>
+        <li><a href="#">سیستم‌سازی فروش<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13 8H3m0 0 4-4M3 8l4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></a></li>
+        <li><a href="#">سیستم‌سازی انبار<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13 8H3m0 0 4-4M3 8l4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></a></li></ul></div>
+      <div class="kcol" data-reveal style="--d:80ms"><div class="hd"><h3>فرآیند و BPMS</h3><span class="n">۴ راهنما</span></div><ul>
+        <li><a href="#">معماری فرآیندهای سازمانی<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13 8H3m0 0 4-4M3 8l4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></a></li>
+        <li><a href="#">BPMN چیست؟<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13 8H3m0 0 4-4M3 8l4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></a></li>
+        <li><a href="#">BPMS چیست؟<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13 8H3m0 0 4-4M3 8l4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></a></li>
+        <li><a href="#">۱۰ قدم عارضه‌یابی کسب‌وکار<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13 8H3m0 0 4-4M3 8l4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></a></li></ul></div>
+      <div class="kcol" data-reveal style="--d:160ms"><div class="hd"><h3>ERP و فروش</h3><span class="n">۴ راهنما</span></div><ul>
+        <li><a href="#">ERP چیست؟ راهنمای انتخاب<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13 8H3m0 0 4-4M3 8l4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></a></li>
+        <li><a href="#">چرا پروژه‌های ERP شکست می‌خورند؟<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13 8H3m0 0 4-4M3 8l4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></a></li>
+        <li><a href="#">قیف فروش چیست؟<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13 8H3m0 0 4-4M3 8l4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></a></li>
+        <li><a href="#">قیف فروش استاندارد<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13 8H3m0 0 4-4M3 8l4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></a></li></ul></div>
+    </div>
+  </div>
+</section>
+
 </main>
 
 <!-- ============ FOOTER ============ -->
