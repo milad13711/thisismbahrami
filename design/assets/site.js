@@ -212,6 +212,34 @@
     search && search.addEventListener('input', () => { q = search.value.trim(); apply(); });
   });
 
+  /* ---------- Strategic DNA canvas: autosave in this browser + print ---------- */
+  const canvas = $('#dnaCanvas');
+  if (canvas) {
+    const KEY = 'fk-dna-canvas', fields = $$('textarea', canvas), saved = $('#canvasSaved');
+    const read = () => { try { return JSON.parse(localStorage.getItem(KEY) || '{}'); } catch { return {}; } };
+    const data = read();
+    fields.forEach(f => { if (data[f.id]) f.value = data[f.id]; });
+    let t;
+    canvas.addEventListener('input', () => {
+      clearTimeout(t);
+      t = setTimeout(() => {
+        const d = {}; fields.forEach(f => { if (f.value.trim()) d[f.id] = f.value; });
+        try { localStorage.setItem(KEY, JSON.stringify(d)); saved.textContent = 'ذخیره شد'; } catch { saved.textContent = ''; }
+        setTimeout(() => saved.textContent = '', 1600);
+      }, 400);
+    });
+    $('#canvasClear').onclick = () => {
+      fields.forEach(f => f.value = '');
+      try { localStorage.removeItem(KEY); } catch {}
+      fields[0].focus();
+    };
+    $('#canvasPrint').onclick = () => {
+      document.documentElement.classList.add('print-canvas');
+      window.print();
+      setTimeout(() => document.documentElement.classList.remove('print-canvas'), 500);
+    };
+  }
+
   /* ---------- assessment wizard ---------- */
   const wiz = $('#wizard');
   if (wiz) {

@@ -14,6 +14,86 @@ The output (design/<name>.html) mirrors header.php + template + footer.php.
 """
 import json, pathlib, re
 
+FA_DIGITS = str.maketrans("0123456789", "۰۱۲۳۴۵۶۷۸۹")
+
+
+def inline(t):
+    return re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", t)
+
+
+def render_md(name):
+    """Tiny line-based markup used for long-form content (book chapters).
+
+    ## h2 (TOC entry) · ### h3 · #### h4 · %% subtitle · - bullet · 1. numbered
+    > pull-quote · !! callout · == formula · | table row (first row = header)
+    A mid-content CTA is injected before the 3rd h2 (the natural half-way point).
+    """
+    lines = (SRC / "content" / f"{name}.md").read_text(encoding="utf-8").splitlines()
+    out, toc, block, rows = [], [], None, []
+    cta = ('<div class="inline-cta"><div><b>این فصل از کتاب سلطان قیف است</b>'
+           '<span>۱۱ بخش دیگر، از مهندسی قیف تا استراتژی ورود به بازار.</span></div>'
+           '<a class="btn btn-gold" href="book.html">معرفی کتاب</a></div>')
+
+    def close():
+        nonlocal block, rows
+        if block:
+            out.append(f"</{block}>")
+        if rows:
+            head, *body = rows
+            out.append('<table><thead><tr>' + "".join(f"<th>{c}</th>" for c in head) + "</tr></thead><tbody>"
+                       + "".join("<tr>" + "".join(f"<td>{c}</td>" for c in r) + "</tr>" for r in body)
+                       + "</tbody></table>")
+        block, rows = None, []
+
+    for raw in lines:
+        ln = raw.strip()
+        if not ln:
+            continue
+        kind = "ul" if ln.startswith("- ") else "ol" if re.match(r"1\. ", ln) else "table" if ln.startswith("|") else None
+        if (kind != block and not (kind == "table" and rows)) or (rows and kind != "table"):
+            close()
+        if kind == "table":
+            rows.append([c.strip() for c in ln.strip("|").split("|")])
+            continue
+        if kind in ("ul", "ol"):
+            if block != kind:
+                out.append(f"<{kind}>"); block = kind
+            out.append(f"<li>{inline(ln[2:].strip() if kind == 'ul' else ln[3:].strip())}</li>")
+            continue
+        if ln.startswith("## "):
+            if len(toc) == 2:
+                out.append(cta)
+            hid = f"p{len(toc) + 1}"
+            toc.append((hid, ln[3:]))
+            out.append(f'<h2 id="{hid}">{inline(ln[3:])}</h2>')
+        elif ln.startswith("#### "):
+            out.append(f"<h4>{inline(ln[5:])}</h4>")
+        elif ln.startswith("### "):
+            out.append(f"<h3>{inline(ln[4:])}</h3>")
+        elif ln.startswith("%% "):
+            out.append(f'<p class="sub">{inline(ln[3:])}</p>')
+        elif ln.startswith("> "):
+            out.append(f"<blockquote>{inline(ln[2:])}</blockquote>")
+        elif ln.startswith("!! "):
+            out.append(f'<div class="callout">{inline(ln[3:])}</div>')
+        elif ln.startswith("== "):
+            out.append(f'<div class="formula">{inline(ln[3:])}</div>')
+        else:
+            out.append(f"<p>{inline(ln)}</p>")
+    close()
+    words = len(re.sub(r"<[^>]+>", " ", " ".join(out)).split())
+    toc_html = "".join(f'<li><a href="#{i}">{t}</a></li>' for i, t in toc)
+    return "\n".join(out), toc_html, str(max(1, round(words / 200))).translate(FA_DIGITS)
+
+
+def expand_includes(body):
+    for name in set(re.findall(r"<!--(?:content|toc|minutes):([\w-]+)-->", body)):
+        html, toc, minutes = render_md(name)
+        body = (body.replace(f"<!--content:{name}-->", html)
+                    .replace(f"<!--toc:{name}-->", toc)
+                    .replace(f"<!--minutes:{name}-->", minutes))
+    return body
+
 ROOT = pathlib.Path(__file__).parent
 SRC = ROOT / "src"
 HEADER = (SRC / "partials/header.html").read_text(encoding="utf-8")
@@ -57,7 +137,7 @@ def build():
         if not m:
             raise SystemExit(f"{src.name}: missing <!--meta {{...}} --> header")
         meta = json.loads(m.group(1))
-        body = raw[m.end():]
+        body = expand_includes(raw[m.end():])
         out = SHELL.format(header=HEADER, footer=FOOTER, body=body,
                            title=meta["title"], description=meta.get("description", ""),
                            page=meta.get("page", ""))
@@ -67,7 +147,7 @@ def build():
     print("\n".join(f"  {n:<18} {m.get('template','')}" for n, m in pages))
 
 
-ORDER = ["index", "service", "about", "article", "blog", "book", "projects", "case", "assessment", "faq", "404"]
+ORDER = ["index", "service", "about", "article", "blog", "book", "chapter", "projects", "case", "assessment", "faq", "404"]
 
 
 def gallery(pages):
