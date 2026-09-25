@@ -22,15 +22,15 @@
   --ink-300:#9AA6BB;
   --ink-200:#C5CDDA;
 
-  --paper:#FAF8F4;
-  --paper-2:#F3EFE7;
+  --paper:#FFFFFF;
+  --paper-2:#F5F6F8;
   --surface:#FFFFFF;
-  --line:#E7E1D6;
-  --line-soft:#EFEAE1;
+  --line:#E6E8EC;
+  --line-soft:#EEF0F3;
 
   --text:#0B1322;
   --text-2:#3B4760;
-  --text-3:#5E6879;          /* 5.3:1 on paper */
+  --text-3:#5B6576;          /* 5.6:1 on white */
 
   --gold:#C9A45C;
   --gold-hi:#E6C98E;
@@ -197,14 +197,35 @@ p{margin:0}
 .diag{display:grid;grid-template-columns:1fr 360px;gap:32px;align-items:start}
 .symptoms{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
 .sym{position:relative;text-align:start;display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start;padding:22px;border-radius:var(--r-md);border:1.5px solid var(--line);background:var(--surface);box-shadow:var(--shadow-sm);transition:border-color .25s,box-shadow .3s var(--ease-out),transform .3s var(--ease-out),background-color .25s,opacity .8s var(--ease-out)}
-.sym:hover{transform:translateY(-2px);box-shadow:var(--shadow-md);border-color:#D8CFBF}
-.sym .chk{width:26px;height:26px;border-radius:8px;border:1.5px solid #CFC6B6;display:grid;place-items:center;transition:.25s var(--ease-out);margin-top:3px}
+.sym:hover{transform:translateY(-2px);box-shadow:var(--shadow-md);border-color:#D3D8E0}
+.sym .chk{width:28px;height:28px;border-radius:8px;border:2px solid #C9CED8;display:grid;place-items:center;transition:.25s var(--ease-out);margin-top:3px}
 .sym .chk svg{opacity:0;transform:scale(.5);transition:.25s var(--ease-out)}
 .sym .t{display:block;font-size:17px;font-weight:700;margin-bottom:4px}
 .sym .d{display:block;font-size:14.5px;color:var(--text-3);line-height:1.8}
-.sym[aria-pressed="true"]{border-color:var(--ink-900);background:#FFFDF8;box-shadow:var(--shadow-md)}
+.sym[aria-pressed="true"]{border-color:var(--ink-900);background:#F8FAFC;box-shadow:var(--shadow-md)}
 .sym[aria-pressed="true"] .chk{background:var(--ink-900);border-color:var(--ink-900)}
 .sym[aria-pressed="true"] .chk svg{opacity:1;transform:none}
+.sym .yn{display:inline-flex;align-items:center;gap:6px;margin-top:12px;font-size:13px;font-weight:700;padding:5px 12px;border-radius:999px;border:1.5px dashed #C9CED8;color:var(--text-3);transition:.25s var(--ease-out)}
+.sym .yn .on{display:none}
+.sym:hover .yn{border-color:var(--ink-900);color:var(--text)}
+.sym[aria-pressed="true"] .yn{background:var(--ink-900);border:1.5px solid var(--ink-900);color:#fff}
+.sym[aria-pressed="true"] .yn .off{display:none}
+.sym[aria-pressed="true"] .yn .on{display:inline}
+.sym.hint{animation:hint 1.8s ease-out infinite}
+.sym.hint::after{content:"از اینجا شروع کنید";position:absolute;top:-13px;inset-inline-end:18px;font-size:12px;font-weight:800;padding:2px 10px;border-radius:999px;background:var(--gold-hi);color:var(--ink-950)}
+@keyframes hint{0%{box-shadow:0 0 0 0 rgba(201,164,92,.55)}70%,100%{box-shadow:0 0 0 12px rgba(201,164,92,0)}}
+.howto{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:22px;font-size:14.5px;color:var(--text-2)}
+.howto span{display:inline-flex;align-items:center;gap:8px;padding:7px 14px 7px 16px;border-radius:999px;background:var(--paper-2);font-weight:600}
+.howto b{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--ink-900);color:var(--gold-hi);font-size:12.5px}
+.howto svg{color:var(--text-3)}
+.tally{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px;font-size:14.5px;color:var(--text-3)}
+.tally b{color:var(--text);font-size:16px}
+.tally button{border:0;background:none;font-size:14px;font-weight:700;color:var(--gold-text);padding:8px 4px;min-height:40px;visibility:hidden}
+.tally.has button{visibility:visible}
+.verdict .empty-hint{display:flex;align-items:center;justify-content:center;gap:8px;color:var(--gold-hi);font-size:13.5px;font-weight:700;margin-top:4px}
+.verdict .empty-hint svg{animation:nudge 1.4s ease-in-out infinite}
+.verdict.has .empty-hint{display:none}
+@keyframes nudge{50%{transform:translateX(5px)}}
 .verdict{position:sticky;top:96px;border-radius:var(--r-lg);padding:28px;background:var(--ink-900);color:#fff;box-shadow:var(--shadow-lg);overflow:hidden;isolation:isolate}
 .verdict::before{content:"";position:absolute;inset:auto -40% -60% auto;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(201,164,92,.28),transparent 70%);z-index:-1}
 .verdict .k{font-size:13px;color:var(--ink-300)}
@@ -220,7 +241,7 @@ p{margin:0}
   .diag{grid-template-columns:1fr}
   /* mobile: live result pinned to the bottom while scrolling the symptom cards */
   .verdict{position:sticky;top:auto;bottom:12px;z-index:5;padding:12px 16px;display:grid;grid-template-columns:auto 1fr;gap:2px 14px;align-items:center;border-radius:20px}
-  .verdict .k,.verdict p{display:none}
+  .verdict .k,.verdict p,.verdict .empty-hint{display:none}
   .verdict .gauge{width:78px;margin:0;grid-row:span 2}
   .verdict .gauge .val{font-size:22px}
   .verdict .gauge .val small{font-size:11px}
@@ -262,7 +283,7 @@ p{margin:0}
    ========================================================= */
 .bento{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:minmax(210px,auto);gap:16px}
 .tile{position:relative;display:flex;flex-direction:column;gap:10px;padding:26px;border-radius:var(--r-lg);background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-sm);overflow:hidden;isolation:isolate;transition:transform .4s var(--ease-out),box-shadow .4s var(--ease-out),border-color .3s,opacity .8s var(--ease-out)}
-.tile:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);border-color:#D8CFBF}
+.tile:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);border-color:#D3D8E0}
 .tile .ic{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;background:var(--paper-2);color:var(--ink-900);margin-bottom:6px}
 .tile h3{font-size:19px;font-weight:800}
 .tile p{font-size:15px;color:var(--text-3);line-height:1.85}
@@ -277,10 +298,20 @@ p{margin:0}
 .tile.feat .go{color:var(--gold-hi)}
 .tile.feat .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
 .tile.feat .tags span{font-size:13px;padding:5px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.12);color:var(--ink-200)}
-.tile.wide{grid-column:span 2}
+.tile.feat2{grid-column:span 2;grid-row:span 2;padding:34px;background:linear-gradient(160deg,#FFF6E4 0%,#FFFFFF 60%);border-color:#EAD7AE}
+.tile.feat2 .ic{background:#fff;color:var(--gold-text);box-shadow:var(--shadow-sm)}
+.tile.feat2 h3{font-size:clamp(24px,2.4vw,30px)}
+.tile.feat2 p{font-size:16px;color:var(--text-2);max-width:460px}
+.tile.feat2 .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.tile.feat2 .tags span{font-size:13px;padding:5px 12px;border-radius:999px;background:#fff;border:1px solid #EAD7AE;color:var(--text-2)}
+.tile.feat2 .modes{display:flex;flex-wrap:wrap;gap:16px;margin-top:6px;font-size:14px;font-weight:600;color:var(--text-2)}
+.tile.feat2 .modes span{display:inline-flex;align-items:center;gap:6px}
+.tile.feat2 .modes svg{color:var(--gold-text)}
+.tile.ask{background:var(--paper-2);border-style:dashed;justify-content:center}
+.tile.ask .go{margin-top:6px}
 .tile .mini{position:absolute;left:-10px;bottom:-10px;z-index:-1}
-@media (max-width:1000px){.bento{grid-template-columns:repeat(2,1fr)}.tile.feat{grid-row:auto}}
-@media (max-width:600px){.bento{grid-template-columns:1fr}.tile.feat,.tile.wide{grid-column:auto}.tile .mini{display:none}}
+@media (max-width:1000px){.bento{grid-template-columns:repeat(2,1fr)}.tile.feat,.tile.feat2{grid-row:auto}}
+@media (max-width:600px){.bento{grid-template-columns:1fr}.tile.feat,.tile.feat2{grid-column:auto}.tile .mini{display:none}}
 .also{margin-top:24px;font-size:15.5px;color:var(--text-3)}
 .also a{color:var(--text);font-weight:700;background:linear-gradient(var(--gold),var(--gold)) 0 100%/100% 1.5px no-repeat;transition:background-size .3s}
 .also a:hover{background-size:0 1.5px}
@@ -303,6 +334,10 @@ p{margin:0}
 .case dt{color:var(--text-3);font-weight:600}
 .case dd{margin:0;color:var(--text-2)}
 .case .go{margin-top:auto;font-size:14px;font-weight:700;color:var(--gold-text);display:inline-flex;gap:8px;align-items:center}
+.st{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;padding:2px 10px;border-radius:999px}
+.st::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+.st.live{background:#E8F5F1;color:#1F6E5E}
+.st.dev{background:#FDF1E6;color:#A14A08}
 @media (max-width:960px){.cases{grid-template-columns:1fr}}
 
 /* =========================================================
@@ -417,7 +452,7 @@ footer .legal{border-top:1px solid rgba(255,255,255,.08);margin-top:56px;padding
     <nav class="nav" aria-label="منوی اصلی">
       <a href="#services">خدمات</a>
       <a href="#method">متد</a>
-      <a href="#cases">پروژه‌ها</a>
+      <a href="#products">محصولات</a>
       <a href="#knowledge">دانشنامه</a>
       <a href="#book">سلطان قیف</a>
       <a href="#faq">درباره من</a>
@@ -431,7 +466,7 @@ footer .legal{border-top:1px solid rgba(255,255,255,.08);margin-top:56px;padding
 <div class="drawer" id="drawer" aria-hidden="true">
   <div class="panel" role="dialog" aria-label="منو">
     <button class="close" id="drawerClose" aria-label="بستن منو"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M4 4l10 10M14 4 4 14" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg></button>
-    <a href="#services">خدمات</a><a href="#method">متد</a><a href="#cases">پروژه‌ها</a><a href="#knowledge">دانشنامه</a><a href="#book">سلطان قیف</a><a href="#faq">درباره من</a>
+    <a href="#services">خدمات</a><a href="#method">متد</a><a href="#products">محصولات</a><a href="#knowledge">دانشنامه</a><a href="#book">سلطان قیف</a><a href="#faq">درباره من</a>
     <a class="btn btn-gold" href="#assess" style="margin-top:16px">درخواست ارزیابی سازمان</a>
   </div>
 </div>
@@ -447,7 +482,7 @@ footer .legal{border-top:1px solid rgba(255,255,255,.08);margin-top:56px;padding
       <div class="ctas rise" style="--d:240ms">
         <a class="btn btn-gold" href="#assess">درخواست ارزیابی سازمان
           <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M15 9H3m0 0 5-5M3 9l5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-        <a class="btn btn-line" href="#cases">مشاهده پروژه‌ها</a>
+        <a class="btn btn-line" href="#products">محصولات ما</a>
       </div>
       <div class="facts rise" style="--d:320ms">
         <span><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m3 8.5 3 3 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>بررسی حضوری در شیراز و سایر شهرها</span>
@@ -566,18 +601,28 @@ footer .legal{border-top:1px solid rgba(255,255,255,.08);margin-top:56px;padding
     <div class="sec-head" data-reveal>
       <span class="eyebrow">خودارزیابی ۳۰ ثانیه‌ای</span>
       <h2 class="h2">سازمان شما به «سیستم» نیاز دارد، نه آدم بیشتر</h2>
-      <p class="lead">نشانه‌هایی را که در سازمان خودتان می‌بینید انتخاب کنید. معمولاً مسئله کمبود نیرو یا تلاش نیست؛ نبودِ معماری فرآیند است.</p>
+      <p class="lead">کدام‌یک از این جمله‌ها درباره‌ی سازمان شما درست است؟ معمولاً مسئله کمبود نیرو یا تلاش نیست؛ نبودِ معماری فرآیند است.</p>
+    </div>
+    <div class="howto" data-reveal aria-hidden="true">
+      <span><b>۱</b>روی جمله‌هایی که در سازمان‌تان صدق می‌کند بزنید</span>
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M13 8H3m0 0 4-4M3 8l4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span><b>۲</b>نتیجه همان لحظه نمایش داده می‌شود</span>
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M13 8H3m0 0 4-4M3 8l4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span><b>۳</b>ارزیابی کامل را دریافت کنید</span>
     </div>
     <div class="diag">
+      <div>
+      <div class="tally" id="tally"><span><b id="cnt">۰</b> از ۶ نشانه انتخاب شده</span><button type="button" id="reset">پاک کردن انتخاب‌ها</button></div>
       <div class="symptoms">
-        <button type="button" class="sym" aria-pressed="false" data-reveal><span class="chk"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="m2.5 7.5 3 3 6-7" stroke="#E6C98E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><span class="t">همه‌چیز به مدیر وابسته است</span><span class="d">بدون حضور شما تصمیم‌ها متوقف می‌شوند و رشد به سقف زمان شما می‌خورد.</span></span></button>
-        <button type="button" class="sym" aria-pressed="false" data-reveal style="--d:60ms"><span class="chk"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="m2.5 7.5 3 3 6-7" stroke="#E6C98E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><span class="t">نرم‌افزار خریدید، مشکل ماند</span><span class="d">ERP یا اتوماسیون مستقر شده، اما همان آشفتگی قبل دیجیتال شده است.</span></span></button>
-        <button type="button" class="sym" aria-pressed="false" data-reveal style="--d:120ms"><span class="chk"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="m2.5 7.5 3 3 6-7" stroke="#E6C98E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><span class="t">رفتن یک نفر، دانش را می‌برد</span><span class="d">کار در ذهن افراد است، نه در فرآیند مستند؛ هر جابه‌جایی یعنی شروع از صفر.</span></span></button>
-        <button type="button" class="sym" aria-pressed="false" data-reveal style="--d:180ms"><span class="chk"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="m2.5 7.5 3 3 6-7" stroke="#E6C98E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><span class="t">فروش هست، سود نیست</span><span class="d">گلوگاه‌های مسیر سفارش تا تحویل، حاشیه‌ی سود را بی‌صدا می‌خورند.</span></span></button>
-        <button type="button" class="sym" aria-pressed="false" data-reveal style="--d:240ms"><span class="chk"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="m2.5 7.5 3 3 6-7" stroke="#E6C98E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><span class="t">گزارش‌ها با هم نمی‌خوانند</span><span class="d">فروش، انبار و مالی هر کدام عدد خودشان را دارند و تصمیم‌گیری حدسی است.</span></span></button>
-        <button type="button" class="sym" aria-pressed="false" data-reveal style="--d:300ms"><span class="chk"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="m2.5 7.5 3 3 6-7" stroke="#E6C98E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><span class="t">رشد، هرج‌ومرج بیشتری آورده</span><span class="d">چیزی که در ۱۰ نفر جواب می‌داد، در ۵۰ نفر دیگر کار نمی‌کند.</span></span></button>
+        <button type="button" class="sym hint" aria-pressed="false" data-reveal><span class="chk"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="m2.5 7.5 3 3 6-7" stroke="#E6C98E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><span class="t">همه‌چیز به مدیر وابسته است</span><span class="d">بدون حضور شما تصمیم‌ها متوقف می‌شوند و رشد به سقف زمان شما می‌خورد.</span><span class="yn"><span class="off">+ در سازمان ما هست</span><span class="on">✓ انتخاب شد</span></span></span></button>
+        <button type="button" class="sym" aria-pressed="false" data-reveal style="--d:60ms"><span class="chk"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="m2.5 7.5 3 3 6-7" stroke="#E6C98E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><span class="t">نرم‌افزار خریدید، مشکل ماند</span><span class="d">ERP یا اتوماسیون مستقر شده، اما همان آشفتگی قبل دیجیتال شده است.</span><span class="yn"><span class="off">+ در سازمان ما هست</span><span class="on">✓ انتخاب شد</span></span></span></button>
+        <button type="button" class="sym" aria-pressed="false" data-reveal style="--d:120ms"><span class="chk"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="m2.5 7.5 3 3 6-7" stroke="#E6C98E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><span class="t">رفتن یک نفر، دانش را می‌برد</span><span class="d">کار در ذهن افراد است، نه در فرآیند مستند؛ هر جابه‌جایی یعنی شروع از صفر.</span><span class="yn"><span class="off">+ در سازمان ما هست</span><span class="on">✓ انتخاب شد</span></span></span></button>
+        <button type="button" class="sym" aria-pressed="false" data-reveal style="--d:180ms"><span class="chk"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="m2.5 7.5 3 3 6-7" stroke="#E6C98E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><span class="t">فروش هست، سود نیست</span><span class="d">گلوگاه‌های مسیر سفارش تا تحویل، حاشیه‌ی سود را بی‌صدا می‌خورند.</span><span class="yn"><span class="off">+ در سازمان ما هست</span><span class="on">✓ انتخاب شد</span></span></span></button>
+        <button type="button" class="sym" aria-pressed="false" data-reveal style="--d:240ms"><span class="chk"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="m2.5 7.5 3 3 6-7" stroke="#E6C98E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><span class="t">گزارش‌ها با هم نمی‌خوانند</span><span class="d">فروش، انبار و مالی هر کدام عدد خودشان را دارند و تصمیم‌گیری حدسی است.</span><span class="yn"><span class="off">+ در سازمان ما هست</span><span class="on">✓ انتخاب شد</span></span></span></button>
+        <button type="button" class="sym" aria-pressed="false" data-reveal style="--d:300ms"><span class="chk"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="m2.5 7.5 3 3 6-7" stroke="#E6C98E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><span class="t">رشد، هرج‌ومرج بیشتری آورده</span><span class="d">چیزی که در ۱۰ نفر جواب می‌داد، در ۵۰ نفر دیگر کار نمی‌کند.</span><span class="yn"><span class="off">+ در سازمان ما هست</span><span class="on">✓ انتخاب شد</span></span></span></button>
       </div>
-      <aside class="verdict on-dark" data-reveal style="--d:120ms">
+      </div>
+      <aside class="verdict on-dark" id="verdict" data-reveal style="--d:120ms">
         <div class="k">نیاز سازمان شما به سیستم‌سازی</div>
         <div class="gauge">
           <svg viewBox="0 0 200 116" aria-hidden="true">
@@ -587,9 +632,10 @@ footer .legal{border-top:1px solid rgba(255,255,255,.08);margin-top:56px;padding
           <div class="val"><span id="score">۰</span><small> از ۶</small></div>
         </div>
         <div aria-live="polite">
-          <h3 id="vTitle">نشانه‌ها را انتخاب کنید</h3>
-          <p id="vText">با هر انتخاب، تصویر دقیق‌تری از وضعیت سیستمی سازمان‌تان می‌بینید.</p>
+          <h3 id="vTitle">هنوز انتخابی نکرده‌اید</h3>
+          <p id="vText">روی کارت‌ها بزنید؛ با هر انتخاب، نتیجه اینجا به‌روز می‌شود.</p>
         </div>
+        <div class="empty-hint" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10m0 0-4-4m4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>کارت‌ها سمت راست هستند</div>
         <a class="btn btn-gold" href="#assess">دریافت ارزیابی کامل</a>
       </aside>
     </div>
@@ -646,7 +692,15 @@ footer .legal{border-top:1px solid rgba(255,255,255,.08);margin-top:56px;padding
         <span class="go">مشاهده‌ی خدمت <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13 8H3m0 0 4-4M3 8l4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
         <svg class="mini" width="260" height="180" viewBox="0 0 260 180" fill="none" aria-hidden="true"><g stroke="rgba(230,201,142,.25)" stroke-width="1.2"><path d="M20 150h60v-50h60v-50h100"/><path d="M80 150v20M140 100v70M200 50v120"/></g><g fill="rgba(230,201,142,.5)"><circle cx="80" cy="100" r="4"/><circle cx="140" cy="50" r="4"/><circle cx="240" cy="50" r="4"/></g></svg>
       </a>
-      <a class="tile wide" href="#" data-reveal style="--d:60ms">
+      <a class="tile feat2" href="#" data-reveal style="--d:60ms">
+        <span class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 18V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H8z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M8 9h8M8 12.5h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+        <h3>مشاوره کسب‌وکار</h3>
+        <p>از ایده و راه‌اندازی تا توسعه و عبور از بن‌بست‌های رشد؛ همراهی شخصی برای مدیران و صاحبان کسب‌وکار.</p>
+        <div class="tags"><span>راه‌اندازی کسب‌وکار</span><span>توسعه کسب‌وکار</span><span>استراتژی و مدل کسب‌وکار</span><span>امکان‌سنجی</span><span>منتورینگ مدیران</span></div>
+        <div class="modes"><span><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="m2.5 7.5 3 3 6-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>حضوری در شیراز</span><span><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="m2.5 7.5 3 3 6-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>آنلاین</span><span><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="m2.5 7.5 3 3 6-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>تلفنی</span></div>
+        <span class="go">رزرو جلسه‌ی مشاوره <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13 8H3m0 0 4-4M3 8l4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      </a>
+      <a class="tile" href="#" data-reveal >
         <span class="ic"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true"><circle cx="4.5" cy="11" r="2.5" stroke="currentColor" stroke-width="1.8"/><circle cx="17.5" cy="4.5" r="2.5" stroke="currentColor" stroke-width="1.8"/><circle cx="17.5" cy="17.5" r="2.5" stroke="currentColor" stroke-width="1.8"/><path d="M7 11h4V4.5h4M11 11v6.5h4" stroke="currentColor" stroke-width="1.6"/></svg></span>
         <h3>معماری فرآیند</h3>
         <p>نقشه‌ی فرآیندهای سازمان با BPMN، مستندسازی، تحلیل و بهبود فرآیند.</p>
@@ -688,36 +742,40 @@ footer .legal{border-top:1px solid rgba(255,255,255,.08);margin-top:56px;padding
         <p>سیستم‌سازی فروش با متد سلطان قیف.</p>
         <span class="go">مشاهده <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13 8H3m0 0 4-4M3 8l4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
       </a>
+      <a class="tile ask" href="#diagnosis" data-reveal style="--d:240ms">
+        <h3>نمی‌دانید از کدام خدمت شروع کنید؟</h3>
+        <p>با خودارزیابی ۳۰ ثانیه‌ای شروع کنید.</p>
+        <span class="go">شروع خودارزیابی <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13 8H3m0 0 4-4M3 8l4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      </a>
     </div>
-    <p class="also" data-reveal>به دنبال <a href="#">مشاوره کسب‌وکار و راه‌اندازی</a> هستید؟ این خدمت همچنان ارائه می‌شود.</p>
   </div>
 </section>
 
-<!-- ============ CASES ============ -->
-<section class="sec" id="cases" style="padding-top:0">
+<!-- ============ PRODUCTS ============ -->
+<section class="sec" id="products" style="padding-top:0">
   <div class="wrap">
     <div class="sec-head split" data-reveal>
-      <div style="display:grid;gap:14px"><span class="eyebrow">پروژه‌ها</span><h2 class="h2">مسئله، تشخیص، سیستم، نتیجه</h2></div>
-      <a class="btn btn-line" href="#">همه‌ی پروژه‌ها</a>
+      <div style="display:grid;gap:14px"><span class="eyebrow">محصولات اکسیر تجارت امین</span><h2 class="h2">سیستم‌هایی که خودمان ساخته‌ایم</h2><p class="lead">تجربه‌ی سیستم‌سازی در سازمان‌ها، در قالب نرم‌افزارهای تخصصی برای هر صنف.</p></div>
+      <a class="btn btn-line" href="https://eta.co.ir" target="_blank" rel="noopener">همه‌ی محصولات</a>
     </div>
     <div class="cases">
       <article class="case" data-reveal>
-        <div class="cover"><svg viewBox="0 0 360 150" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><linearGradient id="c1" x1="0" x2="1"><stop offset="0" stop-color="#1A2740"/><stop offset="1" stop-color="#0B1322"/></linearGradient></defs><rect width="360" height="150" fill="url(#c1)"/><g stroke="rgba(230,201,142,.35)" fill="none"><circle cx="80" cy="80" r="40"/><circle cx="80" cy="80" r="70"/><circle cx="80" cy="80" r="100"/></g><circle cx="80" cy="80" r="6" fill="#E6C98E"/></svg><span class="tag">فناوری اطلاعات · سازمان بزرگ</span></div>
-        <div class="in"><h3>واحد فناوری اطلاعات آستان قدس رضوی</h3>
-          <dl><div><dt>مسئله</dt><dd class="placeholder">…</dd></div><div><dt>سیستم</dt><dd class="placeholder">…</dd></div><div><dt>نتیجه</dt><dd class="placeholder">…</dd></div></dl>
-          <a class="go" href="#">مطالعه‌ی پروژه <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13 8H3m0 0 4-4M3 8l4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
+        <div class="cover"><svg viewBox="0 0 360 150" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="360" height="150" fill="#0F2A28"/><g fill="rgba(111,211,189,.22)"><rect x="40" y="90" width="26" height="60"/><rect x="76" y="70" width="26" height="80"/><rect x="112" y="50" width="26" height="100"/><rect x="148" y="30" width="26" height="120"/></g><path d="M40 86 L90 66 L125 46 L160 26 L320 20" stroke="#6FD3BD" stroke-width="2" fill="none"/></svg><span class="tag">ERP · کارخانه و سازمان</span></div>
+        <div class="in"><h3>اکسیر ERP</h3>
+          <dl><div><dt>مخاطب</dt><dd>کارخانه‌ها و سازمان‌ها، با قالب‌های صنفی آماده</dd></div><div><dt>کاربرد</dt><dd>مدیریت یکپارچه‌ی کسب‌وکار؛ فروش، انبار، مالی، منابع انسانی و فرآیندها</dd></div><div><dt>وضعیت</dt><dd><span class="st live">فعال</span></dd></div></dl>
+          <a class="go" href="https://exirerp.ir" target="_blank" rel="noopener">exirerp.ir <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13 8H3m0 0 4-4M3 8l4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
       </article>
       <article class="case" data-reveal style="--d:80ms">
-        <div class="cover"><svg viewBox="0 0 360 150" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="360" height="150" fill="#0F2A28"/><g fill="rgba(111,211,189,.22)"><rect x="40" y="90" width="26" height="60"/><rect x="76" y="70" width="26" height="80"/><rect x="112" y="50" width="26" height="100"/><rect x="148" y="30" width="26" height="120"/></g><path d="M40 86 L90 66 L125 46 L160 26 L320 20" stroke="#6FD3BD" stroke-width="2" fill="none"/></svg><span class="tag">ERP · مدیریت هوشمند</span></div>
-        <div class="in"><h3>اکسیر تجارت امین</h3>
-          <dl><div><dt>مسئله</dt><dd class="placeholder">…</dd></div><div><dt>سیستم</dt><dd>Exir ERP</dd></div><div><dt>نتیجه</dt><dd class="placeholder">…</dd></div></dl>
-          <a class="go" href="#">مطالعه‌ی پروژه <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13 8H3m0 0 4-4M3 8l4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
+        <div class="cover"><svg viewBox="0 0 360 150" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="360" height="150" fill="#1E1A12"/><g fill="none" stroke="rgba(230,201,142,.45)" stroke-width="1.5"><path d="M40 150V78l40-26 40 26v72"/><path d="M120 150V58l50-32 50 32v92"/><path d="M220 150V88l34-22 34 22v62"/><path d="M60 100h40M60 122h40M145 80h50M145 102h50M145 124h50M238 108h32M238 128h32"/></g><g transform="translate(300 40)"><path d="M0 22C0 10 8 2 16 2s16 8 16 20c0 12-16 30-16 30S0 34 0 22z" fill="#E6C98E"/><circle cx="16" cy="20" r="6" fill="#1E1A12"/></g></svg><span class="tag">CRM تخصصی · املاک</span></div>
+        <div class="in"><h3>اکسیر املاک</h3>
+          <dl><div><dt>مخاطب</dt><dd>آژانس‌ها و مشاوران املاک</dd></div><div><dt>کاربرد</dt><dd>مدیریت فایل و مشتری با تطبیق هوشمند</dd></div><div><dt>وضعیت</dt><dd><span class="st live">فعال</span></dd></div></dl>
+          <a class="go" href="https://exiramlak.ir" target="_blank" rel="noopener">exiramlak.ir <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13 8H3m0 0 4-4M3 8l4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
       </article>
       <article class="case" data-reveal style="--d:160ms">
-        <div class="cover"><svg viewBox="0 0 360 150" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="360" height="150" fill="#2A2013"/><g fill="none" stroke="rgba(230,201,142,.5)" stroke-width="1.5"><path d="M20 20h180l-50 40H70z"/><path d="M70 66h80l-30 32h-20z"/><path d="M92 104h36l-12 20h-12z"/></g></svg><span class="tag">تولید پوشاک · فروش</span></div>
-        <div class="in"><h3>تیم فروش برند پوشینو</h3>
-          <dl><div><dt>مسئله</dt><dd class="placeholder">…</dd></div><div><dt>سیستم</dt><dd>قیف فروش</dd></div><div><dt>نتیجه</dt><dd class="placeholder">…</dd></div></dl>
-          <a class="go" href="#">مطالعه‌ی پروژه <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13 8H3m0 0 4-4M3 8l4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
+        <div class="cover"><svg viewBox="0 0 360 150" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="360" height="150" fill="#1A2740"/><g fill="none" stroke="rgba(255,255,255,.18)" stroke-dasharray="4 6"><circle cx="90" cy="75" r="36"/><circle cx="90" cy="75" r="60"/></g><g fill="rgba(230,201,142,.8)"><circle cx="90" cy="15" r="4"/><circle cx="150" cy="75" r="4"/><circle cx="54" cy="75" r="3"/></g><path d="M80 75h20M90 65v20" stroke="#E6C98E" stroke-width="2.4" stroke-linecap="round"/></svg><span class="tag">در حال توسعه</span></div>
+        <div class="in"><h3>محصولات صنفی جدید</h3>
+          <dl><div><dt>اولین</dt><dd class="placeholder">نرم‌افزار سالن زیبایی و عروسی</dd></div><div><dt>رویکرد</dt><dd>برای هر صنف یک محصول تخصصی، نه یک نرم‌افزار عمومی</dd></div><div><dt>وضعیت</dt><dd><span class="st dev">در حال توسعه</span></dd></div></dl>
+          <a class="go" href="https://eta.co.ir" target="_blank" rel="noopener">eta.co.ir <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13 8H3m0 0 4-4M3 8l4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
       </article>
     </div>
   </div>
@@ -836,8 +894,8 @@ footer .legal{border-top:1px solid rgba(255,255,255,.08);margin-top:56px;padding
         <a class="brand" href="#"><span class="mark" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 26 26" fill="none"><circle cx="5" cy="13" r="3" fill="#E6C98E"/><circle cx="21" cy="5" r="3" stroke="#fff" stroke-width="1.8"/><circle cx="21" cy="21" r="3" stroke="#fff" stroke-width="1.8"/><path d="M8 13h5m0 0V6.5a1.5 1.5 0 0 1 1.5-1.5H18M13 13v6.5a1.5 1.5 0 0 0 1.5 1.5H18" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg></span><span><b>میلاد بهرامی</b><small>مشاور سیستم‌سازی و تحول سازمانی</small></span></a>
         <p class="bio">مدیرعامل اکسیر تجارت امین؛ متخصص معماری فرآیند، ERP، BPMS و اتوماسیون؛ نویسنده‌ی کتاب سلطان قیف.</p>
       </div>
-      <div><h4>خدمات</h4><ul><li><a href="#">سیستم‌سازی سازمانی</a></li><li><a href="#">معماری فرآیند</a></li><li><a href="#">عارضه‌یابی سازمان</a></li><li><a href="#">مشاوره ERP</a></li><li><a href="#">مشاوره BPMS</a></li></ul></div>
-      <div><h4>منابع</h4><ul><li><a href="#">دانشنامه</a></li><li><a href="#">پروژه‌ها</a></li><li><a href="#">کتاب سلطان قیف</a></li><li><a href="#">سوالات متداول</a></li></ul></div>
+      <div><h4>خدمات</h4><ul><li><a href="#">مشاوره کسب‌وکار</a></li><li><a href="#">سیستم‌سازی سازمانی</a></li><li><a href="#">معماری فرآیند</a></li><li><a href="#">عارضه‌یابی سازمان</a></li><li><a href="#">مشاوره ERP</a></li><li><a href="#">مشاوره BPMS</a></li></ul></div>
+      <div><h4>منابع</h4><ul><li><a href="#">دانشنامه</a></li><li><a href="#products">محصولات</a></li><li><a href="#">کتاب سلطان قیف</a></li><li><a href="#">سوالات متداول</a></li></ul></div>
       <div><h4>تماس</h4><ul><li>شیراز، <span class="placeholder">آدرس</span></li><li><span class="placeholder">تلفن</span></li><li><a href="#assess">درخواست ارزیابی</a></li></ul></div>
     </div>
     <div class="legal"><span>© ۱۴۰۵ میلاد بهرامی · thisismbahrami.ir</span><span>مشاور سیستم‌سازی در شیراز و سراسر ایران</span></div>
@@ -923,7 +981,7 @@ footer .legal{border-top:1px solid rgba(255,255,255,.08);margin-top:56px;padding
   const syms = [...document.querySelectorAll('.sym')], arc = document.getElementById('arc');
   const score = document.getElementById('score'), vT = document.getElementById('vTitle'), vX = document.getElementById('vText');
   const levels = [
-    ['نشانه‌ها را انتخاب کنید','با هر انتخاب، تصویر دقیق‌تری از وضعیت سیستمی سازمان‌تان می‌بینید.','#6FD3BD'],
+    ['هنوز انتخابی نکرده‌اید','روی کارت‌ها بزنید؛ با هر انتخاب، نتیجه اینجا به‌روز می‌شود.','#6FD3BD'],
     ['زمان مناسب برای پیشگیری','چند نشانه‌ی اولیه دیده می‌شود؛ حالا ساده‌ترین زمان برای مستندسازی فرآیندهاست.','#6FD3BD'],
     ['نیاز جدی به سیستم‌سازی','گلوگاه‌ها در حال تبدیل شدن به سقف رشد هستند. عارضه‌یابی ساختاریافته توصیه می‌شود.','#E6C98E'],
     ['رشد شما قفل شده است','سازمان به افراد وابسته است و داده‌ها پراکنده‌اند. معماری فرآیند اولویت اول است.','#E0874B']
@@ -935,8 +993,16 @@ footer .legal{border-top:1px solid rgba(255,255,255,.08);margin-top:56px;padding
     arc.style.strokeDashoffset = 100 - (n / 6) * 100;
     arc.style.stroke = levels[lv][2];
     vT.textContent = levels[lv][0]; vX.textContent = levels[lv][1];
+    document.getElementById('cnt').textContent = fa(n);
+    document.getElementById('tally').classList.toggle('has', n > 0);
+    document.getElementById('verdict').classList.toggle('has', n > 0);
   };
-  syms.forEach(s => s.onclick = () => { s.setAttribute('aria-pressed', String(s.getAttribute('aria-pressed') !== 'true')); update(); });
+  syms.forEach(s => s.onclick = () => {
+    syms.forEach(x => x.classList.remove('hint'));
+    s.setAttribute('aria-pressed', String(s.getAttribute('aria-pressed') !== 'true'));
+    update();
+  });
+  document.getElementById('reset').onclick = () => { syms.forEach(s => s.setAttribute('aria-pressed', 'false')); update(); };
 
   /* method: scroll-driven progress (rAF-throttled) */
   const steps = [...document.querySelectorAll('.step')], rail = document.querySelector('.steps .rail');
