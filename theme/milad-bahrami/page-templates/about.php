@@ -73,8 +73,103 @@
   </div>
 </section>
 
-<!-- ============ ۳ج · محتوای موجود صفحه (حفظ سئو) ============ -->
-<?php get_template_part( 'template-parts/content', null, array( 'title' => 'روایت کامل' ) ); ?>
+<!-- ============ ۳ج · روایت (جایگزین متن قدیمی؛ عنوان‌ها و کلیدواژه‌های رتبه‌دار حفظ شده) ============ -->
+<section class="sec" id="narrative">
+  <div class="wrap narr">
+    <div data-reveal>
+      <span class="eyebrow">روایت من</span>
+      <h2 class="h2" style="margin-top:14px">میلاد بهرامی، مشاور عارضه‌یابی و توسعه‌ی کسب‌وکار کارآفرینان و مدیران</h2>
+      <p class="lead" style="margin-top:14px">حدود ۷ سال در استان خراسان رضوی و بعد از آن تا امروز در استان فارس با صنایع مختلف کار کرده‌ام؛ در سال‌های نخست بیشتر با شرکت‌های دانش‌بنیان.</p>
+      <div class="callout" style="margin-top:22px"><b>یک نکته درباره‌ی نام:</b> نام رسمی من در مقالات، انتشارات و اسناد علمی و تجاری «محمدامین بهرامی» است؛ «میلاد بهرامی» نامی است که از کودکی با آن شناخته می‌شدم.</div>
+    </div>
+    <div class="prose" data-reveal style="--d:80ms">
+      <p>هم در مدیریت کسب‌وکار تخصص داشتم و هم تجربه‌ی علمی‌ام در فناوری نانو بود؛ برای همین صندوق نوآوری و شکوفایی ریاست جمهوری و ستاد توسعه‌ی فناوری نانو مرا برای ارزیابی صنایع و حل چالش‌های صنعتی حوزه‌ی دانش‌بنیان اعزام می‌کردند.</p>
+      <h3>مسیر تحصیلی: از «مهندسی زندگی» تا مدیریت راهبردی</h3>
+      <p>با مهندسی شیمی شروع کردم؛ رشته‌ای که به تعبیر من «مهندسی زندگی» است و کمک کرد هم فرایندهای فنی سازمان‌ها را بهینه کنم و هم فرایندهای سازمانی بخش منابع انسانی را. فناوری نانو رشته‌ی اصلی علمی‌ام شد: دو مقاله‌ی بین‌المللی چاپ کردم و در فضای آکادمیک یک داروی هوشمند برای تسکین آنی جراحت‌های عمیق ساختم. بعد به مبانی تجاری و مدیریتی علاقه‌مند شدم و مدیریت اجرایی (MBA)، دکتری حرفه‌ای مدیریت راهبردی کسب‌وکار (DBA) و مدیریت سرمایه و هوش مالی را پیش بردم.</p>
+      <h3>مسیر تجربی: بیش از ۴۲ کسب‌وکار</h3>
+      <p>از سال ۱۳۹۶ تا نیمه‌ی نخست ۱۴۰۳ بیش از ۴۲ کسب‌وکار متمایز را تحلیل کردم و در نقش مشاور مدیریت، منابع انسانی، سرمایه‌گذاری، استراتژیک، مارکتینگ، توسعه‌ی بازار، باشگاه مشتریان و طراحی فرایندهای سازمانی کار کرده‌ام.</p>
+      <h3>مدیریت سرمایه در شرایط بحرانی</h3>
+      <p>از سال ۱۳۹۸ وارد بازار رمزارز شدم و مدل‌های تحلیل فاندامنتال، سنتیمنتال، تکنیکال و روانشناسی بازار را از منابع معتبر بین‌المللی آموختم. برای این بازار و بازارهای طلا و بورس و اندوخته‌های سازمانی مدل‌های مدیریت سرمایه ساختم و با همین مدل‌ها در شرایط بحرانی کسب‌وکارهایی را از لبه‌ی ورشکستگی نجات دادم.</p>
+      <h3>کتاب و بازی Funnel King</h3>
+      <p>در ۲۰۲۶ کتاب <a href="<?php echo esc_url( mb_link( 'book' ) ); ?>">سلطان قیف | Funnel King</a> را به‌عنوان ابزاری عملی برای <a href="<?php echo esc_url( mb_link( 'article' ) ); ?>">طراحی قیف فروش</a> منتشر کردم. برای فهم بهتر مفاهیم کتاب، بازی Funnel King را به‌عنوان ایونتی برای مدیران، صاحبان کسب‌وکار و فریلنسرها طراحی کردیم تا تئوری‌های استراتژیک به یک بازی عملی تبدیل شوند. طراحی بازی را <a href="<?php echo esc_url( mb_link( 'exir-case' ) ); ?>">کارگروه مطالعات بازار شرکت اکسیر تجارت امین</a> انجام داد.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ۳د · پژوهش، اختراع و انتشارات ============ -->
+<section class="sec band">
+  <div class="wrap">
+    <div class="sec-head" data-reveal><span class="eyebrow">پژوهش، اختراع و انتشارات</span><h2 class="h2">آنچه ثبت و منتشر شده است</h2></div>
+    <div class="grid-3">
+      <div class="card" data-reveal style="--d:0ms"><h3>مقالات ISI</h3>
+        <ul class="plist">
+          <li><a href="https://www.tandfonline.com/doi/shareview/10.1080/07391102.2019.1599732" target="_blank" rel="noopener">Experimental study and mathematical modeling for encapsulation of fentanyl citrate drug in nanostructured lipid carrier</a><small>Journal of Biomolecular Structure and Dynamics · ۲۰۱۹</small></li>
+          <li><a href="https://www.tandfonline.com/doi/abs/10.2147/DDDT.S235474" target="_blank" rel="noopener">Improvement of Pain Relief of Fentanyl Citrate Drug Encapsulated in Nanostructured Lipid Carrier: Drug Formulation, Parameter Optimization, in vitro and in vivo Studies</a><small>Dove Medical Press · ۲۰۲۰</small></li>
+        </ul>
+      </div>
+      <div class="card" data-reveal style="--d:70ms"><h3>مقالات علمی داخلی</h3>
+        <ul class="plist">
+          <li>شیوه‌های نوین شناسایی بات‌نت با روش الگوریتم انتخاب منفی</li>
+          <li>راهبردهای تشخیص، پیشگیری و مقابله با جرائم متاورسی با مدل ماتریس SWOT</li>
+        </ul>
+      </div>
+      <div class="card" data-reveal style="--d:140ms"><h3>اختراع ثبت‌شده</h3>
+        <ul class="plist">
+          <li><b>دستگاه آشکارساز دمایی جهت رگ‌گیری آزمایشگاهی</b><small>شماره‌ی اظهارنامه ۱۳۹۷۵۰۱۴۰۰۰۳۰۰۱۹۸۹ · شماره‌ی ثبت ۹۸۳۵۳ · تاریخ ۰۷/۰۳/۱۳۹۷</small></li>
+        </ul>
+      </div>
+    </div>
+    <div class="grid-2" style="margin-top:18px">
+      <div class="card" data-reveal><h3>انتشارات</h3>
+        <ul class="plist">
+          <li><a href="<?php echo esc_url( mb_link( 'book' ) ); ?>">کتاب سلطان قیف | Funnel King</a><small>مدیریت استراتژیک فروش در بازارهای رقابتی و بحرانی · ۲۰۲۶</small></li>
+          <li>کتابچه‌ی ژورنال معامله‌گری اختصاصی</li>
+          <li>کتابچه‌های CRM اختصاصی کسب‌وکارها</li>
+        </ul>
+      </div>
+      <div class="card" data-reveal style="--d:70ms"><h3>تأییدیه‌ها و عضویت‌ها</h3>
+        <ul class="plist">
+          <li>دانش‌آموخته‌ی برتر بنیاد ملی نخبگان</li>
+          <li>دارای تأییدیه از وزارت صنعت، معدن و تجارت</li>
+          <li>عضو هیئت علمی کارگروه سازمان‌های پیشرو و مرکز کوچینگ ایران</li>
+          <li>ثبت نام در کتاب بین‌المللی <a href="<?php echo esc_url( mb_link( 'tribute' ) ); ?>">«به احترام موفقیت» (Entrepreneurship: A Tribute to Success)</a> · ۲۰۲۴</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ۳ه · تجربه‌های کاری ============ -->
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-head" data-reveal><span class="eyebrow">تجربه‌های کاری</span><h2 class="h2">از نیروگاه خورشیدی تا مشاوره‌ی سازمانی</h2></div>
+    <ul class="plist xp" data-reveal>
+      <li>مشاوره‌ی عارضه‌یابی و توسعه‌ی کسب‌وکار از سال ۱۳۹۶ تاکنون · <a href="<?php echo esc_url( mb_link( 'service' ) ); ?>">مشاوره کسب‌وکار</a></li>
+      <li>بنیانگذار و مدیرعامل <a href="https://eta.co.ir" target="_blank" rel="noopener">شرکت اکسیر تجارت امین</a></li>
+      <li>مدیر دپارتمان فناوری نانو زیست‌بوم نوآوری خیام</li>
+      <li>کارشناس فنی ارزیابی شرکت‌های دانش‌بنیان صندوق نوآوری و شکوفایی ریاست جمهوری</li>
+      <li>منتورینگ تیم المپیاد نانواستارتاپ دانشجویی ایران</li>
+      <li>مشاوره و منتورینگ حوزه‌ی بلاکچین و سرمایه‌گذاری در بازار رمزارز</li>
+      <li>مدیریت پروژه‌های متعدد در فضای وب</li>
+      <li>طراحی و اجرای نیروگاه‌های خورشیدی خانگی</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ ۳و · رویکرد مشاوره ============ -->
+<section class="sec band">
+  <div class="wrap">
+    <div class="sec-head" data-reveal><span class="eyebrow">رویکرد مشاوره</span><h2 class="h2">برنامه‌ریزی کسب‌وکار؛ از چشم‌انداز تا ماندن روی ریل</h2><p class="lead">برنامه‌ریزی و راهبرد استراتژیک برای هر کسب‌وکار حیاتی است؛ بدون آن، کسب‌وکار «بادی به هر جهت» می‌شود و با دیدن هر ایده‌ی جذاب مسیرش عوض می‌شود.</p></div>
+    <div class="grid-4">
+      <div class="card" data-reveal style="--d:0ms"><span class="chip light">۱</span><h3 style="margin-top:12px">چشم‌انداز شغلی</h3><p>چشم‌انداز (Job Vision) شما واقع‌بینانه تصویر می‌شود.</p></div>
+      <div class="card" data-reveal style="--d:60ms"><span class="chip light">۲</span><h3 style="margin-top:12px">ماموریت‌های سازمانی</h3><p>مراحل رسیدن به چشم‌انداز، از آخرین تا اولین مرحله، در قالب ماموریت‌ها (Mission) بازنویسی می‌شود.</p></div>
+      <div class="card" data-reveal style="--d:120ms"><span class="chip light">۳</span><h3 style="margin-top:12px">راهبرد استراتژیک</h3><p>برای هر ماموریت نتایج مختلف پیش‌بینی می‌شود: Plan A، Plan B، Plan C و … برای هر پیشامد احتمالی.</p></div>
+      <div class="card" data-reveal style="--d:180ms"><span class="chip light">۴</span><h3 style="margin-top:12px">ماندن روی ریل</h3><p>در هر نتیجه و هر مرحله‌ی رشد، مجموعه‌ی اجرایی روی ریل می‌ماند و به چشم‌انداز سازمانی می‌رسد.</p></div>
+    </div>
+    <p class="lead" style="margin-top:32px;max-width:760px" data-reveal>اگر به‌دنبال <a href="<?php echo esc_url( mb_link( 'service' ) ); ?>" style="color:var(--gold-text);font-weight:700">مشاور کسب‌وکار در شیراز</a> هستید، همین روند را در مشاوره روی داده‌های سازمان شما پیاده می‌کنم؛ شروعش <a href="<?php echo esc_url( mb_link( 'assessment' ) ); ?>" style="color:var(--gold-text);font-weight:700">ارزیابی سازمان</a> است.</p>
+  </div>
+</section>
+
 
 <!-- ============ ۴ · اصول کار ============ -->
 <section class="sec values">
@@ -114,6 +209,14 @@
       <a class="card" href="<?php echo esc_url( mb_link( 'case' ) ); ?>"><h3>پوشینو</h3><p>تیم فروش، تولید پوشاک</p></a>
       <a class="card" href="<?php echo esc_url( mb_link( 'case' ) ); ?>"><h3>طلا و جواهرات Moon</h3><p>۲.۳ برابر رکورد فروش در ۴ ماه</p></a>
     </div>
+  </div>
+</section>
+
+<!-- ============ ۶ب · نشانی ============ -->
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-head" data-reveal><span class="eyebrow">نشانی</span><h2 class="h2">ما را در نقشه بیابید</h2></div>
+    <div class="map" data-reveal><iframe loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://maps.google.com/maps?q=%D9%85%D8%B4%D8%A7%D9%88%D8%B1%20%DA%A9%D8%B3%D8%A8%20%D9%88%20%DA%A9%D8%A7%D8%B1%20%D8%B4%DB%8C%D8%B1%D8%A7%D8%B2%20%D9%85%DB%8C%D9%84%D8%A7%D8%AF%20%D8%A8%D9%87%D8%B1%D8%A7%D9%85%DB%8C%2C%20JHM6%2BV2C%2C%20Shiraz%2C%20Fars%20Province%2C%20Iran&amp;t=m&amp;z=14&amp;output=embed&amp;iwloc=near" title="مشاور کسب و کار شیراز میلاد بهرامی، JHM6+V2C، شیراز، استان فارس"></iframe></div>
   </div>
 </section>
 

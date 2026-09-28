@@ -73,3 +73,112 @@ add_filter( 'the_content', function ( $html ) {
 	}
 	return preg_replace( '/<(\/?)h1\b/u', '<$1h2', $html );
 }, 8 );
+
+/* ------------------------------------------------------------------ content quality (migrated posts) */
+
+/**
+ * Old Phlox/Elementor posts headed their sections with H4 (or a lone H2 + H4s). Re-level the headings
+ * in use so the outline is H2 → H3 → H4 without skips; this also feeds the TOC and mid-article CTA.
+ */
+function mb_normalize_headings( $html ) {
+	if ( ! preg_match_all( '/<h([2-6])\b/i', $html, $m ) ) {
+		return $html;
+	}
+	$levels = array_unique( array_map( 'intval', $m[1] ) );
+	sort( $levels );
+	$map = array();
+	foreach ( $levels as $i => $lvl ) {
+		$map[ $lvl ] = min( 2 + $i, 6 );
+	}
+	return preg_replace_callback( '/<(\/?)h([2-6])\b/i', function ( $x ) use ( $map ) {
+		return '<' . $x[1] . 'h' . $map[ (int) $x[2] ];
+	}, $html );
+}
+
+/** Redirected legacy paths (English slugs, truncated slugs) → their final canonical URL key. */
+function mb_legacy_link_map() {
+	return apply_filters( 'mb_legacy_link_map', array(
+		'moshavereh'                     => array( 'key', 'service' ),
+		'moshavereh-2'                   => array( 'key', 'service' ),
+		'about-us'                       => array( 'key', 'about' ),
+		'author/mbahrami'                => array( 'key', 'about' ),
+		'contact-us'                     => array( 'key', 'assessment', 'contact' ),
+		'services'                       => array( 'path', '/مشاور-کسب-و-کار-حرفه-ای-سازمان-های-پیشرو/' ),
+		'job-diagnostic'                 => array( 'path', '/10-قدم-عارضه-یابی-کسب-و-کار/' ),
+		'market-competition'             => array( 'path', '/5-استراتژی-رقابت-در-بازار-رقابتی/' ),
+		'appropriate-business-in-iran'   => array( 'path', '/کسب-و-کار-متناسب-با-اقتصاد-ایران-سال-1403/' ),
+		'31-مشاغل-خانگی-زنان-خانه-دار-مشاور-کسب-و-ک' => array( 'path', '/مشاغل-خانگی-زنان-خانه-دار-مشاور-کسب-کار/' ),
+	) );
+}
+
+function mb_path_url( $path ) {
+	return home_url( implode( '/', array_map( 'rawurlencode', explode( '/', $path ) ) ) );
+}
+
+/**
+ * Link hygiene for migrated content: point legacy/redirected internal links at their final URL,
+ * open internal links in the same tab, fill "#" placeholder buttons, drop admin/preview links.
+ */
+function mb_optimize_links( $html ) {
+	$host = wp_parse_url( home_url(), PHP_URL_HOST );
+	$map  = mb_legacy_link_map();
+	return preg_replace_callback( '/<a\b([^>]*)>(.*?)<\/a>/su', function ( $m ) use ( $host, $map ) {
+		$attrs = $m[1];
+		$text  = $m[2];
+		if ( ! preg_match( '/\bhref="([^"]*)"/u', $attrs, $hm ) ) {
+			return $m[0];
+		}
+		$href = html_entity_decode( $hm[1] );
+
+		if ( '#' === $href || '' === $href ) {
+			$plain = wp_strip_all_tags( $text );
+			if ( preg_match( '/خرید|تهیه/u', $plain ) ) {
+				$new = 'https://funnelking.ir';
+			} elseif ( str_contains( $plain, 'بازی' ) ) {
+				$new = mb_link( 'book', 'game' );
+			} else {
+				return $m[0];
+			}
+			return '<a' . preg_replace( '/\bhref="[^"]*"/u', 'href="' . esc_url( $new ) . '"', $attrs ) . '>' . $text . '</a>';
+		}
+
+		$parts = wp_parse_url( $href );
+		if ( ! $parts ) {
+			return $m[0];
+		}
+		$h        = isset( $parts['host'] ) ? preg_replace( '/^www\./', '', strtolower( $parts['host'] ) ) : '';
+		$internal = ( '' === $h && isset( $parts['path'] ) && str_starts_with( $parts['path'], '/' ) ) || in_array( $h, array( $host, 'thisismbahrami.ir' ), true );
+		if ( ! $internal ) {
+			return $m[0];
+		}
+		$path = isset( $parts['path'] ) ? $parts['path'] : '/';
+		if ( preg_match( '#^/(wp-admin/|wp-login)#', $path ) || ( isset( $parts['query'] ) && str_contains( $parts['query'], 'preview' ) ) ) {
+			return $text; // stray edit/preview link: keep the words, drop the link.
+		}
+		$key = trim( rawurldecode( $path ), '/' );
+		$new = null;
+		if ( isset( $map[ $key ] ) ) {
+			$r   = $map[ $key ];
+			$new = 'key' === $r[0] ? mb_link( $r[1], $r[2] ?? '' ) : mb_path_url( $r[1] );
+		} elseif ( '' !== $h ) {
+			$new = home_url( $path ) . ( isset( $parts['query'] ) ? '?' . $parts['query'] : '' ) . ( isset( $parts['fragment'] ) ? '#' . $parts['fragment'] : '' );
+		}
+		if ( $new ) {
+			$attrs = preg_replace( '/\bhref="[^"]*"/u', 'href="' . esc_url( $new ) . '"', $attrs );
+		}
+		$attrs = preg_replace( '/\s+(target|rel)="[^"]*"/u', '', $attrs );
+		return '<a' . $attrs . '>' . $text . '</a>';
+	}, $html );
+}
+
+add_filter( 'the_content', function ( $html ) {
+	if ( is_admin() || ! is_singular() ) {
+		return $html;
+	}
+	$html = mb_optimize_links( $html );
+	if ( is_singular( 'post' ) ) {
+		$html = preg_replace( '/\s*\*\*\s*/u', ' ', $html );
+		$html = mb_normalize_headings( $html );
+	}
+	return $html;
+}, 9 );

@@ -43,8 +43,8 @@ add_action( 'init', function () {
  * Assets
  * ------------------------------------------------------------------------- */
 add_action( 'wp_enqueue_scripts', function () {
-	wp_enqueue_style( 'mb-site', MB_URI . '/assets/css/site.css', array(), MB_VER );
-	wp_enqueue_script( 'mb-site', MB_URI . '/assets/js/site.js', array(), MB_VER, array( 'strategy' => 'defer', 'in_footer' => true ) );
+	wp_enqueue_style( 'mb-site', MB_URI . '/assets/css/site.css', array(), MB_VER . '.' . (int) @filemtime( MB_DIR . '/assets/css/site.css' ) );
+	wp_enqueue_script( 'mb-site', MB_URI . '/assets/js/site.js', array(), MB_VER . '.' . (int) @filemtime( MB_DIR . '/assets/js/site.js' ), array( 'strategy' => 'defer', 'in_footer' => true ) );
 	wp_localize_script( 'mb-site', 'MB', array(
 		'ajax'  => admin_url( 'admin-ajax.php' ),
 		'nonce' => wp_create_nonce( 'mb_lead' ),

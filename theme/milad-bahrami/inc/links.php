@@ -19,6 +19,8 @@ function mb_link_map() {
 		'projects'   => '/portfolio/',
 		'chapter'    => '/سلطان-قیف-فصل-اول/',                        // new
 		'assessment' => '/ارزیابی-سازمان/',                           // new
+		'tribute'    => '/کارآفرینی-a-tribute-to-success/',        // existing post
+		'exir-case'  => '/portfolio/مدیریت-شرکت-اکسیر-تجارت-امین/',   // existing case
 		'article'    => '/قیف-فروش-سلطان-قیف/',                       // existing post (sample link target)
 		'case'       => '/portfolio/',                                // case links in static templates fall back to the archive
 		'404'        => '/',
