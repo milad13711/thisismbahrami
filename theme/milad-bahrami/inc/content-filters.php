@@ -135,7 +135,7 @@ function mb_optimize_links( $html ) {
 			if ( preg_match( '/خرید|تهیه/u', $plain ) ) {
 				$new = 'https://funnelking.ir';
 			} elseif ( str_contains( $plain, 'بازی' ) ) {
-				$new = mb_link( 'book', 'game' );
+				$new = 'https://funnelking.ir';
 			} else {
 				return $m[0];
 			}
