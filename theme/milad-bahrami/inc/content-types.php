@@ -88,6 +88,11 @@ add_filter( 'template_include', function ( $template ) {
 	return $template;
 } );
 
+/* Rank Math sees the /faq/all/ query as the posts index; give it its own signals. */
+add_filter( 'rank_math/frontend/canonical', fn( $c ) => get_query_var( 'mb_faq_index' ) ? home_url( '/faq/all/' ) : $c );
+add_filter( 'rank_math/frontend/title', fn( $t ) => get_query_var( 'mb_faq_index' ) ? 'سوالات متداول - ' . get_bloginfo( 'name' ) : $t );
+add_filter( 'rank_math/frontend/description', fn( $d ) => get_query_var( 'mb_faq_index' ) ? 'پاسخ پرسش‌های پرتکرار درباره‌ی مشاوره کسب‌وکار، عارضه‌یابی و سیستم‌سازی سازمانی.' : $d );
+
 function mb_portfolio_fields() {
 	return array(
 		'mb_client'       => 'کارفرما',

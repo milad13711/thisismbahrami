@@ -155,7 +155,20 @@ add_action( 'admin_post_mb_mig', function () {
 			echo wp_json_encode( $data, JSON_UNESCAPED_UNICODE );
 			exit;
 		}
-	} elseif ( 'import' === $step && ! empty( $_FILES['cleaned']['tmp_name'] ) ) {
+	} elseif ( 'export_file' === $step ) {
+			$data = mb_mig_export();
+			if ( is_wp_error( $data ) ) {
+				$msg = $data->get_error_message();
+			} else {
+				$file = WP_CONTENT_DIR . '/mb-export-' . wp_generate_password( 16, false ) . '.json';
+				file_put_contents( $file, wp_json_encode( $data, JSON_UNESCAPED_UNICODE ) ); // phpcs:ignore
+				$msg = sprintf( '%d items saved to %s (delete after download).', count( $data ), basename( $file ) );
+			}
+		} elseif ( 'import_file' === $step ) {
+			$file = WP_CONTENT_DIR . '/mb-cleaned.json';
+			$json = is_readable( $file ) ? json_decode( file_get_contents( $file ), true ) : null; // phpcs:ignore
+			$msg  = is_array( $json ) ? sprintf( '%d posts updated (previous version of each is backed up).', mb_mig_import( $json ) ) : 'mb-cleaned.json missing or invalid.';
+		} elseif ( 'import' === $step && ! empty( $_FILES['cleaned']['tmp_name'] ) ) {
 		$json = json_decode( file_get_contents( $_FILES['cleaned']['tmp_name'] ), true ); // phpcs:ignore
 		$msg  = is_array( $json ) ? sprintf( '%d مطلب به‌روز شد (نسخه‌ی قبلی هر کدام ذخیره شد).', mb_mig_import( $json ) ) : 'فایل JSON نامعتبر است.';
 	} elseif ( 'setup' === $step ) {
@@ -185,8 +198,10 @@ function mb_mig_page() {
 	echo '<p>مطالب ساخته‌شده با المنتور که هنوز تبدیل نشده‌اند: <b>' . (int) $pending . '</b></p>';
 	echo '<h2>۱. خروجی</h2><p>المنتور باید فعال باشد.</p>';
 	$form( 'export', 'دانلود خروجی المنتور (JSON)' );
+	$form( 'export_file', 'Save export on server (for FTP download)', '', 'button-secondary' );
 	echo '<h2>۳. ورود محتوای تمیز</h2>';
 	$form( 'import', 'بارگذاری cleaned.json', '<input type="file" name="cleaned" accept=".json" required>' );
+	$form( 'import_file', 'Import from wp-content/mb-cleaned.json (FTP upload)', '', 'button-secondary' );
 	echo '<h2>۴. تنظیم قالب‌ها و صفحات</h2>';
 	$form( 'setup', 'اعمال تنظیمات' );
 	echo '<h2>بازگردانی</h2><p>همه‌ی مطالب تبدیل‌شده را دقیقاً به حالت قبل برمی‌گرداند.</p>';

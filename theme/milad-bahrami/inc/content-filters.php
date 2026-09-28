@@ -65,3 +65,11 @@ add_filter( 'the_content', function ( $html ) {
 	}
 	return preg_replace( '/<div[^>]*class="[^"]*elementor[^"]*"[^>]*>\s*<\/div>/u', '', $html );
 }, 20 );
+
+/** The template prints the only H1; demote any H1 left inside migrated content. */
+add_filter( 'the_content', function ( $html ) {
+	if ( ! is_singular() || ! in_the_loop() ) {
+		return $html;
+	}
+	return preg_replace( '/<(\/?)h1\b/u', '<$1h2', $html );
+}, 8 );

@@ -8,3 +8,5 @@ node_modules/
 wp-config.php
 /local-wp/
 /dist/
+/backup old site/
+*.tar.gz
