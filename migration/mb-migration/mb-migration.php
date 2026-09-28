@@ -3,7 +3,7 @@
  * Plugin Name: MB Migration (موقت)
  * Description: ابزار یک‌باره‌ی مهاجرت به قالب جدید: خروجی محتوای المنتور، ورود محتوای تمیز، تنظیم قالب‌ها، و بازگردانی. بعد از مهاجرت حذف شود.
  * Version: 1.0.0
- * Requires PHP: 8.1
+ * Requires PHP: 7.4
  *
  * Steps (Tools → مهاجرت قالب):
  *  1. Export  — download rendered HTML of every Elementor-built post/page (Elementor must still be active).
@@ -33,6 +33,8 @@ function mb_mig_elementor_ids() {
 }
 
 function mb_mig_export() {
+	@ini_set( 'memory_limit', '512M' ); // phpcs:ignore
+	@set_time_limit( 300 ); // phpcs:ignore
 	if ( ! class_exists( '\Elementor\Plugin' ) ) {
 		return new WP_Error( 'mb', 'المنتور غیرفعال است؛ خروجی باید قبل از غیرفعال کردن المنتور گرفته شود.' );
 	}
