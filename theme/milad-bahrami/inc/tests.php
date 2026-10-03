@@ -47,11 +47,11 @@ function mb_is_tests_index() {
 }
 
 add_action( 'init', function () {
-	add_rewrite_rule( '^tests-sitemap\.xml$', 'index.php?mb_tests_sitemap=1', 'top' );
+	add_rewrite_rule( '^tests-urls\.xml$', 'index.php?mb_tests_sitemap=1', 'top' );
 	add_rewrite_rule( '^tests/?$', 'index.php?mb_tests_index=1', 'top' );
 	add_rewrite_rule( '^tests/([a-z0-9-]+)/?$', 'index.php?mb_test=$matches[1]', 'top' );
 	// Self-heal: flush once whenever the rule set changes (no wp-admin visit needed).
-	$ver = '3';
+	$ver = '4';
 	if ( get_option( 'mb_tests_rewrite' ) !== $ver ) {
 		flush_rewrite_rules( false );
 		update_option( 'mb_tests_rewrite', $ver, true );
@@ -63,7 +63,7 @@ add_filter( 'query_vars', function ( $vars ) {
 	return $vars;
 } );
 
-/** /tests-sitemap.xml — listed in the Rank Math sitemap index and robots.txt. */
+/** /tests-urls.xml — listed in the Rank Math sitemap index and robots.txt. */
 add_action( 'template_redirect', function () {
 	if ( ! get_query_var( 'mb_tests_sitemap' ) ) {
 		return;
@@ -84,10 +84,10 @@ add_action( 'template_redirect', function () {
 	exit;
 }, 1 );
 add_filter( 'rank_math/sitemap/index', function ( $xml ) {
-	return $xml . '<sitemap><loc>' . esc_url( home_url( '/tests-sitemap.xml' ) ) . '</loc><lastmod>' . gmdate( 'c', (int) @filemtime( MB_DIR . '/inc/tests.php' ) ) . '</lastmod></sitemap>';
+	return $xml . '<sitemap><loc>' . esc_url( home_url( '/tests-urls.xml' ) ) . '</loc><lastmod>' . gmdate( 'c', (int) @filemtime( MB_DIR . '/inc/tests.php' ) ) . '</lastmod></sitemap>';
 } );
 add_filter( 'robots_txt', function ( $out ) {
-	return $out . "\nSitemap: " . home_url( '/tests-sitemap.xml' ) . "\n";
+	return $out . "\nSitemap: " . home_url( '/tests-urls.xml' ) . "\n";
 }, 20 );
 
 add_filter( 'template_include', function ( $template ) {
