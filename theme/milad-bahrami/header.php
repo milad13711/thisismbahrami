@@ -55,6 +55,7 @@
       <a href="<?php echo esc_url( mb_link( 'about' ) ); ?>" data-nav="about">درباره من</a>
       <a href="<?php echo esc_url( mb_link( 'book' ) ); ?>" data-nav="book">سلطان قیف</a>
       <a href="<?php echo esc_url( mb_link( 'blog' ) ); ?>" data-nav="blog">دانشنامه</a>
+      <a href="<?php echo esc_url( mb_link( 'tests' ) ); ?>" data-nav="tests">تست‌ها</a>
     </nav>
     <div class="hdr-ctas"><a class="btn hdr-book" href="https://exirerp.ir/book/coaching">درخواست مشاوره</a><a class="btn btn-gold cta-desk" href="<?php echo esc_url( mb_link( 'assessment' ) ); ?>">ارزیابی سازمان</a></div>
     <button class="burger" aria-label="باز کردن منو" aria-expanded="false" aria-controls="drawer" id="burger">
@@ -69,7 +70,7 @@
     <details class="drawer-group"><summary>خدمات</summary>
       <a href="<?php echo esc_url( mb_link( 'service' ) ); ?>">مشاوره کسب‌وکار</a><a href="#">سیستم‌سازی سازمانی</a><a href="#">معماری فرآیند</a><a href="#">عارضه‌یابی سازمان</a><a href="#">مشاوره ERP</a><a href="#">مشاوره BPMS</a><a href="#">اتوماسیون کسب‌وکار</a><a href="#">مشاوره قیف فروش</a>
     </details>
-    <a href="<?php echo esc_url( mb_link( 'index', 'products' ) ); ?>">محصولات</a><a href="<?php echo esc_url( mb_link( 'projects' ) ); ?>">نمونه‌کارها</a><a href="<?php echo esc_url( mb_link( 'about' ) ); ?>">درباره من</a><a href="<?php echo esc_url( mb_link( 'book' ) ); ?>">سلطان قیف</a><a href="<?php echo esc_url( mb_link( 'blog' ) ); ?>">دانشنامه</a><a href="<?php echo esc_url( mb_link( 'faq' ) ); ?>">سوالات متداول</a>
+    <a href="<?php echo esc_url( mb_link( 'index', 'products' ) ); ?>">محصولات</a><a href="<?php echo esc_url( mb_link( 'projects' ) ); ?>">نمونه‌کارها</a><a href="<?php echo esc_url( mb_link( 'about' ) ); ?>">درباره من</a><a href="<?php echo esc_url( mb_link( 'book' ) ); ?>">سلطان قیف</a><a href="<?php echo esc_url( mb_link( 'blog' ) ); ?>">دانشنامه</a><a href="<?php echo esc_url( mb_link( 'tests' ) ); ?>">تست‌ها</a><a href="<?php echo esc_url( mb_link( 'faq' ) ); ?>">سوالات متداول</a>
     <a class="btn btn-gold" href="https://exirerp.ir/book/coaching" style="margin-top:16px">درخواست مشاوره کسب‌وکار</a>
     <a class="btn btn-line" href="<?php echo esc_url( mb_link( 'assessment' ) ); ?>" style="border-color:rgba(255,255,255,.2);color:#fff">ارزیابی سازمان</a>
   </div>
