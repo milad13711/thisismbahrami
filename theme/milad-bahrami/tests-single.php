@@ -11,7 +11,7 @@ $others = array_filter( mb_tests(), fn( $o ) => $o['slug'] !== $t['slug'] );
 	<div class="wrap">
 		<div class="rise" style="max-width:780px">
 			<ol class="crumbs" aria-label="مسیر صفحه"><li><a href="<?php echo esc_url( home_url( '/' ) ); ?>">خانه</a></li><li><a href="<?php echo esc_url( mb_test_url() ); ?>">تست‌ها</a></li><li aria-current="page"><?php echo esc_html( $t['short'] ); ?></li></ol>
-			<h1><?php echo esc_html( $t['name'] ); ?>: <span class="grad"><?php echo esc_html( $t['h1_tail'] ?? $t['tagline'] ); ?></span></h1>
+			<h1><?php echo esc_html( $t['name'] ); ?> رایگان: <span class="grad"><?php echo esc_html( $t['h1_tail'] ?? $t['tagline'] ); ?></span></h1>
 			<?php foreach ( $t['intro'] as $p ) : ?><p class="lead"><?php echo esc_html( $p ); ?></p><?php endforeach; ?>
 			<div class="chips" style="margin-top:22px"><span class="chip gold">رایگان و کامل</span><span class="chip"><?php echo esc_html( mb_fa_digits( $t['minutes'] ) ); ?> دقیقه</span><span class="chip"><?php echo esc_html( mb_fa_digits( $t['count'] ) ); ?> سؤال</span><span class="chip">بدون ثبت‌نام</span></div>
 		</div>

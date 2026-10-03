@@ -1104,3 +1104,14 @@ a.tcard:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
   .rtype,.rm{break-inside:avoid}
 }
 @counter-style persian{system:numeric;symbols:"۰" "۱" "۲" "۳" "۴" "۵" "۶" "۷" "۸" "۹"}
+
+/* generic test result helpers */
+.bigcode.small span{width:56px;height:62px;font-size:26px}
+.rpairs{display:grid;gap:16px}
+.rpair{display:grid;grid-template-columns:1fr 2fr 1fr;gap:10px;align-items:center;font-size:14.5px}
+.rp-l,.rp-r{display:flex;gap:8px;align-items:center}.rp-r{justify-content:flex-end}
+.rp-l span,.rp-r span{color:var(--text-3);font-weight:700}
+.rp-m{height:12px;border-radius:99px;background:var(--b);overflow:hidden;direction:rtl}
+.rp-m i{display:block;height:100%;background:var(--a)}
+@media (max-width:760px){.rpair{grid-template-columns:1fr 1fr}.rp-m{grid-column:1/-1;order:3}}
+.chip.gold-l{background:#FFF6DF;border-color:#EBD9A6;color:var(--gold-text)}

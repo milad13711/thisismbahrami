@@ -154,7 +154,7 @@
   function finish() {
     var raw = {}, cnt = {};
     Object.keys(cfg.dims).forEach(function (d) { raw[d] = 0; cnt[d] = 0; });
-    S.order.forEach(function (id, i) { var d = qById(id).d; raw[d] += S.answers[i]; cnt[d]++; });
+    S.order.forEach(function (id, i) { var q = qById(id), d = q.d; raw[d] += q.r ? 4 - S.answers[i] : S.answers[i]; cnt[d]++; });
     var pct = {};
     Object.keys(raw).forEach(function (d) { pct[d] = cnt[d] ? Math.round(raw[d] / (cnt[d] * 4) * 100) : 0; });
     store.del(KEY);
@@ -171,9 +171,10 @@
     if (!m) return null;
     var dims = Object.keys(cfg.dims), nums = m[4].split('.').filter(Boolean).map(Number);
     if (nums.length !== dims.length || nums.some(function (n) { return n < 0 || n > 100; })) return null;
-    var st = m[1] && cfg.labels.status[m[1]] ? m[1] : '';
-    if (!st) return null;
-    var tr = m[2] && cfg.labels.track[m[2]] ? m[2] : '';
+    var L = cfg.labels || { status: {}, track: {} };
+    var st = m[1] && L.status[m[1]] ? m[1] : '';
+    if (!st && cfg.gates.length) return null;
+    var tr = m[2] && L.track[m[2]] ? m[2] : '';
     if (st === 'student' && !tr) return null;
     var pct = {}; dims.forEach(function (d, i) { pct[d] = nums[i]; });
     return { profile: { status: st, track: tr || undefined, goal: m[3] || undefined }, pct: pct };
@@ -182,8 +183,8 @@
     S.phase = 'result';
     var r = renderers[app.getAttribute('data-renderer')];
     var ctx = { cfg: cfg, profile: S.profile, pct: pct, fa: fa, esc: esc, cta: app.getAttribute('data-cta') };
-    var who = cfg.labels.status[S.profile.status] + (S.profile.track ? ' · ' + cfg.labels.track[S.profile.track] : '');
-    mount('<div class="tres"><div class="tres-top"><span class="chip light">' + esc(who) + '</span><h2 class="tres-h" data-focus>کارنامه‌ی شما آماده است</h2></div>' + r.render(ctx) +
+    var who = S.profile.status ? cfg.labels.status[S.profile.status] + (S.profile.track ? ' · ' + cfg.labels.track[S.profile.track] : '') : '';
+    mount('<div class="tres"><div class="tres-top">' + (who ? '<span class="chip light">' + esc(who) + '</span>' : '') + '<h2 class="tres-h" data-focus>کارنامه‌ی شما آماده است</h2></div>' + r.render(ctx) +
       '<div class="tres-actions"><button type="button" class="btn btn-ink" data-print>ذخیره / چاپ نتیجه (PDF)</button><button type="button" class="btn btn-line-d" data-copy>کپی لینک نتیجه</button><button type="button" class="btn btn-line-d" data-retake>انجام دوباره‌ی تست</button></div></div>');
     app.querySelector('[data-print]').addEventListener('click', function () { window.print(); });
     app.querySelector('[data-retake]').addEventListener('click', function () {

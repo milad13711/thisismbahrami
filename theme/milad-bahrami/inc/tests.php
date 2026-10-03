@@ -21,6 +21,12 @@ function mb_tests() {
 				$tests[ $cfg['slug'] ] = $cfg;
 			}
 		}
+		foreach ( (array) glob( MB_DIR . '/inc/tests/*.json' ) as $file ) {
+			$cfg = json_decode( (string) file_get_contents( $file ), true );
+			if ( is_array( $cfg ) && ! empty( $cfg['slug'] ) ) {
+				$tests[ $cfg['slug'] ] = $cfg;
+			}
+		}
 		uasort( $tests, fn( $a, $b ) => ( $a['order'] ?? 10 ) <=> ( $b['order'] ?? 10 ) );
 	}
 	return $tests;
@@ -41,10 +47,11 @@ function mb_is_tests_index() {
 }
 
 add_action( 'init', function () {
+	add_rewrite_rule( '^tests-sitemap\.xml$', 'index.php?mb_tests_sitemap=1', 'top' );
 	add_rewrite_rule( '^tests/?$', 'index.php?mb_tests_index=1', 'top' );
 	add_rewrite_rule( '^tests/([a-z0-9-]+)/?$', 'index.php?mb_test=$matches[1]', 'top' );
 	// Self-heal: flush once whenever the rule set changes (no wp-admin visit needed).
-	$ver = '2';
+	$ver = '3';
 	if ( get_option( 'mb_tests_rewrite' ) !== $ver ) {
 		flush_rewrite_rules( false );
 		update_option( 'mb_tests_rewrite', $ver, true );
@@ -52,9 +59,36 @@ add_action( 'init', function () {
 } );
 
 add_filter( 'query_vars', function ( $vars ) {
-	array_push( $vars, 'mb_test', 'mb_tests_index' );
+	array_push( $vars, 'mb_test', 'mb_tests_index', 'mb_tests_sitemap' );
 	return $vars;
 } );
+
+/** /tests-sitemap.xml — listed in the Rank Math sitemap index and robots.txt. */
+add_action( 'template_redirect', function () {
+	if ( ! get_query_var( 'mb_tests_sitemap' ) ) {
+		return;
+	}
+	status_header( 200 );
+	header( 'Content-Type: application/xml; charset=UTF-8' );
+	header( 'X-Robots-Tag: noindex, follow' );
+	$mod  = gmdate( 'c', (int) @filemtime( MB_DIR . '/inc/tests.php' ) );
+	$urls = array( array( mb_test_url(), 'weekly', '0.8' ) );
+	foreach ( mb_tests() as $t ) {
+		$urls[] = array( mb_test_url( $t['slug'] ), 'monthly', '0.9' );
+	}
+	echo '<?xml version="1.0" encoding="UTF-8"?>' . "\n" . '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
+	foreach ( $urls as $u ) {
+		printf( "<url><loc>%s</loc><lastmod>%s</lastmod><changefreq>%s</changefreq><priority>%s</priority></url>\n", esc_url( $u[0] ), $mod, $u[1], $u[2] );
+	}
+	echo '</urlset>';
+	exit;
+}, 1 );
+add_filter( 'rank_math/sitemap/index', function ( $xml ) {
+	return $xml . '<sitemap><loc>' . esc_url( home_url( '/tests-sitemap.xml' ) ) . '</loc><lastmod>' . gmdate( 'c', (int) @filemtime( MB_DIR . '/inc/tests.php' ) ) . '</lastmod></sitemap>';
+} );
+add_filter( 'robots_txt', function ( $out ) {
+	return $out . "\nSitemap: " . home_url( '/tests-sitemap.xml' ) . "\n";
+}, 20 );
 
 add_filter( 'template_include', function ( $template ) {
 	if ( mb_is_tests_index() || get_query_var( 'mb_test' ) ) {
@@ -72,8 +106,8 @@ add_filter( 'template_include', function ( $template ) {
 function mb_tests_seo( $field ) {
 	if ( mb_is_tests_index() ) {
 		$vals = array(
-			'title'       => 'تست‌های شغلی و کسب‌وکار — انتخاب رشته و مسیر شغلی | میلاد بهرامی',
-			'description' => 'تست‌های رایگان انتخاب رشته، علایق شغلی و مسیر کسب‌وکار با تفسیر کامل و پیشنهاد عملی؛ مناسب دانش‌آموز، دانشجو، شاغل و جویای کار.',
+			'title'       => 'تست‌های رایگان شغلی، شخصیت و کسب‌وکار؛ هالند، دیسک، ۱۶ تیپ | میلاد بهرامی',
+			'description' => 'تست‌های رایگان آنلاین انتخاب رشته، علایق شغلی (هالند)، شخصیت (دیسک و ۱۶ تیپ)، کارآفرینی و هوش‌های چندگانه؛ تفسیر کامل و بدون پرداخت، بدون ثبت‌نام.',
 			'canonical'   => mb_test_url(),
 		);
 		return $vals[ $field ];
