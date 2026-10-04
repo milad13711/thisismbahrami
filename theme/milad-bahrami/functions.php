@@ -19,6 +19,7 @@ require MB_DIR . '/inc/template-tags.php';
 require MB_DIR . '/inc/content-filters.php';
 require MB_DIR . '/inc/seo.php';
 require MB_DIR . '/inc/leads.php';
+require MB_DIR . '/inc/erp.php';
 require MB_DIR . '/inc/tests.php';
 
 /* ---------------------------------------------------------------------------
