@@ -648,7 +648,7 @@ a.post.feature p{font-size:16px}
 .toc-m{display:none;border:1px solid var(--line);border-radius:var(--r-md);padding:4px 18px;margin-bottom:28px}
 .toc-m summary{font-weight:800;padding:12px 0;cursor:pointer}
 .toc-m ol{margin:0 0 12px;padding-inline-start:20px;display:grid;gap:6px;font-size:15px;color:var(--text-2)}
-@media (max-width:1000px){.a-layout{grid-template-columns:1fr}.a-side{display:none}.toc-m{display:block}}
+@media (max-width:1000px){.a-layout{grid-template-columns:minmax(0,1fr)}.a-side{display:none}.toc-m{display:block}}
 
 .tldr{border-radius:var(--r-md);padding:22px 24px;background:var(--paper-2);border-inline-start:4px solid var(--gold);margin-bottom:36px}
 .tldr b{display:block;font-size:14px;color:var(--gold-text);margin-bottom:8px}
@@ -1131,3 +1131,11 @@ a.post .th img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover
 a.post:hover .th img{transform:scale(1.04)}
 .post-cover{margin:0 0 28px}
 .post-cover img{width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;border-radius:var(--r-lg);box-shadow:var(--shadow-md)}
+
+/* wide tables/code/embeds scroll inside the text column instead of widening the page */
+.a-layout>article{min-width:0}
+.prose table{display:block;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;border-collapse:collapse}
+.prose th,.prose td{padding:10px 14px;border:1px solid var(--line);text-align:start;vertical-align:top}
+.prose th{background:var(--paper-2);font-weight:700}
+.prose pre{max-width:100%;overflow-x:auto}
+.prose{overflow-wrap:anywhere}
