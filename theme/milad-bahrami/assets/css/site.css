@@ -48,6 +48,7 @@ body{margin:0;background:var(--paper);color:var(--text);font-family:Vazirmatn,Ta
 a{color:inherit;text-decoration:none}
 button{font:inherit;color:inherit;cursor:pointer}
 img,svg{max-width:100%;display:block}
+img{height:auto} /* WP adds width/height attrs; without this wide images squash on narrow screens */
 h1,h2,h3,h4{margin:0;line-height:1.4;text-wrap:balance}
 p{margin:0}
 :focus-visible{outline:3px solid var(--gold);outline-offset:3px;border-radius:6px}
@@ -1115,3 +1116,18 @@ a.tcard:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
 .rp-m i{display:block;height:100%;background:var(--a)}
 @media (max-width:760px){.rpair{grid-template-columns:1fr 1fr}.rp-m{grid-column:1/-1;order:3}}
 .chip.gold-l{background:#FFF6DF;border-color:#EBD9A6;color:var(--gold-text)}
+
+/* article media: keep uploaded images proportional and centered at every width */
+.prose img,.prose video,.prose iframe{max-width:100%;height:auto;border-radius:var(--r-md)}
+.prose iframe,.prose video{aspect-ratio:16/9;width:100%}
+.prose figure,.prose .wp-caption{max-width:100%;margin:28px auto}
+.prose figure img,.prose .wp-caption img{margin-inline:auto}
+.prose figcaption,.prose .wp-caption-text{font-size:14px;color:var(--text-3);text-align:center;margin-top:10px}
+.prose img.aligncenter,.prose .aligncenter{margin-inline:auto}
+.prose img.alignleft,.prose img.alignright{float:none;margin:24px auto}
+.prose p>img:only-child{margin:24px auto}
+.post-cover img,.card .cover img{width:100%;height:100%;object-fit:cover}
+.post .th img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease-out)}
+.post:hover .th img{transform:scale(1.04)}
+.post-cover{margin:0 0 28px}
+.post-cover img{width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;border-radius:var(--r-lg);box-shadow:var(--shadow-md)}

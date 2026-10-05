@@ -14,6 +14,12 @@
 
 defined( 'ABSPATH' ) || exit;
 
+// Public identifiers of the "ارزیابی سازمان (سایت)" form in Milad's Exir ERP tenant (override in wp-config.php if needed).
+defined( 'MB_ERP_API' ) || define( 'MB_ERP_API', 'https://exirerp.ir/api' );
+defined( 'MB_ERP_TENANT' ) || define( 'MB_ERP_TENANT', 't7debc5f8d8e' );
+defined( 'MB_ERP_FORM' ) || define( 'MB_ERP_FORM', 'site-assessment' );
+defined( 'MB_ERP_FIELD' ) || define( 'MB_ERP_FIELD', '7a68504e-8f19-42c1-bfe6-a8d72596b02f' );
+
 add_action( 'mb_lead_created', function ( $post_id, $rows ) {
 	foreach ( array( 'MB_ERP_API', 'MB_ERP_TENANT', 'MB_ERP_FORM', 'MB_ERP_FIELD' ) as $c ) {
 		if ( ! defined( $c ) || ! constant( $c ) ) {

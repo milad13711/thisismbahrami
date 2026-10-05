@@ -12,6 +12,18 @@ list( $content, $toc ) = mb_content_with_toc( mb_strip_title_heading( apply_filt
 if ( count( $toc ) >= 3 ) {
 	$content = mb_inject_inline_cta( $content );
 }
+// Featured image shown once as the article cover: drop its duplicate (first occurrence) from the body.
+$cover = '';
+if ( has_post_thumbnail() ) {
+	$tid  = get_post_thumbnail_id();
+	$full = wp_get_attachment_image_src( $tid, 'full' );
+	if ( $full ) {
+		$base = preg_quote( pathinfo( $full[0], PATHINFO_FILENAME ), '#' );
+		// Remove the first <img> (and its now-empty wrapper) that points at the same file, any size suffix.
+		$content = preg_replace( '#(<p>\s*)?(<a[^>]*>\s*)?<img[^>]+src="[^"]*' . $base . '(?:-\d+x\d+)?\.[a-z0-9]+"[^>]*>(\s*</a>)?(\s*</p>)?#iu', '', $content, 1 );
+		$cover = '<figure class="post-cover">' . wp_get_attachment_image( $tid, 'full', false, array( 'loading' => 'eager', 'fetchpriority' => 'high', 'sizes' => '(max-width: 900px) 100vw, 760px' ) ) . '</figure>';
+	}
+}
 $cats = get_the_category();
 $cat  = $cats ? $cats[0] : null;
 // Optional "خلاصه در ۳۰ ثانیه" box: one takeaway per line in the mb_tldr custom field.
@@ -55,6 +67,7 @@ $tldr = array_filter( array_map( 'trim', explode( "\n", (string) get_post_meta( 
 				</ol></details>
 			<?php endif; ?>
 
+			<?php echo $cover; // phpcs:ignore -- core-generated attachment markup ?>
 			<div class="prose">
 				<?php echo $content; // phpcs:ignore WordPress.Security.EscapeOutput -- filtered post content ?>
 			</div>

@@ -75,6 +75,65 @@ function mb_mig_import( array $cleaned ) {
 	return $done;
 }
 
+
+/**
+ * Featured images: for every published post without one, use the first local uploads image found in its
+ * content (registering it in the media library when only the file exists, e.g. uploaded by FTP).
+ * Never touches post content; only sets _thumbnail_id and the attachment's alt text.
+ */
+function mb_mig_autofeature() {
+	require_once ABSPATH . 'wp-admin/includes/image.php';
+	$up    = wp_get_upload_dir();
+	$ids   = get_posts( array( 'post_type' => 'post', 'post_status' => 'publish', 'numberposts' => -1, 'fields' => 'ids', 'meta_query' => array( array( 'key' => '_thumbnail_id', 'compare' => 'NOT EXISTS' ) ) ) );
+	$set   = 0;
+	$skip  = array();
+	foreach ( $ids as $id ) {
+		$html = get_post_field( 'post_content', $id );
+		if ( ! preg_match_all( '#<img[^>]+>#i', $html, $imgs ) ) {
+			$skip[] = $id;
+			continue;
+		}
+		$done = false;
+		foreach ( $imgs[0] as $tag ) {
+			if ( ! preg_match( '#src="([^"]+)"#i', $tag, $m ) ) {
+				continue;
+			}
+			$url = html_entity_decode( $m[1] );
+			$pos = strpos( $url, '/wp-content/uploads/' );
+			if ( false === $pos ) {
+				continue;
+			}
+			$alt = preg_match( '#alt="([^"]*)"#i', $tag, $a ) ? html_entity_decode( $a[1] ) : '';
+			$att = attachment_url_to_postid( $url );
+			if ( ! $att ) {
+				$rel  = rawurldecode( substr( $url, $pos + strlen( '/wp-content/uploads/' ) ) );
+				$rel  = preg_replace( '#-\d+x\d+(\.[a-z0-9]+)$#i', '$1', strtok( $rel, '?' ) );
+				$file = trailingslashit( $up['basedir'] ) . $rel;
+				if ( ! is_readable( $file ) ) {
+					continue;
+				}
+				$type = wp_check_filetype( $file );
+				$att  = wp_insert_attachment( array( 'post_mime_type' => $type['type'], 'post_title' => $alt ?: pathinfo( $file, PATHINFO_FILENAME ), 'post_status' => 'inherit' ), $file, $id );
+				if ( is_wp_error( $att ) || ! $att ) {
+					continue;
+				}
+				wp_update_attachment_metadata( $att, wp_generate_attachment_metadata( $att, $file ) );
+			}
+			if ( $alt && '' === get_post_meta( $att, '_wp_attachment_image_alt', true ) ) {
+				update_post_meta( $att, '_wp_attachment_image_alt', wp_slash( $alt ) );
+			}
+			set_post_thumbnail( $id, $att );
+			$set++;
+			$done = true;
+			break;
+		}
+		if ( ! $done ) {
+			$skip[] = $id;
+		}
+	}
+	return array( $set, $skip );
+}
+
 function mb_mig_setup() {
 	$log = array();
 	$tpl = array(
@@ -173,6 +232,17 @@ add_action( 'admin_post_mb_mig', function () {
 		} elseif ( 'import' === $step && ! empty( $_FILES['cleaned']['tmp_name'] ) ) {
 		$json = json_decode( file_get_contents( $_FILES['cleaned']['tmp_name'] ), true ); // phpcs:ignore
 		$msg  = is_array( $json ) ? sprintf( '%d مطلب به‌روز شد (نسخه‌ی قبلی هر کدام ذخیره شد).', mb_mig_import( $json ) ) : 'فایل JSON نامعتبر است.';
+	} elseif ( 'autofeature' === $step ) {
+		list( $n, $skip ) = mb_mig_autofeature();
+		$msg = sprintf( 'featured image set on %d posts; no usable image in: %s', $n, $skip ? implode( ',', $skip ) : '—' );
+	} elseif ( 'flush_sitemap' === $step ) {
+		$ok = false;
+		if ( class_exists( '\\RankMath\\Sitemap\\Cache' ) ) {
+			\RankMath\Sitemap\Cache::invalidate_storage();
+			$ok = true;
+		}
+		do_action( 'rank_math/sitemap/clear_cache' );
+		$msg = $ok ? 'sitemap cache flushed' : 'Rank Math cache class not found';
 	} elseif ( 'setup' === $step ) {
 		$msg = implode( ' · ', mb_mig_setup() );
 	} elseif ( 'rollback' === $step ) {
@@ -204,6 +274,9 @@ function mb_mig_page() {
 	echo '<h2>۳. ورود محتوای تمیز</h2>';
 	$form( 'import', 'بارگذاری cleaned.json', '<input type="file" name="cleaned" accept=".json" required>' );
 	$form( 'import_file', 'Import from wp-content/mb-cleaned.json (FTP upload)', '', 'button-secondary' );
+	echo '<h2>تصویر شاخص</h2><p>برای مطالب بدون تصویر شاخص، اولین تصویر داخل متن را انتخاب می‌کند.</p>';
+	$form( 'autofeature', 'تنظیم خودکار تصویر شاخص' );
+	$form( 'flush_sitemap', 'پاک‌کردن کش نقشه‌ی سایت', '', 'button-secondary' );
 	echo '<h2>۴. تنظیم قالب‌ها و صفحات</h2>';
 	$form( 'setup', 'اعمال تنظیمات' );
 	echo '<h2>بازگردانی</h2><p>همه‌ی مطالب تبدیل‌شده را دقیقاً به حالت قبل برمی‌گرداند.</p>';
