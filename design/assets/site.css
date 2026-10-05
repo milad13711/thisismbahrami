@@ -574,23 +574,23 @@ a.card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);border-color
 
 /* post cards */
 .posts{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.post{display:flex;flex-direction:column;border-radius:var(--r-lg);background:var(--surface);border:1px solid var(--line);overflow:hidden;transition:transform .4s var(--ease-out),box-shadow .4s var(--ease-out),opacity .8s var(--ease-out)}
-.post:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
-.post .th{aspect-ratio:16/9;position:relative;overflow:hidden;background:var(--ink-900)}
-.post .th svg{position:absolute;inset:0;width:100%;height:100%;transition:transform .8s var(--ease-out)}
-.post:hover .th svg{transform:scale(1.05)}
-.post .th .cat{position:absolute;top:14px;inset-inline-start:14px;font-size:12px;font-weight:700;padding:4px 11px;border-radius:999px;background:rgba(255,255,255,.12);backdrop-filter:blur(6px);color:#fff;border:1px solid rgba(255,255,255,.16)}
-.post .in{padding:20px 22px 22px;display:flex;flex-direction:column;gap:8px;flex:1}
-.post h3{font-size:17.5px;font-weight:800;line-height:1.6}
-.post p{font-size:14.5px;color:var(--text-3);line-height:1.8}
-.post .meta{margin-top:auto;padding-top:10px;display:flex;gap:14px;font-size:12.5px;color:var(--text-3)}
-.post.feature{grid-column:span 3;display:grid;grid-template-columns:1.2fr 1fr}
-.post.feature .th{aspect-ratio:auto;min-height:300px}
-.post.feature .in{padding:36px;justify-content:center}
-.post.feature h3{font-size:clamp(22px,2.4vw,30px);line-height:1.5}
-.post.feature p{font-size:16px}
-@media (max-width:960px){.posts{grid-template-columns:repeat(2,1fr)}.post.feature{grid-column:span 2;grid-template-columns:1fr}.post.feature .th{min-height:220px}}
-@media (max-width:620px){.posts{grid-template-columns:1fr}.post.feature{grid-column:auto}}
+a.post{display:flex;flex-direction:column;border-radius:var(--r-lg);background:var(--surface);border:1px solid var(--line);overflow:hidden;transition:transform .4s var(--ease-out),box-shadow .4s var(--ease-out),opacity .8s var(--ease-out)}
+a.post:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+a.post .th{aspect-ratio:16/9;position:relative;overflow:hidden;background:var(--ink-900)}
+a.post .th svg{position:absolute;inset:0;width:100%;height:100%;transition:transform .8s var(--ease-out)}
+a.post:hover .th svg{transform:scale(1.05)}
+a.post .th .cat{position:absolute;top:14px;inset-inline-start:14px;font-size:12px;font-weight:700;padding:4px 11px;border-radius:999px;background:rgba(255,255,255,.12);backdrop-filter:blur(6px);color:#fff;border:1px solid rgba(255,255,255,.16)}
+a.post .in{padding:20px 22px 22px;display:flex;flex-direction:column;gap:8px;flex:1}
+a.post h3{font-size:17.5px;font-weight:800;line-height:1.6}
+a.post p{font-size:14.5px;color:var(--text-3);line-height:1.8}
+a.post .meta{margin-top:auto;padding-top:10px;display:flex;gap:14px;font-size:12.5px;color:var(--text-3)}
+a.post.feature{grid-column:span 3;display:grid;grid-template-columns:1.2fr 1fr}
+a.post.feature .th{aspect-ratio:auto;min-height:300px}
+a.post.feature .in{padding:36px;justify-content:center}
+a.post.feature h3{font-size:clamp(22px,2.4vw,30px);line-height:1.5}
+a.post.feature p{font-size:16px}
+@media (max-width:960px){.posts{grid-template-columns:repeat(2,1fr)}a.post.feature{grid-column:span 2;grid-template-columns:1fr}a.post.feature .th{min-height:220px}}
+@media (max-width:620px){.posts{grid-template-columns:1fr}a.post.feature{grid-column:auto}}
 
 /* filters */
 .filters{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin-bottom:28px}
@@ -1127,7 +1127,7 @@ a.tcard:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
 .prose img.alignleft,.prose img.alignright{float:none;margin:24px auto}
 .prose p>img:only-child{margin:24px auto}
 .post-cover img,.card .cover img{width:100%;height:100%;object-fit:cover}
-.post .th img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease-out)}
-.post:hover .th img{transform:scale(1.04)}
+a.post .th img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease-out)}
+a.post:hover .th img{transform:scale(1.04)}
 .post-cover{margin:0 0 28px}
 .post-cover img{width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;border-radius:var(--r-lg);box-shadow:var(--shadow-md)}
