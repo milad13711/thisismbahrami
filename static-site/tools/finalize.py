@@ -61,7 +61,7 @@ for src, (code, dst) in sorted(man['redirects'].items()):
     if not dst or src == dst or src in pages: continue
     if any(e in src for e in EXCL): continue
     s = urllib.parse.quote(src.rstrip('/'), safe='/')
-    d = urllib.parse.quote(dst, safe='/')
+    d = dst
     if s in ('', '/'): continue
     red.append('RedirectMatch 301 ^%s/?$ %s%s' % (re.escape(urllib.parse.unquote(s)).replace('\\/', '/').replace('%', '%'), BASE, d))
 extra = []
@@ -69,7 +69,7 @@ for line in open('tools/redirects.txt', encoding='utf-8'):
     line = line.strip()
     if not line or line.startswith('#'): continue
     a, b = line.split()
-    extra.append('RedirectMatch 301 ^%s/?$ %s' % (re.escape(a.rstrip('/')).replace('\\/', '/'), BASE + urllib.parse.quote(b, safe='/')))
+    extra.append('RedirectMatch 301 ^%s/?$ %s' % (re.escape(a.rstrip('/')).replace('\\/', '/'), BASE + b))
 gone = [l.strip() for l in open('tools/gone.txt', encoding='utf-8') if l.strip() and not l.startswith('#')]
 extra.append('RedirectMatch 410 ^/(%s)/?$' % '|'.join(re.escape(g) for g in gone))
 extra.append('RedirectMatch 410 ^/(tag|author|feed|comments)(/.*)?$')
