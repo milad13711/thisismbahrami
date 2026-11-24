@@ -1,0 +1,5 @@
+# URL fragments never exported (spam / WP internals)
+chicken-road-mobile-sessions
+/wp-json
+/author/
+casino

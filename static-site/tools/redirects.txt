@@ -1,0 +1,6 @@
+# legacy URL -> new URL (301). Format: /old/ /new/
+/رویدادها/ /blog/
+/رویدادها/مکان-ها/ /blog/
+/how-to-be-great-bussinessman/ /تاجر-موفق-how-to-be-great-bussinessman/
+/moshavereh-2/ /مشاوره-کسب-و-کار/
+/navatel/ /تلفن-ابری/

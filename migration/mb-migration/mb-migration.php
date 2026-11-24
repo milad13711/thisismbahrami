@@ -235,6 +235,150 @@ add_action( 'admin_post_mb_mig', function () {
 	} elseif ( 'autofeature' === $step ) {
 		list( $n, $skip ) = mb_mig_autofeature();
 		$msg = sprintf( 'featured image set on %d posts; no usable image in: %s', $n, $skip ? implode( ',', $skip ) : '—' );
+	} elseif ( 'purge_author' === $step ) {
+		// Incident cleanup: delete up to 150 posts of the intruder account per click (time-bounded).
+		$uid  = (int) ( $_POST['uid'] ?? 0 );
+		$user = $uid > 1 ? get_userdata( $uid ) : null;
+		if ( ! $user || user_can( $user, 'manage_options' ) ) {
+			$msg = 'refused: pick a non-admin author id other than 1';
+		} else {
+			@set_time_limit( 25 );
+			$ids = get_posts( array( 'author' => $uid, 'post_type' => 'any', 'post_status' => 'any', 'numberposts' => 150, 'fields' => 'ids', 'suppress_filters' => true ) );
+			$t   = microtime( true );
+			$n   = 0;
+			foreach ( $ids as $pid ) {
+				wp_delete_post( $pid, true );
+				$n++;
+				if ( microtime( true ) - $t > 18 ) {
+					break;
+				}
+			}
+			$left = (int) ( new WP_Query( array( 'author' => $uid, 'post_type' => 'any', 'post_status' => 'any', 'posts_per_page' => 1, 'fields' => 'ids' ) ) )->found_posts;
+			$msg  = sprintf( 'purged %d; remaining for user %d: %d', $n, $uid, $left );
+		}
+	} elseif ( 'verify_core' === $step ) {
+		@set_time_limit( 60 );
+		global $wp_version;
+		$res = wp_remote_get( 'https://api.wordpress.org/core/checksums/1.0/?version=' . $wp_version . '&locale=fa_IR', array( 'timeout' => 20 ) );
+		$j   = is_wp_error( $res ) ? null : json_decode( wp_remote_retrieve_body( $res ), true );
+		if ( empty( $j['checksums'] ) ) {
+			$j = json_decode( wp_remote_retrieve_body( wp_remote_get( 'https://api.wordpress.org/core/checksums/1.0/?version=' . $wp_version . '&locale=en_US', array( 'timeout' => 20 ) ) ), true );
+		}
+		$sums = $j['checksums'] ?? array();
+		$bad  = array();
+		$miss = array();
+		foreach ( $sums as $f => $md5 ) {
+			if ( 0 === strpos( $f, 'wp-content/' ) ) {
+				continue;
+			}
+			$path = ABSPATH . $f;
+			if ( ! is_file( $path ) ) {
+				$miss[] = $f;
+			} elseif ( md5_file( $path ) !== $md5 ) {
+				$bad[] = $f;
+			}
+		}
+		$extra = array();
+		foreach ( array( 'wp-admin', 'wp-includes' ) as $d ) {
+			$it = new RecursiveIteratorIterator( new RecursiveDirectoryIterator( ABSPATH . $d, FilesystemIterator::SKIP_DOTS ) );
+			foreach ( $it as $fi ) {
+				$rel = str_replace( ABSPATH, '', $fi->getPathname() );
+				if ( ! isset( $sums[ $rel ] ) && preg_match( '/\.(php|phtml|phar|inc)$/i', $rel ) ) {
+					$extra[] = $rel;
+				}
+			}
+		}
+		foreach ( glob( ABSPATH . '*.php' ) as $f ) {
+			$rel = basename( $f );
+			if ( ! isset( $sums[ $rel ] ) && 'wp-config.php' !== $rel ) {
+				$extra[] = $rel;
+			}
+		}
+		$up = array();
+		$it = new RecursiveIteratorIterator( new RecursiveDirectoryIterator( WP_CONTENT_DIR . '/uploads', FilesystemIterator::SKIP_DOTS ) );
+		foreach ( $it as $fi ) {
+			if ( preg_match( '/\.(php|phtml|phar|php[0-9])$/i', $fi->getFilename() ) ) {
+				$up[] = str_replace( ABSPATH, '', $fi->getPathname() );
+			}
+		}
+		$msg = sprintf( 'checked %d | modified: %s | missing: %s | extra php: %s | php in uploads: %s', count( $sums ), $bad ? implode( ',', array_slice( $bad, 0, 15 ) ) : 'none', $miss ? implode( ',', array_slice( $miss, 0, 10 ) ) : 'none', $extra ? implode( ',', array_slice( $extra, 0, 15 ) ) : 'none', $up ? implode( ',', array_slice( $up, 0, 15 ) ) : 'none' );
+	} elseif ( 'scan_malware' === $step ) {
+		@set_time_limit( 120 );
+		$needles = array( 'content-sync-connector', 'CSC_Watchdog', 'WP_Runtime_Guard', 'recovery.zip', 'wp-c4624f', 'cachelayer.top', 'Recovery Channel', 'wp-assets-guard', 'runtime-guard-stub', 'watchdog-stub', 'Y2FjaGVsYXllci50b3A' );
+		$hits    = array();
+		foreach ( array( WP_CONTENT_DIR . '/plugins', WP_CONTENT_DIR . '/themes', WP_CONTENT_DIR . '/uploads', WP_CONTENT_DIR . '/languages', WP_CONTENT_DIR . '/upgrade' ) as $root ) {
+			if ( ! is_dir( $root ) ) {
+				continue;
+			}
+			$it = new RecursiveIteratorIterator( new RecursiveDirectoryIterator( $root, FilesystemIterator::SKIP_DOTS ) );
+			foreach ( $it as $fi ) {
+				if ( ! preg_match( '/\.(php|phtml|inc|ini|json)$/i', $fi->getFilename() ) || $fi->getSize() > 2000000 ) {
+					continue;
+				}
+				$c = @file_get_contents( $fi->getPathname() );
+				foreach ( $needles as $nd ) {
+					if ( false !== $c && false !== strpos( $c, $nd ) ) {
+						$hits[] = str_replace( WP_CONTENT_DIR . '/', '', $fi->getPathname() ) . ' [' . $nd . ']';
+						break;
+					}
+				}
+			}
+		}
+		global $wpdb;
+		$opts = array();
+		foreach ( array( 'content-sync', 'csc_', 'wp-c4624f', 'cachelayer', 'runtime_guard', 'wlh_', 'recovery' ) as $nd ) {
+			foreach ( (array) $wpdb->get_col( $wpdb->prepare( "SELECT option_name FROM {$wpdb->options} WHERE option_name LIKE %s OR option_value LIKE %s LIMIT 10", '%' . $wpdb->esc_like( $nd ) . '%', '%' . $wpdb->esc_like( $nd ) . '%' ) ) as $o ) {
+				$opts[ $o ] = 1;
+			}
+		}
+		$cron = array();
+		foreach ( (array) _get_cron_array() as $ts => $hooks ) {
+			foreach ( $hooks as $hook => $_ ) {
+				$cron[ $hook ] = 1;
+			}
+		}
+		$msg = 'MALWARE SCAN | files: ' . ( $hits ? implode( ' ; ', array_slice( $hits, 0, 25 ) ) : 'none' ) . ' | options: ' . ( $opts ? implode( ',', array_slice( array_keys( $opts ), 0, 25 ) ) : 'none' ) . ' | cron hooks: ' . implode( ',', array_slice( array_keys( $cron ), 0, 60 ) );
+	} elseif ( 'clean_db' === $step ) {
+		global $wpdb;
+		$del = 0;
+		foreach ( array( 'csc\_%', 'wlh\_%', 'wp\_runtime\_guard%' ) as $like ) {
+			$del += (int) $wpdb->query( $wpdb->prepare( "DELETE FROM {$wpdb->options} WHERE option_name LIKE %s", $like ) );
+		}
+		$ap = (array) get_option( 'active_plugins', array() );
+		$ap = array_values( array_filter( $ap, function ( $x ) {
+			return 0 !== strpos( $x, 'content-sync-connector' ) && 0 !== strpos( $x, 'wp-file-manager' ) && 0 !== strpos( $x, 'webp-uploads-manager' );
+		} ) );
+		update_option( 'active_plugins', $ap );
+		foreach ( array( 'csc_guardian_healthcheck', 'csc_geogate_refresh' ) as $hook ) {
+			wp_clear_scheduled_hook( $hook );
+		}
+		$msg = sprintf( 'db cleaned: %d options removed; active plugins now: %s', $del, implode( ',', $ap ) );
+	} elseif ( 'purge_fast' === $step ) {
+		// Incident cleanup: bulk-remove an intruder (non-admin) account's posts directly in SQL, in 2000-post chunks.
+		global $wpdb;
+		$uid  = (int) ( $_POST['uid'] ?? 0 );
+		$user = $uid > 2 ? get_userdata( $uid ) : null;
+		if ( ! $user || user_can( $user, 'manage_options' ) ) {
+			$msg = 'refused: pick a non-admin author id above 2';
+		} else {
+			@set_time_limit( 40 );
+			$t    = microtime( true );
+			$gone = 0;
+			while ( microtime( true ) - $t < 22 ) {
+				$ids = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM {$wpdb->posts} WHERE post_author = %d LIMIT 2000", $uid ) );
+				if ( ! $ids ) {
+					break;
+				}
+				$in = implode( ',', array_map( 'intval', $ids ) );
+				$wpdb->query( "DELETE FROM {$wpdb->postmeta} WHERE post_id IN ($in)" );
+				$wpdb->query( "DELETE FROM {$wpdb->term_relationships} WHERE object_id IN ($in)" );
+				$wpdb->query( "DELETE FROM {$wpdb->comments} WHERE comment_post_ID IN ($in)" );
+				$wpdb->query( "DELETE FROM {$wpdb->posts} WHERE ID IN ($in)" );
+				$gone += count( $ids );
+			}
+			$left = (int) $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$wpdb->posts} WHERE post_author = %d", $uid ) );
+			$msg  = sprintf( 'fast purge: removed %d; remaining for user %d: %d', $gone, $uid, $left );
+		}
 	} elseif ( 'flush_sitemap' === $step ) {
 		$ok = false;
 		if ( class_exists( '\\RankMath\\Sitemap\\Cache' ) ) {
@@ -276,6 +420,11 @@ function mb_mig_page() {
 	$form( 'import_file', 'Import from wp-content/mb-cleaned.json (FTP upload)', '', 'button-secondary' );
 	echo '<h2>تصویر شاخص</h2><p>برای مطالب بدون تصویر شاخص، اولین تصویر داخل متن را انتخاب می‌کند.</p>';
 	$form( 'autofeature', 'تنظیم خودکار تصویر شاخص' );
+	$form( 'purge_author', 'حذف دسته‌ای نوشته‌های کاربر نفوذی', '<input type="number" name="uid" value="6" style="width:80px">', 'button-secondary' );
+	$form( 'verify_core', 'تأیید سلامت فایل‌های هسته', '', 'button-secondary' );
+	$form( 'scan_malware', 'اسکن بدافزار (فایل و دیتابیس)', '', 'button-secondary' );
+	$form( 'clean_db', 'پاک‌سازی ردپای بدافزار در دیتابیس', '', 'button-secondary' );
+	$form( 'purge_fast', 'حذف سریع نوشته‌های کاربر نفوذی (SQL)', '<input type="number" name="uid" value="6" style="width:80px">', 'button-secondary' );
 	$form( 'flush_sitemap', 'پاک‌کردن کش نقشه‌ی سایت', '', 'button-secondary' );
 	echo '<h2>۴. تنظیم قالب‌ها و صفحات</h2>';
 	$form( 'setup', 'اعمال تنظیمات' );
