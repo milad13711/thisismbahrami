@@ -1139,3 +1139,17 @@ a.post:hover .th img{transform:scale(1.04)}
 .prose th{background:var(--paper-2);font-weight:700}
 .prose pre{max-width:100%;overflow-x:auto}
 .prose{overflow-wrap:anywhere}
+
+/* comments (static site) */
+#mb-comments{margin-top:48px;padding-top:28px;border-top:1px solid var(--line)}
+#mb-comments h2{font-size:22px;margin:0 0 16px}
+#mb-comments .c-item{padding:14px 0;border-bottom:1px solid var(--line-soft)}
+#mb-comments .c-item b{margin-inline-end:10px}#mb-comments .c-item time{font-size:12.5px;color:var(--text-3)}
+#mb-comments .c-item p{margin:6px 0 0;color:var(--text-2)}
+#mb-comments .c-empty{color:var(--text-3)}
+#mb-comments form{display:grid;gap:12px;margin-top:22px;max-width:640px}
+#mb-comments label{font-size:13px;font-weight:700;display:grid;gap:6px}
+#mb-comments input,#mb-comments textarea{font:inherit;padding:12px 14px;border:1.5px solid var(--line);border-radius:12px;background:#fff}
+#mb-comments .hp{position:absolute;inset-inline-start:-9999px;width:1px;height:1px;opacity:0}
+#mb-comments .c-msg{padding:10px 14px;border-radius:12px;font-size:14px}
+#mb-comments .c-msg.ok{background:#EEF8F5;color:#1d6b5a}#mb-comments .c-msg.err{background:#FDECEA;color:#a13a2d}

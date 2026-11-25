@@ -323,3 +323,42 @@
     show(0);
   }
 })();
+
+/* ---- ERP-backed extras (static site): visit beacon + comments ---- */
+(() => {
+  const cfg = window.MB && window.MB.erp;
+  if (!cfg) return;
+  const base = cfg.api + '/public/website/' + cfg.tenant;
+  const prod = /(^|\.)thisismbahrami\.ir$/.test(location.hostname) && location.hostname !== 'staging.thisismbahrami.ir';
+  // visit count: no cookies, no IP stored; skipped for Do-Not-Track / Global Privacy Control and on non-production hosts
+  if (prod && navigator.doNotTrack !== '1' && !navigator.globalPrivacyControl) {
+    const body = JSON.stringify({ path: location.pathname + location.search, ref: document.referrer || undefined });
+    try { fetch(base + '/hit', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body, keepalive: true }).catch(() => {}); } catch (e) { /* ignore */ }
+  }
+  const box = document.getElementById('mb-comments');
+  if (!box) return;
+  const post = box.dataset.post;
+  const list = box.querySelector('[data-list]');
+  const form = box.querySelector('form');
+  const msg = box.querySelector('[data-msg]');
+  const fa = n => String(n).replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  fetch(base + '/comments?post=' + encodeURIComponent(post)).then(r => r.ok ? r.json() : []).then(rows => {
+    if (!Array.isArray(rows) || !rows.length) { list.innerHTML = '<p class="c-empty">هنوز دیدگاهی ثبت نشده؛ اولین نفر باشید.</p>'; return; }
+    list.innerHTML = rows.map(c => '<article class="c-item"><b>' + esc(c.authorName) + '</b><time>' + fa(new Date(c.createdAt).toLocaleDateString('fa-IR')) + '</time><p>' + esc(c.body).replace(/\n/g, '<br>') + '</p></article>').join('');
+  }).catch(() => { list.innerHTML = ''; });
+  if (!form) return;
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    const fd = new FormData(form);
+    const btn = form.querySelector('button[type=submit]');
+    msg.hidden = true; btn.disabled = true;
+    try {
+      const r = await fetch(base + '/comments', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ post, name: fd.get('name'), email: fd.get('email') || undefined, body: fd.get('body'), website: fd.get('website') || undefined }) });
+      if (r.status === 429) throw new Error('تعداد ارسال‌ها زیاد است؛ کمی بعد دوباره تلاش کنید.');
+      if (!r.ok) throw new Error('ارسال انجام نشد؛ نام و متن دیدگاه را کامل بنویسید.');
+      form.reset(); msg.textContent = 'ممنون! دیدگاه شما بعد از تأیید مدیر نمایش داده می‌شود.'; msg.className = 'c-msg ok';
+    } catch (err) { msg.textContent = err.message || 'ارسال انجام نشد.'; msg.className = 'c-msg err'; }
+    msg.hidden = false; btn.disabled = false;
+  });
+})();

@@ -210,6 +210,9 @@ def main():
     related = ''.join(build_hub.card(p) for p in posts[:3])
     cur = open(os.path.join(SITE, rel_page), encoding='utf-8').read()
     cur = re.sub(r'(<div class="posts">).*?(</div>\s*</div>\s*</section>\s*<!-- =+ ۴)', lambda m: m.group(1) + related + m.group(2), cur, count=1, flags=re.S)
+    if 'id="mb-comments"' not in cur:
+        from add_comments import SECTION
+        cur = cur.replace('</article>', SECTION % urllib.parse.unquote(new_path).strip('/') + '\n</article>', 1)
     open(os.path.join(SITE, rel_page), 'w', encoding='utf-8').write(cur)
     lst = os.path.join(ROOT, 'tools', 'last-publish.txt')
     open(lst, 'w', encoding='utf-8').write('\n'.join(dict.fromkeys(changed)))
